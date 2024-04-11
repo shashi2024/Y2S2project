@@ -15,6 +15,8 @@ app.get("/", (req, res, next) => {
   next();
 });
 
+// test comment
+
 app.listen(PORT, () => {
   logger.info(`Server is up and running on port ${PORT}`);
   connect();
