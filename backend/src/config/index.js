@@ -1,4 +1,5 @@
-module.exports = {
-  ServerConfig: require("./server-config"),
-  Logger: require("./logger-config"),
+const config = {
+  DB_CONNECTION_STRING: process.env.MONGODB_URL,
 };
+
+export default config;
