@@ -1,23 +1,27 @@
 {
-  "name": "express-starter",
+  "name": "Hotel-Management-System",
   "version": "1.0.0",
-  "description": "Express Starter Template",
-  "main": "index.js",
+  "description": "Hotel Management System API",
+  "main": "app.js",
+  "repository": "https://github.com/shashi2024/Y2S2project",
+  "author": "Team",
+  "license": "MIT",
+  "private": true,
   "scripts": {
-    "dev": "node --watch src/index.js"
+    "start": "nodemon --exec babel-node -- src/app.js"
   },
-  "keywords": [
-    "template"
-  ],
-  "author": "Milind Mishra",
-  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.24.4",
+    "@babel/node": "^7.23.9",
+    "@babel/preset-env": "^7.24.4",
+    "nodemon": "^3.1.0"
+  },
   "dependencies": {
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "http-status-codes": "^2.2.0",
-    "morgan": "^1.10.0",
-    "sequelize": "^6.31.1",
-    "sequelize-cli": "^6.6.0",
-    "winston": "^3.8.2"
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.1",
+    "pino": "^8.20.0",
+    "pino-pretty": "^11.0.0"
   }
 }
