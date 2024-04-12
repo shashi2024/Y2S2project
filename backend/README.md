@@ -1,6 +1,6 @@
 ## Project Backend
 
-This project requires Node.js and Yarn to be installed on your machine.
+This project requires Node.js and Yarn to be installed on your machine. Please google yarn for installation instructions.
 
 ### Installation
 
