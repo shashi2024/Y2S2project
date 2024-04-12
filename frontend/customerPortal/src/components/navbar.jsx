@@ -1,12 +1,11 @@
-import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons"; // Import the faBars icon
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
-import logo from "./images/pic2.png";
-import backgroundImage from "./images/pic1.png";
+import logo from "../assets/images/pic2.png";
+import backgroundImage from "../assets/images/pic1.png";
 
-function Top() {
+const Navbar = () => {
   return (
     <div
       className="h-screen bg-cover"
@@ -50,6 +49,6 @@ function Top() {
       </div>
     </div>
   );
-}
+};
 
-export default Top;
+export default Navbar;
