@@ -1,5 +1,5 @@
-import Test from "../model/test.model.js";
-import logger from "../../utils/logger.js";
+import Test from "../model/test.model";
+import logger from "../../utils/logger";
 
 export const createTest = async (req, res) => {
   const randomNumber = Math.floor(Math.random() * 100);
