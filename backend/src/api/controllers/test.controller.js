@@ -9,9 +9,10 @@ export const createTest = async (req, res) => {
   });
 
   try {
-    await test.save();
+    const savedTest = await test.save();
+    const { _id } = savedTest;
 
-    res.status(200).json(test);
+    res.status(200).json({ savedTest, _id });
   } catch (error) {
     logger.error(error.message);
     res.status(500).json({ message: "Something went wrong" });
