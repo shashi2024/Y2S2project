@@ -1,4 +1,4 @@
-import Test from "../model/test.model";
+import Test from "../model/supplierModel";
 import logger from "../../utils/logger";
 
 export const createTest = async (req, res) => {
