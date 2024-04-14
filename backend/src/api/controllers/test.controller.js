@@ -1,6 +1,7 @@
 import Test from "../model/test.model";
 import logger from "../../utils/logger";
 
+//data display
 export const createTest = async (req, res) => {
   const randomNumber = Math.floor(Math.random() * 100);
 
@@ -23,4 +24,4 @@ export const getHelloMessage = (req, res) => {
   res.json({ message: "test" });
 };
 
-
+//data insert

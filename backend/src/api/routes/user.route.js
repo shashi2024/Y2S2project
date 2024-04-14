@@ -1,9 +1,14 @@
 import { Router } from "express";
-import { getHelloMessage, createUser } from "../controllers/user.controller";
+import { getHelloMessage, addUser, getById, updateUser, deleteUser } from "../controllers/user.controller";
 
 const userRouter = Router();
 
 userRouter.get("/", getHelloMessage);
-userRouter.post("/", createUser);
+userRouter.post("/", addUser);
+userRouter.get("/:id", getById);
+userRouter.put("/:id", updateUser);
+userRouter.delete("/:id", deleteUser);
 
-export default userRouter;
+
+
+export default userRouter; 

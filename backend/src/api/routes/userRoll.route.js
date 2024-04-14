@@ -1,9 +1,12 @@
 import { Router } from "express";
-import { getHelloMessage, createUserRoll } from "../controllers/userRoll.controller";
+import { getHelloMessage, addUserRoll, getById, updateUserRoll, deleteUserRoll } from "../controllers/userRoll.controller";
 
 const userRollRouter = Router();
 
 userRollRouter.get("/", getHelloMessage);
-userRollRouter.post("/", createUserRoll);
+userRollRouter.post("/", addUserRoll);
+userRollRouter.get("/:id", getById);
+userRollRouter.put("/:id", updateUserRoll);
+userRollRouter.delete("/:id", deleteUserRoll);
 
 export default userRollRouter;

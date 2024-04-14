@@ -18,6 +18,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json({ limit: "20mb" }));
 
+app.use(express.json());
 app.use("/test", testRouter);
 app.use("/user", userRouter);
 app.use("/userreport", userReportRouter);

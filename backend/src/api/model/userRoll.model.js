@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 
 // Define the schema
 const UserRollSchema = new mongoose.Schema({
-  uID: {
-    type: Number,
+  rollName: {
+    type: String,
     required: true,
   },
   rID: {
