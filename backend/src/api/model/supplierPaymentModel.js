@@ -2,12 +2,16 @@
 import mongoose from "mongoose";
 
 // Define the schema
-const supplierSchema = new mongoose.Schema({
+const supplierPaymentSchema = new mongoose.Schema({
+  paymentId: {
+    type: Number,
+    required: true,
+  },
   name: {
     type: String, // Data type of the schema
     required: true, // validation - if the feild should be filled or not
   },
-  id: {
+  supplierId: {
     type: String,
     required: true,
     unique: true,
@@ -38,5 +42,5 @@ const supplierSchema = new mongoose.Schema({
 });
 
 // Create the model from the schema and export it
-const Supplier = mongoose.model("Supplier", supplierSchema);
-export default Supplier;
+const SupplierPayment = mongoose.model("Supplier", supplierPaymentSchema);
+export default SupplierPayment;

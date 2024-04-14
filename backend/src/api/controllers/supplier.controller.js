@@ -1,15 +1,15 @@
-import Test from "../model/supplierModel";
+import Supplier from "../model/supplierPaymentModel";
 import logger from "../../utils/logger";
 
 export const createTest = async (req, res) => {
   const randomNumber = Math.floor(Math.random() * 100);
 
-  const test = new Test({
+  const supplier = new Supplier({
     randomNo: randomNumber,
   });
 
   try {
-    const savedTest = await test.save();
+    const savedTest = await supplier.save();
     const { _id } = savedTest;
 
     res.status(200).json({ savedTest, _id });
@@ -22,3 +22,7 @@ export const createTest = async (req, res) => {
 export const getHelloMessage = (req, res) => {
   res.json({ message: "hello" });
 };
+
+//-----------------------------------------------------------------
+
+

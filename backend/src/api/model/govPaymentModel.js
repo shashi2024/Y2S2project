@@ -2,6 +2,7 @@
 import mongoose from "mongoose";
 
 // Define the schema
+// Schema creates the structure of the documents that we save
 const governmentPaymentSchema = new mongoose.Schema({
   paymentType: {
     type: String, // Data type of the schema
