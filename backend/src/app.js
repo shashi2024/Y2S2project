@@ -11,6 +11,14 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json({ limit: "20mb" }));
 
+app.get("/", (req, res) => {
+  res.send(`Welcome to the backend!`);
+});
+
+app.post("/", (req, res) => {
+  res.send(`post request to the homepage`);
+});
+
 app.use("/test", testRouter);
 
 app.listen(PORT, () => {
