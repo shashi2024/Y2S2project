@@ -12,7 +12,7 @@ import { faFax } from "@fortawesome/free-solid-svg-icons";
 
 function Bottom() {
   return (
-    <div className="absolute w-full h-40 h-screen overflow-hidden bg-teal-400">
+    <div className="absolute w-full h-72 overflow-hidden bg-teal-400">
       <div>
         <div className="absolute top-14 left-40">
           <h1 className="text-lg tracking-widest font-bold font-sans">
