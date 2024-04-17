@@ -2,7 +2,7 @@
 import mongoose from "mongoose";
 
 // Define the schema
-const utilityPaymentSchema = new mongoose.Schema({
+const refundPaymentSchema = new mongoose.Schema({
   customerId: {
     type: String, // Data type of the schema
     required: true, // validation - if the feild should be filled or not
@@ -32,5 +32,5 @@ const utilityPaymentSchema = new mongoose.Schema({
 });
 
 // Create the model from the schema and export it
-const UtilityPayment = mongoose.model("UtilityPayment", utilityPaymentSchema);
-export default UtilityPayment;
+const RefundPayment = mongoose.model("UtilityPayment", refundPaymentSchema);
+export default RefundPayment;

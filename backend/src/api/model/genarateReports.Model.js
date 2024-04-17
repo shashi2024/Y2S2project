@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 const genarateReportsSchema = new mongoose.Schema({
   Type: {
     // utility bill / tax / salary etc.
-    type: String, // Data type of the schema
+    type: String, // Data type of the schema -- utility / gov / refund / salary
     required: true, // validation - if the feild should be filled or not
   },
   fromDate: {
@@ -15,12 +15,12 @@ const genarateReportsSchema = new mongoose.Schema({
   toDate: {
     type: Date,
     required: true,
-  },    
+  },
 });
 
 // Create the model from the schema and export it
 const GenarateReports = mongoose.model(
-  "GovernmentPayment",
+  "GenarateReports",
   genarateReportsSchema
 );
 export default GenarateReports;

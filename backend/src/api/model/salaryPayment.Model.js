@@ -2,7 +2,7 @@
 import mongoose from "mongoose";
 
 // Define the schema
-const utilityPaymentSchema = new mongoose.Schema({
+const salaryPaymentSchema = new mongoose.Schema({
   empId: {
     type: String, // Data type of the schema
     unique: true,
@@ -44,5 +44,5 @@ const utilityPaymentSchema = new mongoose.Schema({
 });
 
 // Create the model from the schema and export it
-const UtilityPayment = mongoose.model("UtilityPayment", utilityPaymentSchema);
-export default UtilityPayment;
+const SalaryPayment = mongoose.model("SalaryPayment", salaryPaymentSchema);
+export default SalaryPayment;
