@@ -1,16 +1,32 @@
-import "./App.css";
-import {Route, Routes, BrowserRouter as Router} from 'react-router-dom'
-import CreateFoodItem from './features/createFoodItem/createForm.jsx'
+import React, { useEffect } from 'react';
+import {
+  Routes,
+  Route,
+  useLocation
+} from 'react-router-dom';
+
+import './css/style.css';
+
+import './charts/ChartjsConfig';
+
+// Import pages
+import Dashboard from './pages/Dashboard';
 
 function App() {
+
+  const location = useLocation();
+
+  useEffect(() => {
+    document.querySelector('html').style.scrollBehavior = 'auto'
+    window.scroll({ top: 0 })
+    document.querySelector('html').style.scrollBehavior = ''
+  }, [location.pathname]); // triggered on route change
+
   return (
     <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<h1>Home</h1>} />
-          <Route path="/createFood" element={<CreateFoodItem />} />
-        </Routes>
-      </Router>
+      <Routes>
+        <Route exact path="/" element={<Dashboard />} />
+      </Routes>
     </>
   );
 }
