@@ -55,6 +55,11 @@ function CreateTaskForm() {
         <input
           {...register("title")}
           placeholder="Enter Title"
+          className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
+        />
+        <input
+          {...register("title")}
+          placeholder="Enter Title"
           className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         />
       </div>
