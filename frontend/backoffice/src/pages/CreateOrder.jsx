@@ -2,6 +2,7 @@ import { useState } from "react";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 import ProductCard from "../components/ProductCard";
+import Button from "../components/Button";
 
 const CreateOrder = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -75,9 +76,7 @@ const CreateOrder = () => {
                   className="bg-white p-4 rounded-md shadow-sm"
                   style={{ width: "300px", height: "100px" }}
                 >
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Create Order
-                  </button>
+                  <Button>Create Order</Button>
                 </div>
               </div>
             </div>
