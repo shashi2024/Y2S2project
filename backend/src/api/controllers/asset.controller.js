@@ -8,6 +8,7 @@ export const createAsset = async (req, res) => {
     const asset = new Asset(assetData);
     await asset.save();
 
+    // eslint-disable-next-line no-underscore-dangle
     logger.info(`Asset with ID: ${asset._id} created.`);
     res.status(201).send(asset);
   } catch (error) {
