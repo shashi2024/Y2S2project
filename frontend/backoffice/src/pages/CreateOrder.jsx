@@ -12,6 +12,7 @@ const CreateOrder = () => {
   const [discount, setDiscount] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
   const [foodItems, setFoodItems] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const onSubmit = async (event) => {
@@ -34,7 +35,7 @@ const CreateOrder = () => {
         orderData
       );
       console.log(response.data);
-      window.location.reload;
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
@@ -53,6 +54,21 @@ const CreateOrder = () => {
     };
 
     fetchedFoodItems();
+  }, []);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/order/");
+        setOrders(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchOrders();
   }, []);
 
   if (isLoading) {
@@ -193,10 +209,10 @@ const CreateOrder = () => {
                       onChange={(e) => setCustomer(e.target.value)}
                     >
                       <option value="">Select a customer</option>
-                      <option value="6623aace70493c8b0066b376">
+                      <option value="66243dbdaae02f29f1e63e85">
                         Customer 01
                       </option>
-                      <option value="6623aace70493c8b0066b376">
+                      <option value="66243ffee696fab10e4d82d8">
                         Customer 02
                       </option>
                     </select>
@@ -248,26 +264,29 @@ const CreateOrder = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {orders.map((order) => (
-                      <tr
-                        key={order.id}
-                        className="border-t border-second_background"
-                      >
-                        <td className="py-4 px-6">{order.id}</td>
-                        <td className="py-4 px-6">{order.customerName}</td>
-                        <td className="py-4 px-6">{order.orderStatus}</td>
-                        <td className="py-4 px-6">{order.paymentStatus}</td>
-                        <td className="py-4 px-6">
-                          ${order.totalAmount.toFixed(2)}
-                        </td>
-                        <td className="py-4 px-6">
-                          <div className="flex space-x-4">
-                            <Button>Full Fill</Button>
-                            <Button>Cancel</Button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                    {orders.length &&
+                      orders.map((order) => (
+                        <tr
+                          key={order.id}
+                          className="border-t border-second_background"
+                        >
+                          <td className="py-4 px-6">{order.orderNumber}</td>
+                          <td className="py-4 px-6">
+                            {order.customerID?.name}
+                          </td>
+                          <td className="py-4 px-6">{order.orderStatus}</td>
+                          <td className="py-4 px-6">{order.paymentStatus}</td>
+                          <td className="py-4 px-6">
+                            ${order.totalAmount.toFixed(2)}
+                          </td>
+                          <td className="py-4 px-6">
+                            <div className="flex space-x-4">
+                              <Button>Full Fill</Button>
+                              <Button>Cancel</Button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
