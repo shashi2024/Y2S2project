@@ -9,6 +9,8 @@ import "./charts/ChartjsConfig";
 import Dashboard from "./pages/Dashboard";
 import CreateFoodItem from "./pages/CreateFoodItem";
 import CreateOrder from "./pages/CreateOrder";
+import FoodInventory from "./pages/FoodInventory";
+import ManageMenu from "./pages/ManageMenu";
 
 function App() {
   const location = useLocation();
@@ -33,6 +35,12 @@ function App() {
           path="/restaurant/manage-orders"
           element={<CreateOrder />}
         />
+        <Route
+          exact
+          path="/restaurant/food-inventory"
+          element={<FoodInventory />}
+        />
+        <Route exact path="/restaurant/manage-menus" element={<ManageMenu />} />
       </Routes>
     </>
   );
