@@ -11,6 +11,9 @@ import CreateFoodItem from "./pages/CreateFoodItem";
 import CreateOrder from "./pages/CreateOrder";
 import FoodInventory from "./pages/FoodInventory";
 import ManageMenu from "./pages/ManageMenu";
+import ManageReservations from "./pages/ManageReservations";
+import RequestIngredients from "./pages/RequestIngredients";
+import RestaurantDashboard from "./pages/RestaurantDashboard";
 
 function App() {
   const location = useLocation();
@@ -41,6 +44,21 @@ function App() {
           element={<FoodInventory />}
         />
         <Route exact path="/restaurant/manage-menus" element={<ManageMenu />} />
+        <Route
+          exact
+          path="/restaurant/manage-reservations"
+          element={<ManageReservations />}
+        />
+        <Route
+          exact
+          path="/restaurant/request-ingredients"
+          element={<RequestIngredients />}
+        />
+        <Route
+          exact
+          path="/restaurant/dashboard"
+          element={<RestaurantDashboard />}
+        />
       </Routes>
     </>
   );

@@ -34,9 +34,7 @@ const CreateOrder = () => {
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            <h1 className="text-slate-800 font-bold text-3xl">
-              Order Create Form
-            </h1>
+            <h1 className="text-slate-800 font-bold text-3xl">Create Order</h1>
 
             <div className="flex">
               {/* Product list */}
