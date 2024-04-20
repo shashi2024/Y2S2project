@@ -13,6 +13,7 @@ import FoodInventory from "./pages/FoodInventory";
 import ManageMenu from "./pages/ManageMenu";
 import ManageReservations from "./pages/ManageReservations";
 import RequestIngredients from "./pages/RequestIngredients";
+import RestaurantDashboard from "./pages/RestaurantDashboard";
 
 function App() {
   const location = useLocation();
@@ -52,6 +53,11 @@ function App() {
           exact
           path="/restaurant/request-ingredients"
           element={<RequestIngredients />}
+        />
+        <Route
+          exact
+          path="/restaurant/dashboard"
+          element={<RestaurantDashboard />}
         />
       </Routes>
     </>
