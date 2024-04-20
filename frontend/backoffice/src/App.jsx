@@ -1,7 +1,14 @@
 import "./App.css";
+import NavBar from "./components/NavBar";
+import SideBar from "./components/SideBar";
 
 function App() {
-  return <h1 className="text-3xl font-bold underline">Back Office Portal</h1>;
+  return (
+    <>
+      <NavBar />
+      <SideBar />
+    </>
+  );
 }
 
 export default App;
