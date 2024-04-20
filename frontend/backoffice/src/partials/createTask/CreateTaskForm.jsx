@@ -39,7 +39,7 @@ function CreateTaskForm() {
 
       const response = await axios.post("http://localhost:5000/task", taskData);
       console.log(response.data);
-      navigate("/maintenance/manage-tasks");
+      navigate("/maintenance/monitor-tasks");
     } catch (error) {
       console.error(error);
     }
@@ -55,7 +55,7 @@ function CreateTaskForm() {
         <input
           {...register("title")}
           placeholder="Enter Title"
-          className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
         />
       </div>
 
@@ -151,12 +151,12 @@ function CreateTaskForm() {
       <div>
         <label className="block text-sm font-medium">Assignee</label>
         <select
-          {...register("assignee")}
+          {...register("userId")}
           className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         >
-          <option value="option1">Option 01</option>
-          <option value="option2">Option 02</option>
-          <option value="option3">Option 03</option>
+          <option value="66244ddc6fc5b531cea5b6ca">Option 01</option>
+          <option value="66244ddc6fc5b531cea5b6ca">Option 02</option>
+          <option value="66244ddc6fc5b531cea5b6ca">Option 03</option>
         </select>
       </div>
 

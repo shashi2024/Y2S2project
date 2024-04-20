@@ -8,6 +8,9 @@ import foodItemRouter from "./api/routes/foodItem.route";
 import menuRouter from "./api/routes/menu.route";
 import orderRouter from "./api/routes/order.route";
 import restaurantInventoryRouter from "./api/routes/restaurantInventory.route";
+import maintenanceTaskRouter from "./api/routes/maintenanceTask.route";
+import customerRouter from "./api/routes/customer.route";
+import userRouter from "./api/routes/user.route";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -28,6 +31,12 @@ app.use("/food-item", foodItemRouter);
 app.use("/menu", menuRouter);
 app.use("/order", orderRouter);
 app.use("/restaurant-inventory", restaurantInventoryRouter);
+
+/* Maintenance */
+app.use("/task", maintenanceTaskRouter);
+
+app.use("/customer", customerRouter);
+app.use("/user", userRouter);
 
 app.listen(PORT, () => {
   logger.info(`Server is up and running on port ${PORT}`);

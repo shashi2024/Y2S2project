@@ -32,7 +32,7 @@ function FoodItemsTable() {
   return (
     <div>
       <h1 className="text-2xl font-bold">Manage Food Items</h1>
-      <hr className="border-t border-second_background mt-2 mb-12"/>
+      <hr className="border-t border-second_background mt-2 mb-12" />
       <table className="w-full text-left border-collapse">
         {/* ... */}
         <tbody>

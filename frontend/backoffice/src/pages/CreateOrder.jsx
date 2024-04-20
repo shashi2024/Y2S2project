@@ -3,6 +3,7 @@ import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 import ProductCard from "../components/ProductCard";
 import Button from "../components/Button";
+import axios from "axios";
 
 const CreateOrder = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -10,18 +11,82 @@ const CreateOrder = () => {
   const [customer, setCustomer] = useState("");
   const [discount, setDiscount] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [foodItems, setFoodItems] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    const orderData = {
+      items: Object.entries(selectedItems).map(([foodItemID, quantity]) => ({
+        foodItemID,
+        quantity,
+      })),
+      discount,
+      totalAmount,
+      discountedAmount: calculateDiscountedAmount(),
+      customerID: customer,
+    };
+
+    try {
+      console.log(orderData);
+      const response = await axios.post(
+        "http://localhost:5000/order/",
+        orderData
+      );
+      console.log(response.data);
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchedFoodItems = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/food-item/");
+        setFoodItems(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchedFoodItems();
+  }, []);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/order/");
+        setOrders(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
+  if (isLoading) {
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary"></div>
+    </div>;
+  }
 
   const calculateDiscountedAmount = () => {
     return totalAmount - discount;
   };
 
-  const products = [
-    { id: "1", name: "Product 1", image: "url-to-image-1", price: 100 },
-    { id: "2", name: "Product 2", image: "url-to-image-2", price: 89 },
-    { id: "3", name: "Product 3", image: "url-to-image-3", price: 79},
-    { id: "4", name: "Product 4", image: "url-to-image-3", price: 69 },
-  ];
+  //   const products = [
+  //     { id: "1", name: "Product 1", image: "url-to-image-1", price: 100 },
+  //     { id: "2", name: "Product 2", image: "url-to-image-2", price: 89 },
+  //     { id: "3", name: "Product 3", image: "url-to-image-3", price: 79 },
+  //     { id: "4", name: "Product 4", image: "url-to-image-3", price: 69 },
+  //   ];
 
   const handleSelect = (productId) => {
     setSelectedItems({
@@ -39,7 +104,10 @@ const CreateOrder = () => {
 
   const calculateTotal = () => {
     return Object.entries(selectedItems).reduce((total, [item, quantity]) => {
-      return total + products.find((product) => product.id === item).price * quantity;
+      return (
+        total +
+        foodItems.find((product) => product._id === item).price * quantity
+      );
     }, 0);
   };
 
@@ -53,8 +121,8 @@ const CreateOrder = () => {
     const newOrder = {
       id: Date.now(), // replace with your own function to generate order ID
       customerName: customer,
-      orderStatus: 'New',
-      paymentStatus: 'Pending',
+      orderStatus: "New",
+      paymentStatus: "Pending",
       totalAmount: calculateDiscountedAmount(),
     };
 
@@ -87,7 +155,9 @@ const CreateOrder = () => {
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto bg-background">
             <div className="bg-white p-6 rounded-lg shadow-lg">
               <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-                <h1 className="text-slate-800 font-bold text-3xl">Add Products</h1>
+                <h1 className="text-slate-800 font-bold text-3xl">
+                  Add Products
+                </h1>
 
                 <div className="flex justify-between items-start">
                   <div className="flex-grow pr-4">
@@ -95,12 +165,12 @@ const CreateOrder = () => {
                       className="grid grid-cols-4 gap-4"
                       style={{ maxHeight: "500px" }}
                     >
-                      {products.map((product) => (
+                      {foodItems.map((product) => (
                         <ProductCard
-                          key={product.id}
+                          key={product._id}
                           product={product}
-                          onSelect={() => handleSelect(product.id)}
-                          onDeselect={() => handleDeselect(product.id)}
+                          onSelect={() => handleSelect(product._id)}
+                          onDeselect={() => handleDeselect(product._id)}
                         />
                       ))}
                     </div>
@@ -108,28 +178,44 @@ const CreateOrder = () => {
 
                   <div
                     className="bg-second_background p-4 rounded-md shadow-sm"
-                    style={{ width: "200px", height: "300px", overflow: "auto" }}
+                    style={{
+                      width: "200px",
+                      height: "300px",
+                      overflow: "auto",
+                    }}
                   >
-                    <h2 className="font-medium text-gray-700">Selected Items</h2>
+                    <h2 className="font-medium text-gray-700">
+                      Selected Items
+                    </h2>
                     <ul>
                       {Object.entries(selectedItems).map(([item, quantity]) => (
                         <li key={item}>
-                          {products.find((product) => product.id === item).name}:{" "}
-                          <span className="font-bold">{quantity}</span>
+                          {
+                            foodItems.find((product) => product._id === item)
+                              ?.name
+                          }
+                          : <span className="font-bold">{quantity}</span>
                         </li>
                       ))}
                     </ul>
-                    <p className="mt-4">Total: <span className="font-bold">${calculateTotal().toFixed(2)}</span></p>
+                    <p className="mt-4">
+                      Total:{" "}
+                      <span className="font-bold">
+                        ${calculateTotal().toFixed(2)}
+                      </span>
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
-          </div>            
+          </div>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto bg-background">
             <div className="bg-white p-6 rounded-lg shadow-lg">
               <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-                <form onSubmit={handleCreateOrder}>
-                  <h1 className="text-slate-800 font-bold text-3xl">Create Order</h1>
+                <form onSubmit={onSubmit}>
+                  <h1 className="text-slate-800 font-bold text-3xl">
+                    Create Order
+                  </h1>
 
                   <label className="block mt-4">
                     <span className="text-gray-700">Customer</span>
@@ -139,14 +225,18 @@ const CreateOrder = () => {
                       onChange={(e) => setCustomer(e.target.value)}
                     >
                       <option value="">Select a customer</option>
-                      <option value="Customer 01">Customer 01</option>
-                      <option value="Customer 02">Customer 02</option>
+                      <option value="66243dbdaae02f29f1e63e85">
+                        Customer 01
+                      </option>
+                      <option value="66243ffee696fab10e4d82d8">
+                        Customer 02
+                      </option>
                     </select>
                   </label>
 
                   <label className="block mt-4">
                     <span className="text-gray-700">Discount</span>
-                    <input 
+                    <input
                       type="number"
                       className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
                       placeholder="Enter discount"
@@ -165,9 +255,7 @@ const CreateOrder = () => {
                     />
                   </label>
 
-                  <Button type="submit">
-                    Create Order
-                  </Button>
+                  <Button>Create Order</Button>
                 </form>
               </div>
             </div>
@@ -176,8 +264,10 @@ const CreateOrder = () => {
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto bg-background">
             <div className="bg-white p-6 rounded-lg shadow-lg">
               <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-                <h1  className="text-slate-800 font-bold text-3xl">Order</h1>
-                <hr className="border-t border-second_background mt-2 mb-12"/>
+                <h1 className="text-slate-800 font-bold text-3xl">
+                  Order List
+                </h1>
+                <hr className="border-t border-second_background mt-2 mb-12" />
                 <table className="w-full text-left border-collapse">
                   <thead className="border-t border-second_background">
                     <tr className="bg-second_background">

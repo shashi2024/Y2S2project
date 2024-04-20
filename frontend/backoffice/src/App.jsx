@@ -16,6 +16,7 @@ import RequestIngredients from "./pages/RequestIngredients";
 import RestaurantDashboard from "./pages/RestaurantDashboard";
 import CreateTask from "./pages/CreateTask";
 import TasksTable from "./pages/MonitorTasks";
+import MonitorTasks from "./pages/MonitorTasks";
 
 function App() {
   const location = useLocation();
@@ -61,17 +62,12 @@ function App() {
           path="/restaurant/dashboard"
           element={<RestaurantDashboard />}
         />
-
         /* Maintenance Routes */
-        <Route
-          exact
-          path="/maintenance/create-task"
-          element={<CreateTask />}
-        />
+        <Route exact path="/maintenance/create-task" element={<CreateTask />} />
         <Route
           exact
           path="/maintenance/monitor-tasks"
-          element={<TasksTable />}
+          element={<MonitorTasks />}
         />
       </Routes>
     </>

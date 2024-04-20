@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
 
 const maintenanceTaskSchema = new mongoose.Schema({
-  taskType: {
-    type: String,
-    enum: ["Routine", "Housekeeping", "Emergency"],
-    required: true,
-  },
+  title: { type: String, required: true },
+  // taskType: {
+  //   type: String,
+  //   enum: ["Routine", "Housekeeping", "Emergency"],
+  //   required: true,
+  // },
   description: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
   completed: { type: Boolean, default: false },
@@ -16,9 +17,20 @@ const maintenanceTaskSchema = new mongoose.Schema({
   },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   assignedAt: { type: Date },
+  startTime: { type: Date },
+  endTime: { type: Date },
+  duration: { type: Number },
 });
 
-const MaintenanceTask = mongoose.model(
+maintenanceTaskSchema.pre("save", function calcDuration(next) {
+  if (this.endTime && this.startTime) {
+    this.duration =
+      (this.endTime.getTime() - this.startTime.getTime()) / 1000 / 60 / 60;
+  }
+  next();
+});
+
+export const MaintenanceTask = mongoose.model(
   "MaintenanceTask",
   maintenanceTaskSchema
 );
