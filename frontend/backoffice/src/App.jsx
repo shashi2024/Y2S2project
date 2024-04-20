@@ -1,12 +1,16 @@
 import "./App.css";
-import NavBar from "./components/NavBar";
-import SideBar from "./components/SideBar";
+import {Route, Routes, BrowserRouter as Router} from 'react-router-dom'
+import CreateFoodItem from './features/createFoodItem/createForm.jsx'
 
 function App() {
   return (
     <>
-      <NavBar />
-      <SideBar />
+      <Router>
+        <Routes>
+          <Route path="/" element={<h1>Home</h1>} />
+          <Route path="/createFood" element={<CreateFoodItem />} />
+        </Routes>
+      </Router>
     </>
   );
 }
