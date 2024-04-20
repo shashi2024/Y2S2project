@@ -24,7 +24,7 @@ function TopBar() {
       <div className="absolute right-96 top-12 flex items-center">
         <FontAwesomeIcon icon={faBell} className="text-red-400 mr-2 size-8" />
         <div>
-          Anesthesia <br /> HR Assistant
+          Manuri Dias <br /> Finance Assistant
         </div>
       </div>
     </div>

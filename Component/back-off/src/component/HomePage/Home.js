@@ -15,7 +15,7 @@ function Home() {
     <div>
       <TopBar />
       <NavBar />
-      <div className="HomePage">
+      <div className="Page">
         <Heading />
         <SupplierPaymentCard />
         <UtilityPaymentCard />

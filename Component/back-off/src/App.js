@@ -8,6 +8,7 @@ import UtilityPaymentPage from "./component/UtilityPaymentPage/UtiityPayment.js"
 import GovPaymentPage from "./component/GovernmentPaymentPage/GovPayment.js";
 import GenerateReportPage from "./component/GenarateReportsPage/GenerateReports.js";
 import RefundRequestPage from "./component/RefundRequestPage/RefundReq.js";
+import UtilityForm from "./component/UtilityPaymentPage/UtilityForm.js";
 
 function App() {
   return (
@@ -22,6 +23,10 @@ function App() {
           <Route path="/refund-request" element={<RefundRequestPage />} />
           <Route path="/generate-reports" element={<GenerateReportPage />} />
           <Route path="/salary-payment" element={<SalaryPaymentPage />} />
+          <Route
+            path="/utility-payment/create-payment"
+            element={<UtilityForm />}
+          />
         </Routes>
       </React.Fragment>
     </div>

@@ -5,7 +5,7 @@ function UtilityPaymentCard() {
   return (
     <div className="Card">
       <h2 className="h2_right">Utility Payments </h2>
-      <Link to="/utiity-payment" className="Utility-Payment-Page">
+      <Link to="/utility-payment" className="Utility-Payment-Page">
         <img className="Img_right" src={UtilityImg} alt="Utility-Img"></img>
       </Link>
       <p>

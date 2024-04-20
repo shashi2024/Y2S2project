@@ -2,20 +2,18 @@ import "../HomePage/Home.css";
 import React from "react";
 import TopBar from "../../TopBar";
 import NavBar from "../../NavBar";
-import CreateBillPayment from "./CreatePayment";
-import ViewBillPayment from "./ViewPayment";
+import UtilityPaymentForm from "./form";
 
-function UtilityPaymentPage() {
+function UtilityForm() {
   return (
     <div className="UtilityPaymentPage">
       <TopBar />
       <NavBar />
       <div className="Page">
-        <CreateBillPayment />
-        <ViewBillPayment />
+        <UtilityPaymentForm />
       </div>
     </div>
   );
 }
 
-export default UtilityPaymentPage;
+export default UtilityForm;
