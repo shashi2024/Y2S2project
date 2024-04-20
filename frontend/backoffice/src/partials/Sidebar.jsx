@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { MdDashboard } from "react-icons/md";
+import { MdDashboard, MdRestaurant } from "react-icons/md";
+import { FaTools } from "react-icons/fa";
 import logo from "../images/logo.png";
 
 import SidebarLinkGroup from "./SidebarLinkGroup";
@@ -218,7 +219,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
-                            <MdDashboard className="fill-current" />
+                            <FaTools className="fill-current" />
                             <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                               Maintenance
                             </span>
@@ -349,7 +350,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
-                            <MdDashboard className="fill-current" />
+                            <MdRestaurant className="fill-current" />
                             <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                               Restaurant
                             </span>
