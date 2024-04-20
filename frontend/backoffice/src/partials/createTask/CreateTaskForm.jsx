@@ -16,13 +16,13 @@ function CreateTaskForm() {
 
       <div>
         <label className="block text-sm font-medium">Task title</label>
-        <input {...register("title")} placeholder="Enter Title" className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+        <input {...register("title")} placeholder="Enter Title" className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5" />
       </div>
 
       <div className="flex space-x-4">
         <div className="w-1/2">
           <label className="block text-sm font-medium">Task Type</label>
-          <select {...register("type")} className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+          <select {...register("type")} className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5">
             <option value="option1">Option 01</option>
             <option value="option2">Option 02</option>
             <option value="option3">Option 03</option>
@@ -31,36 +31,36 @@ function CreateTaskForm() {
 
         <div className="w-1/2">
           <label className="block text-sm font-medium">Task Duration</label>
-          <input {...register("duration")} placeholder="Duration" className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+          <input {...register("duration")} placeholder="Duration" className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5" />
         </div>
       </div>
 
       <div className="flex space-x-4">
         <div className="w-1/3">
           <label className="block text-sm font-medium">Date</label>
-          <input {...register("date")} type="date" className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+          <input {...register("date")} type="date" className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5" />
         </div>
 
         <div className="w-1/3">
           <label className="block text-sm font-medium">Start Time</label>
-          <input {...register("startTime")} type="time" className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+          <input {...register("startTime")} type="time" className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5" />
         </div>
 
         <div className="w-1/3">
           <label className="block text-sm font-medium">End Time</label>
-          <input {...register("endTime")} type="time" className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+          <input {...register("endTime")} type="time" className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5" />
         </div>
       </div>
 
       <div>
         <label className="block text-sm font-medium">Task Description</label>
-        <textarea {...register("description")} className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+        <textarea {...register("description")} className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5" />
       </div>
 
       <div className="flex space-x-4">
         <div className="w-1/2">
           <label className="block text-sm font-medium">Asset</label>
-          <select {...register("asset")} className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+          <select {...register("asset")} className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5">
             <option value="option1">Option 01</option>
             <option value="option2">Option 02</option>
             <option value="option3">Option 03</option>
@@ -69,13 +69,13 @@ function CreateTaskForm() {
 
         <div className="w-1/2">
           <label className="block text-sm font-medium">Location</label>
-          <input {...register("location")} placeholder="Location" className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+          <input {...register("location")} placeholder="Location" className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-color focus:ring focus:ring-button_color focus:ring-opacity-5" />
         </div>
       </div>
 
       <div>
         <label className="block text-sm font-medium">Assignee</label>
-        <select {...register("assignee")} className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+        <select {...register("assignee")} className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5">
           <option value="option1">Option 01</option>
           <option value="option2">Option 02</option>
           <option value="option3">Option 03</option>
