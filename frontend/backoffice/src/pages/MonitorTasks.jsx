@@ -2,8 +2,9 @@ import { useState } from "react";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 import Button from "../components/Button";
+import TasksTable from "../partials/monitorTasks/TaskTable";
 
-const RestaurantDashboard = () => {
+const MonitorTasks = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -14,13 +15,17 @@ const RestaurantDashboard = () => {
         {/*  Site header */}
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <main>
-          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            <h1 className="text-slate-800 font-bold text-3xl">Monitor Tasks</h1>
+          
+          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto bg-background ">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <TasksTable />
+          </div>    
           </div>
+              
         </main>
       </div>
     </div>
   );
 };
 
-export default RestaurantDashboard;
+export default MonitorTasks;

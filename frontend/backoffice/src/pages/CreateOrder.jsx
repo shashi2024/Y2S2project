@@ -99,6 +99,20 @@ const CreateOrder = () => {
     setTotalAmount(calculateTotal());
   }, [selectedItems]);
 
+  const handleCreateOrder = (event) => {
+    event.preventDefault();
+
+    const newOrder = {
+      id: Date.now(), // replace with your own function to generate order ID
+      customerName: customer,
+      orderStatus: "New",
+      paymentStatus: "Pending",
+      totalAmount: calculateDiscountedAmount(),
+    };
+
+    setOrders((prevOrders) => [...prevOrders, newOrder]);
+  };
+
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -110,7 +124,7 @@ const CreateOrder = () => {
             <div className="bg-white p-6 rounded-lg shadow-lg">
               <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
                 <h1 className="text-slate-800 font-bold text-3xl">
-                  Create Order
+                  Add Products
                 </h1>
 
                 <div className="flex justify-between items-start">
@@ -162,7 +176,8 @@ const CreateOrder = () => {
                 </div>
               </div>
             </div>
-
+          </div>
+          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto bg-background">
             <div className="bg-white p-6 rounded-lg shadow-lg">
               <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
                 <form onSubmit={onSubmit}>
@@ -208,8 +223,53 @@ const CreateOrder = () => {
                     />
                   </label>
 
-                  <Button type="submit">Create Order</Button>
+                  <Button>Create Order</Button>
                 </form>
+              </div>
+            </div>
+          </div>
+
+          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto bg-background">
+            <div className="bg-white p-6 rounded-lg shadow-lg">
+              <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+                <h1 className="text-slate-800 font-bold text-3xl">
+                  Order List
+                </h1>
+                <hr className="border-t border-second_background mt-2 mb-12" />
+                <table className="w-full text-left border-collapse">
+                  <thead className="border-t border-second_background">
+                    <tr className="bg-second_background">
+                      <th className="py-4 px-6">Order ID</th>
+                      <th className="py-4 px-6">Customer Name</th>
+                      <th className="py-4 px-6">Order Status</th>
+                      <th className="py-4 px-6">Payment Status</th>
+                      <th className="py-4 px-6">Total Amount</th>
+                      <th className="py-4 px-6">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {orders.map((order) => (
+                      <tr
+                        key={order.id}
+                        className="border-t border-second_background"
+                      >
+                        <td className="py-4 px-6">{order.id}</td>
+                        <td className="py-4 px-6">{order.customerName}</td>
+                        <td className="py-4 px-6">{order.orderStatus}</td>
+                        <td className="py-4 px-6">{order.paymentStatus}</td>
+                        <td className="py-4 px-6">
+                          ${order.totalAmount.toFixed(2)}
+                        </td>
+                        <td className="py-4 px-6">
+                          <div className="flex space-x-4">
+                            <Button>Full Fill</Button>
+                            <Button>Cancel</Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
