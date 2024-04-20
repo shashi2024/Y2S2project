@@ -1,7 +1,9 @@
 import "./Home.css";
 import React from "react";
+import NavBar from "../../NavBar";
+import TopBar from "../../TopBar";
 import Heading from "./Heading";
-import SupplierPaymentCard from "../supplierPaymentsCard";
+import SupplierPaymentCard from "./supplierPaymentsCard";
 import UtilityPaymentCard from "./UtilityPaymentCard";
 import GovernmentPaymentCard from "./GovernmentPaymentCard";
 import SalaryPaymentCard from "./SalaryPaymentCard";
@@ -10,14 +12,18 @@ import GenarateRportsCard from "./GernarateReportsCard";
 
 function Home() {
   return (
-    <div className="HomePage">
-      <Heading></Heading>
-      <SupplierPaymentCard></SupplierPaymentCard>
-      <UtilityPaymentCard></UtilityPaymentCard>
-      <GovernmentPaymentCard></GovernmentPaymentCard>
-      <SalaryPaymentCard></SalaryPaymentCard>
-      <RefundRequestCard></RefundRequestCard>
-      <GenarateRportsCard></GenarateRportsCard>
+    <div>
+      <TopBar />
+      <NavBar />
+      <div className="HomePage">
+        <Heading />
+        <SupplierPaymentCard />
+        <UtilityPaymentCard />
+        <GovernmentPaymentCard />
+        <SalaryPaymentCard />
+        <RefundRequestCard />
+        <GenarateRportsCard />
+      </div>
     </div>
   );
 }

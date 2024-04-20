@@ -1,14 +1,29 @@
 import "./App.css";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
 import Home from "./component/HomePage/Home.js";
-import TopBar from "./TopBar.jsx";
-import NavBar from "./NavBar.jsx";
+import SalaryPaymentPage from "./component/SalaryPaymentPage/SalaryPayment.js";
+import SupplierPaymentPage from "./component/SupplierPaymentPage/SupplierPayment.js";
+import UtilityPaymentPage from "./component/UtilityPaymentPage/UtiityPayment.js";
+import GovPaymentPage from "./component/GovernmentPaymentPage/GovPayment.js";
+import GenerateReportPage from "./component/GenarateReportsPage/GenerateReports.js";
+import RefundRequestPage from "./component/RefundRequestPage/RefundReq.js";
 
 function App() {
   return (
     <div className="bg-red-100 h-screen">
-      <TopBar></TopBar>
-      <NavBar></NavBar>
-      <Home></Home>
+      <React.Fragment>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/salary-payment" element={<SalaryPaymentPage />} />
+          <Route path="/supplier-payment" element={<SupplierPaymentPage />} />
+          <Route path="/utility-payment" element={<UtilityPaymentPage />} />
+          <Route path="/government-payment" element={<GovPaymentPage />} />
+          <Route path="/refund-request" element={<RefundRequestPage />} />
+          <Route path="/generate-reports" element={<GenerateReportPage />} />
+          <Route path="/salary-payment" element={<SalaryPaymentPage />} />
+        </Routes>
+      </React.Fragment>
     </div>
   );
 }

@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  background-color: rgb(254 226 226);
+}
 .HomePage {
   position: absolute;
   width: 870px;
@@ -42,9 +45,17 @@ h2 {
   float: left;
   margin: 20px 50px 20px 100px;
 }
+.Img_left:hover {
+  filter: brightness(80%);
+  cursor: pointer;
+}
 .Img_right {
   float: right;
   margin: 20px 50px 20px 50px;
+}
+.Img_right:hover {
+  filter: brightness(80%);
+  cursor: pointer;
 }
 p {
   margin: 60px 0 0 100px;
