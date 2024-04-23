@@ -1,60 +1,73 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable import/prefer-default-export */
-import SalaryPayment from "../model/salaryPayment.Model";
+import SalaryPayment from "../model/SalaryPayment.model";
 import logger from "../../utils/logger";
 
-// Create a new salary payment
-export const createSalaryPayment = async (req, res) => {
+// Controller function to handle retrieving all salary payments
+const getSalaryPayments = async (req, res) => {
   try {
+    // Fetch all salary payments from the database
+    const salaryPayments = await SalaryPayment.find();
+
+    // Send success response with the retrieved salary payments
+    res.status(200).json({
+      message: "Salary payments retrieved successfully",
+      data: salaryPayments,
+    });
+  } catch (error) {
+    // Handle errors
+    console.error("Error retrieving salary payments:", error);
+    res.status(500).json({
+      message: "Failed to retrieve salary payments",
+      error: error.message,
+    });
+  }
+};
+
+// Controller function to handle creating a new salary payment
+const createSalaryPayment = async (req, res) => {
+  try {
+    // Extract data from request body
     const {
       empId,
       PaymentId,
-      amount,
-      PaymenentDate,
+      PaymentDate,
       attendence,
       otHours,
-      bonus,
+      basicSalary,
       bankName,
       AccountNum,
+      totalSalary,
     } = req.body;
 
-    // Validate request data
-    if (
-      !empId ||
-      !PaymentId ||
-      !amount ||
-      !PaymenentDate ||
-      !attendence ||
-      !otHours ||
-      !AccountNum
-    ) {
-      return res
-        .status(400)
-        .json({ message: "All required fields must be completed" });
-    }
-
-    // Create new salary payment instance
+    // Create a new instance of SalaryPayment model
     const newSalaryPayment = new SalaryPayment({
       empId,
       PaymentId,
-      amount,
-      PaymenentDate,
+      PaymenentDate: PaymentDate,
       attendence,
       otHours,
-      bonus,
+      basicSalary,
       bankName,
       AccountNum,
+      totalSalary,
     });
 
     // Save the new salary payment to the database
-    const savedSalaryPayment = await newSalaryPayment.save();
+    await newSalaryPayment.save();
 
-    // Return the newly created salary payment
-    return res.status(201).json({ salaryPayment: savedSalaryPayment });
-  } catch (err) {
-    // Log the error
-    logger.error(err);
-    // Handle the error
-    return res.status(500).json({ message: "Internal Server Error" });
+    // Send success response
+    res.status(201).json({
+      message: "Salary payment created successfully",
+      data: newSalaryPayment,
+    });
+  } catch (error) {
+    // Handle errors
+    console.error("Error creating salary payment:", error);
+    res.status(500).json({
+      message: "Failed to create salary payment",
+      error: error.message,
+    });
   }
 };
+
+// Export the controller functions
+export { createSalaryPayment, getSalaryPayments };

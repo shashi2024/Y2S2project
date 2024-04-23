@@ -1,46 +1,39 @@
-// Import the mongoose module
 import mongoose from "mongoose";
 
-// Define the schema
 const supplierPaymentSchema = new mongoose.Schema({
   paymentId: {
-    type: Number,
-    required: true,
-  },
-  name: {
-    type: String, // Data type of the schema
-    required: true, // validation - if the feild should be filled or not
-  },
-  supplierId: {
     type: String,
     required: true,
     unique: true,
   },
-  email: {
-    type: String,
-    required: true, // Email is required
-    unique: true, // Email must be unique
-    lowercase: true, // Convert email to lowercase before saving
-  },
-  tele: {
+  supplierId: {
     type: String,
     required: true,
   },
-  country: {
+  supplierName: {
     type: String,
     required: true,
   },
-  bankName: {
+  supplierEmail: {
     type: String,
     required: true,
   },
-  AccountNo: {
+  supplierPhone: {
     type: String,
-    required: true, // Account number is required
-    unique: true, // Account number must be unique
+    required: true,
+  },
+  paymentDate: {
+    type: Date,
+    required: true,
+  },
+  paymentAmount: {
+    type: Number,
+    required: true,
+  },
+  paymentDescription: {
+    type: String,
+    required: true,
   },
 });
 
-// Create the model from the schema and export it
-const SupplierPayment = mongoose.model("Supplier", supplierPaymentSchema);
-export default SupplierPayment;
+export default mongoose.model("SupplierPayment", supplierPaymentSchema);

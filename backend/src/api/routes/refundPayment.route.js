@@ -1,15 +1,18 @@
 import express from "express";
 import {
-  createRefundPayment,
-  displayAllRefundPayments,
-} from "../controllers/refundPayment.controller";
+  getRefundPayments,
+  getRefundPaymentById,
+  updateRefundPaymentById,
+  deleteRefundPaymentById,
+  insertRefundPayment,
+} from "../controllers/RefundPayment.controller";
 
-const refundPaymentrouter = express.Router();
+const router = express.Router();
 
-// Route to create a new refund payment
-refundPaymentrouter.post("/", createRefundPayment);
+router.get("/", getRefundPayments);
+router.post("/", insertRefundPayment);
+router.get("/:id", getRefundPaymentById);
+router.put("/:id", updateRefundPaymentById);
+router.delete("/:id", deleteRefundPaymentById);
 
-// Route to display all refund payments
-refundPaymentrouter.get("/", displayAllRefundPayments);
-
-export default refundPaymentrouter;
+export default router;

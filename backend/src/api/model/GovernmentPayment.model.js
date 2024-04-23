@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
-const utilityPaymentSchema = new mongoose.Schema({
+const governmentPaymentSchema = new mongoose.Schema({
   paymentType: {
-    // Electricity , Water , Gas
+    // Tax , Fine , Fee
     type: String,
     required: true,
   },
-  paymentId: {
+  PaymentId: {
     type: String,
     required: true,
     unique: true,
@@ -15,7 +15,7 @@ const utilityPaymentSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  paymentDate: {
+  PaymenentDate: {
     type: Date,
     required: true,
   },
@@ -25,4 +25,4 @@ const utilityPaymentSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("UtilityPayment", utilityPaymentSchema);
+export default mongoose.model("GovernmentPayment", governmentPaymentSchema);

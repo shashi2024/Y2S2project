@@ -1,73 +1,73 @@
-/* eslint-disable import/no-unresolved */
-// Import the RefundPayment model
-import RefundPayment from "../model/refundPaymentModel";
-import logger from "../../utils/logger";
+import mongoose from "mongoose";
+import RefundPayment from "../model/RefundPayment.model";
 
-// Controller function to create a new refund payment
-export const createRefundPayment = async (req, res) => {
+// Get all Refund Payments
+
+export const getRefundPayments = async (req, res) => {
   try {
-    // Extract data from request body
-    const {
-      customerId,
-      PaymentId,
-      customerName,
-      amount,
-      PaymentDate,
-      description,
-    } = req.body;
-
-    // Validate request data
-    if (
-      !customerId ||
-      !PaymentId ||
-      !customerName ||
-      !amount ||
-      !PaymentDate ||
-      !description
-    ) {
-      return res.status(400).json({ message: "All fields must be completed" });
-    }
-
-    // Create new refund payment instance
-    const newRefundPayment = new RefundPayment({
-      customerId,
-      PaymentId,
-      customerName,
-      amount,
-      PaymentDate,
-      description,
-    });
-
-    // Save the new refund payment to the database
-    const savedRefundPayment = await newRefundPayment.save();
-
-    // Return the newly created refund payment
-    return res.status(201).json({ refundPayment: savedRefundPayment });
-  } catch (err) {
-    // Log the error
-    logger.error(err);
-    // Handle the error
-    return res.status(500).json({ message: "Internal Server Error" });
+    const refundPayments = await RefundPayment.find();
+    res.status(200).json(refundPayments);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
   }
 };
 
-// Controller function to display all refund payments
-export const displayAllRefundPayments = async (req, res) => {
+// get a refund payment by ID
+
+export const getRefundPaymentById = async (req, res) => {
+  const { id } = req.params;
   try {
-    // Retrieve all refund payments from the database
-    const allRefundPayments = await RefundPayment.find();
-
-    // If no refund payments are found, return a 404 status with a message
-    if (!allRefundPayments || allRefundPayments.length === 0) {
-      return res.status(404).json({ message: "No refund payments found" });
-    }
-
-    // Return the array of refund payments
-    return res.status(200).json({ refundPayments: allRefundPayments });
-  } catch (err) {
-    // Log the error
-    logger.error(err);
-    // Handle the error
-    return res.status(500).json({ message: "Internal Server Error" });
+    const refundPayment = await RefundPayment.findById(id);
+    res.status(200).json(refundPayment);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
   }
+};
+
+// insert a new Refund Payment
+
+export const insertRefundPayment = async (req, res) => {
+  const { paymentType, paymentId, paymentDate, paymentDescription } = req.body;
+  const newRefundPayment = new RefundPayment({
+    paymentType,
+    paymentId,
+    paymentDate,
+    paymentDescription,
+  });
+  try {
+    await newRefundPayment.save();
+    res.status(201).json(newRefundPayment);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
+};
+// Update a Refund Payment by ID
+
+export const updateRefundPaymentById = async (req, res) => {
+  const { id } = req.params;
+  const { paymentType, paymentId, paymentDate, paymentDescription } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send("No Refund Payment with that id");
+  const updatedRefundPayment = {
+    paymentType,
+    paymentId,
+    paymentDate,
+    paymentDescription,
+    _id: id,
+  };
+  await RefundPayment.findByIdAndUpdate(id, updatedRefundPayment, {
+    new: true,
+  });
+  res.json(updatedRefundPayment);
+};
+
+// delete a refund payment by ID
+export const deleteRefundPaymentById = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send("No Refund Payment with that id");
+  await RefundPayment.findByIdAndDelete(id);
+  res.json({ message: "Refund Payment deleted successfully." });
 };

@@ -1,6 +1,6 @@
 /* eslint-disable import/no-import-module-exports */
 /* eslint-disable import/prefer-default-export */
-import SupplierPayment from "../model/supplierPayment.Model"; // Import user model
+import SupplierPayment from "../model/supplierPayment.Model"; // Import  model
 import logger from "../../utils/logger";
 
 // Create a new supplier payment || Insert data

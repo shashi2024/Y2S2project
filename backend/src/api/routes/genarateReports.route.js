@@ -1,10 +1,18 @@
-/* eslint-disable import/named */
-import { Router } from "express";
-import { createFinancialReport } from "../controllers/genarateReports.controller";
+import express from "express";
+import {
+  getReports,
+  getReportById,
+  insertReport,
+  updateReportById,
+  deleteReportById,
+} from "../controllers/GenerateReports.controller";
 
-const genarateReportsRouter = Router();
+const router = express.Router();
 
-// Define routes
-genarateReportsRouter.get("/", createFinancialReport);
+router.get("/", getReports);
+router.post("/", insertReport);
+router.get("/:id", getReportById);
+router.put("/:id", updateReportById);
+router.delete("/:id", deleteReportById);
 
-export default genarateReportsRouter;
+export default router;

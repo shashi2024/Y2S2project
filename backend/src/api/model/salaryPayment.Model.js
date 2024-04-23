@@ -1,24 +1,22 @@
-// Import the mongoose module
 import mongoose from "mongoose";
 
-// Define the schema
 const salaryPaymentSchema = new mongoose.Schema({
-  empId: {
-    type: String, // Data type of the schema
-    unique: true,
-    required: true, // validation - if the feild should be filled or not
-  },
   PaymentId: {
     type: String,
     required: true,
     unique: true,
   },
-  amount: {
-    type: Number,
+  EmployeeId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  EmployeeName: {
+    type: String,
     required: true,
   },
-  PaymenentDate: {
-    type: Date,
+  basicSalary: {
+    type: Number,
     required: true,
   },
   attendence: {
@@ -29,10 +27,6 @@ const salaryPaymentSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  bonus: {
-    type: Number,
-    required: false,
-  },
   bankName: {
     type: String,
     required: false,
@@ -41,8 +35,20 @@ const salaryPaymentSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  PaymenentDate: {
+    type: Date,
+    required: true,
+  },
+  discription: {
+    type: String,
+    required: false,
+  },
+  totalSalary: {
+    type: Number,
+    required: true,
+  },
 });
 
-// Create the model from the schema and export it
-const SalaryPayment = mongoose.model("SalaryPayment", salaryPaymentSchema);
-export default SalaryPayment;
+export default mongoose.model("SalaryPayment", salaryPaymentSchema);
+
+// { bufferCommands: false, bufferMaxEntries: 0 }

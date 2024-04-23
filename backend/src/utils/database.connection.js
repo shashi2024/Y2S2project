@@ -4,12 +4,12 @@ import logger from "./logger";
 
 let database;
 
-const connect = () => {
+const connect = async () => {
   const MONGODB_URL = config.DB_CONNECTION_STRING;
 
   if (database) return;
 
-  mongoose
+  await mongoose
     .connect(MONGODB_URL)
     .then(connection => {
       database = connection;

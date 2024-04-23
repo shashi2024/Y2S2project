@@ -1,6 +1,5 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/prefer-default-export */
-import UtilityPayment from "../models/utilityPayment.model";
 import logger from "../../utils/logger";
 
 // Create a new utility payment
