@@ -1,4 +1,5 @@
 import React from "react";
+import "../HomePage/Home.css";
 import TopBar from "../../TopBar";
 import NavBar from "../../NavBar";
 import CreateSalaryPayment from "./CreatePayment";

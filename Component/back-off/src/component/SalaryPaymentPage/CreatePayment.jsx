@@ -7,7 +7,7 @@ function CreateSalaryPayment() {
     <div className="container-1">
       <h2>Create Salary Payment</h2>
       <img className="Img" src={ViewSalary} alt="ViewBill-Img"></img>
-      <Link to="/utility-payment/create-payment">
+      <Link to="/salary-payment/create-payment">
         <button className="goBtn">Pay</button>
       </Link>
     </div>
