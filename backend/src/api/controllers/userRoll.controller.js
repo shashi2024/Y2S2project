@@ -24,6 +24,19 @@ export const getHelloMessage = (req, res) => {
   res.json({ message: "userRoll" });
 };
 
+export const getAllUsersRoll = async (req, res, next) => {
+  try {
+    const usersRoll = await UserRoll.find();
+    if (usersRoll.length === 0) {
+      return res.status(404).json({ message: "No usersRoll found" });
+    }
+    return res.status(200).json({ usersRoll });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Server error" });
+  }
+};
+
 //insert userRoll
 export const addUserRoll = async (req, res, next) => {
   const {rID,rollName} = req.body;

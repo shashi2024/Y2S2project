@@ -24,6 +24,19 @@ export const getHelloMessage = (req, res) => {
   res.json({ message: "department" });
 };
 
+export const getAllDepartments = async (req, res, next) => {
+  try {
+    const departments = await User.find();
+    if (departments.length === 0) {
+      return res.status(404).json({ message: "No departments found" });
+    }
+    return res.status(200).json({ departments });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Server error" });
+  }
+};
+
 //insert department
 export const addDepartment = async (req, res, next) => {
   const {dID,department} = req.body;

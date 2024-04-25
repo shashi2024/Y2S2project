@@ -20,18 +20,31 @@ export const createUser = async (req, res) => {
   }
 };
 
+export const getAllUsers = async (req, res, next) => {
+  try {
+    const users = await User.find();
+    if (users.length === 0) {
+      return res.status(404).json({ message: "No users found" });
+    }
+    return res.status(200).json({ users });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Server error" });
+  }
+};
+
 export const getHelloMessage = (req, res) => {
   res.json({ message: "user" });
 };
 
 //insert user
 export const addUser = async (req, res, next) => {
-  const {name,rID,uID,email,dID} = req.body;
+  const {name,rID,uID,email,dID,password} = req.body;
 
   let users;
 
   try{
-    users = new User({name,rID,uID,email,dID});
+    users = new User({name,rID,uID,email,dID,password});
     await users.save();
   }catch (err){
     console.log(err);
@@ -69,13 +82,13 @@ export const getById = async(req, res, next) => {
 export const updateUser = async (req, res, next) => {
 
   const id =req.params.id;
-  const {name,rID,uID,email,dID} = req.body;
+  const {name,rID,uID,email,dID,password} = req.body;
 
   let users
 
   try {
     users = await User.findByIdAndUpdate(id,
-      {name: name, rID: rID, uID: uID, email: email, dID: dID});
+      {name: name, rID: rID, uID: uID, email: email, dID: dID, password: password},);
       users = await users.save();
   }catch (err){
     console.log(err);

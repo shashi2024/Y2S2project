@@ -19,15 +19,15 @@ function ForgetPassword() {
         </h1>
         <div>
           <input
-            className="bg-gray-900 bg-opacity-80 absolute top-24 left-28 h-12 w-2/3 rounded-xl"
+            className="bg-gray-900 bg-opacity-80 absolute top-24 left-28 h-12 w-2/3 rounded-xl p-2"
             type="password"
-            placeholder="    Enter Password"
+            placeholder="Enter Password"
             id="password1"
           ></input>
           <input
-            className="bg-gray-900 bg-opacity-80 absolute top-48 left-28 h-12 w-2/3 rounded-xl"
+            className="bg-gray-900 bg-opacity-80 absolute top-48 left-28 h-12 w-2/3 rounded-xl p-2"
             type="Password"
-            placeholder="    Enter again Password"
+            placeholder="Enter again Password"
             id="Password2"
           ></input>
           <Link to="/login">
