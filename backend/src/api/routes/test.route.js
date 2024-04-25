@@ -1,9 +1,11 @@
 import { Router } from "express";
-import { getHelloMessage, createTest } from "../controllers/test.controller";
+import { createTest, getTests, getTest } from "../controllers/test.controller";
 
 const testRouter = Router();
 
-testRouter.get("/", getHelloMessage);
+// testRouter.get("/", getHelloMessage);
 testRouter.post("/", createTest);
+testRouter.get("/", getTests);
+testRouter.get("/:id", getTest);
 
 export default testRouter;
