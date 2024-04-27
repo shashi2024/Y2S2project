@@ -45,30 +45,13 @@ export const getFoodItems = async (req, res) => {
 };
 
 export const putFoodItem = async (req, res) => {
-  const {
-    name,
-    description,
-    price,
-    mainCategory,
-    subCategory,
-    isActive,
-    imageUrl,
-  } = req.body;
-  const { uniqueId } = req.params;
+  const { id } = req.params;
 
   try {
-    const updatedFoodItem = await FoodItem.findOneAndUpdate(
-      { uniqueId },
-      {
-        name,
-        description,
-        price,
-        mainCategory,
-        subCategory,
-        isActive,
-        imageUrl,
-      },
-      { new: true }
+    const updatedFoodItem = await FoodItem.findByIdAndUpdate(
+      id,
+      req.body,
+      { new: true, runValidators: true }
     );
 
     if (!updatedFoodItem) {
@@ -81,7 +64,6 @@ export const putFoodItem = async (req, res) => {
     return res.status(500).json({ error: err.message });
   }
 };
-
 export const getFoodItem = async (req, res) => {
   const { uniqueId } = req.params;
 

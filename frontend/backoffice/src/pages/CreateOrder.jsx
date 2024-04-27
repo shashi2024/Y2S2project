@@ -130,19 +130,27 @@ const CreateOrder = () => {
   };
 
   const handleFulfillOrder = (orderId) => {
-    setOrders(prevOrders =>
-      prevOrders.map(order =>
-        order.id === orderId ? { ...order, orderStatus: 'Full Filled' } : order
-      )
-    );
-  };
+    try {
+      const response = axios.put(`http://localhost:5000/order/${orderId}`, {
+        orderStatus: "Fulfilled",
+      });
+      console.log(response.data);
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const handleCancelOrder = (orderId) => {
-    setOrders(prevOrders =>
-      prevOrders.map(order =>
-        order.id === orderId ? { ...order, orderStatus: 'Cancelled' } : order
-      )
-    );
+    try {
+      const response = axios.put(`http://localhost:5000/order/${orderId}`, {
+        orderStatus: "Cancelled",
+      });
+      console.log(response.data);
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -282,15 +290,15 @@ const CreateOrder = () => {
                   <tbody>
                     {orders.map((order) => (
                       <tr key={order.id} className="border-t border-second_background">
-                        <td className="py-4 px-6">{order.id}</td>
-                        <td className="py-4 px-6">{order.customerName}</td>
+                        <td className="py-4 px-6">{order.orderNumber}</td>
+                        <td className="py-4 px-6">{order.customerID?.name}</td>
                         <td className="py-4 px-6">{order.orderStatus}</td>
                         <td className="py-4 px-6">{order.paymentStatus}</td>
                         <td className="py-4 px-6">${order.totalAmount.toFixed(2)}</td>
                         <td className="py-4 px-6">
                           <div className="flex space-x-4">
-                          <Button onClick={() => handleFulfillOrder(order.id)}>Full Fill</Button>
-                          <Button onClick={() => handleCancelOrder(order.id)}>Cancel</Button>
+                          <Button onClick={() => handleFulfillOrder(order._id)}>Full Fill</Button>
+                          <Button onClick={() => handleCancelOrder(order._id)}>Cancel</Button>
                           </div>
                         </td>
                       </tr>

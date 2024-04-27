@@ -5,8 +5,8 @@ const foodItemRouter = Router();
 
 foodItemRouter.post("/", createFoodItem);
 foodItemRouter.get("/", getFoodItems);
-foodItemRouter.put("/:uniqueId", putFoodItem);
-foodItemRouter.get("/:uniqueId", getFoodItem);
+foodItemRouter.put("/:id", putFoodItem);
+foodItemRouter.get("/:id", getFoodItem);
 
 export default foodItemRouter;
 

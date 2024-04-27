@@ -36,7 +36,7 @@ function CreateItemForm() {
           {...register("itemCode")}
           placeholder="Enter Item Code"
           className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
-        />
+          required/>
       </div>
 
       <div>
@@ -45,7 +45,7 @@ function CreateItemForm() {
           {...register("name")}
           placeholder="Enter Item Name"
           className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
-        />
+          required />
       </div>
 
       <div>
