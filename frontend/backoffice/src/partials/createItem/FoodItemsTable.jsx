@@ -41,6 +41,22 @@ function FoodItemsTable() {
     setModalOpen(true);
   };
 
+  const handleDelete = async (item) => {
+    console.log(item._id);
+    try {
+      const response = await axios.delete(`http://localhost:5000/food-item/${item._id}`);
+      if (response.status === 200) {
+        window.location.reload();
+      } else {
+
+        console.error('Failed to delete item:', response);
+      }
+  
+    } catch(error) {
+      console.error(error);
+    }
+  }
+
   const handleChange = (event) => {
     setSelectedItem({
       ...selectedItem,
@@ -86,20 +102,22 @@ function FoodItemsTable() {
         </thead>
         <tbody>
           {foodItems.map((item) => (
-            <tr key={item.id} className="border-t border-second_background">
+            <tr key={item._id} className="border-t border-second_background">
               <td className="py-4 px-6">{item.itemCode}</td>
               <td className="py-4 px-6">{item.name}</td>
-              <td className="py-4 px-6">{item.category}</td>
+              <td className="py-4 px-6">{item.mainCategory}</td>
               <td className="py-4 px-6">{item.subCategory}</td>
               <td className="py-4 px-6">{item.price}</td>
               <td className="py-4 px-6">
                 <Button onClick={() => handleEdit(item)}>Edit</Button>
+                <Button className="ml-2" onClick={() => handleDelete(item)} >Delete</Button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-
+      <hr className="border-t border-second_background mt-2 mb-12"/>
+      
       <Modal 
         isOpen={isModalOpen} 
         onRequestClose={() => setModalOpen(false)}

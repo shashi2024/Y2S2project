@@ -153,6 +153,31 @@ const CreateOrder = () => {
     }
   };
 
+  const genReport = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/report/orders", { responseType: 'arraybuffer' });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+
+      // Extract filename from the 'Content-Disposition' header
+      const contentDisposition = response.headers['content-disposition'] || response.headers['Content-Disposition'];
+      let filename = 'file.xlsx'; // Default filename in case extraction fails
+      console.log(contentDisposition)
+      if (contentDisposition) {
+        const regex = /filename="([^"]*)"/;
+        const match = contentDisposition.match(regex);
+        filename = match ? match[1] : filename;
+      }
+
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      console.error(error);
+    }
+}
+
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -305,6 +330,8 @@ const CreateOrder = () => {
                     ))}
                   </tbody>
                 </table>
+                <hr className="border-t border-second_background mt-2 mb-12"/>
+                <Button onClick={() => genReport()} className="mt-3 mb-2">Generate Report</Button>
               </div>
             </div>
           </div>
