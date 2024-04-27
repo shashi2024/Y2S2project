@@ -1,124 +1,63 @@
 import User from "../model/user.model";
 import logger from "../../utils/logger";
 
-//create user
 export const createUser = async (req, res) => {
-  const randomNumber = Math.floor(Math.random() * 100);
-
-  const user = new User({
-    randomNo: randomNumber,
-  });
+  const { name, rID, uID, email, dID } = req.body;
 
   try {
-    const savedUser = await user.save();
-    const { _id } = savedUser;
+    const newUser = new User({ name, rID, uID, email, dID });
 
-    res.status(200).json({ savedUser, _id });
-  } catch (error) {
-    logger.error(error.message);
-    res.status(500).json({ message: "Something went wrong" });
+    const savedUser = await newUser.save();
+
+    res.status(200).json(savedUser);
+  } catch (err) {
+    logger.error(err.message);
+    res.status(500).json({ error: err.message });
   }
 };
 
-export const getAllUsers = async (req, res, next) => {
+export const getUsers = async (req, res) => {
   try {
     const users = await User.find();
-    if (users.length === 0) {
-      return res.status(404).json({ message: "No users found" });
-    }
-    return res.status(200).json({ users });
+    res.status(200).json(users);
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: "Server error" });
+    logger.error(err.message);
+    res.status(500).json({ error: err.message });
   }
 };
 
-export const getHelloMessage = (req, res) => {
-  res.json({ message: "user" });
-};
-
-//insert user
-export const addUser = async (req, res, next) => {
-  const {name,rID,uID,email,dID,password} = req.body;
-
-  let users;
-
-  try{
-    users = new User({name,rID,uID,email,dID,password});
-    await users.save();
-  }catch (err){
-    console.log(err);
-  }
-
-  if(!users){
-    return res.status(404).send({message:"Unable to add user"});
-  }
-  return res.status(200).json({
-    users
-  })
-}
-
-//Get by ID
-export const getById = async(req, res, next) => {
-  const id =req.params.id;
-
-  let users;
-
-  try{
-    users=await User.findById(id);
-  }catch (err){
-    console.log(err);
-  }
-
-  if(!users){
-    return res.status(404).send({message:"Unable to desplay user"});
-  }
-  return res.status(200).json({
-    users
-  })
-}
-
-//update user
-export const updateUser = async (req, res, next) => {
-
-  const id =req.params.id;
-  const {name,rID,uID,email,dID,password} = req.body;
-
-  let users
+export const getUser = async (req, res) => {
+  const { uniqueId } = req.params;
 
   try {
-    users = await User.findByIdAndUpdate(id,
-      {name: name, rID: rID, uID: uID, email: email, dID: dID, password: password},);
-      users = await users.save();
-  }catch (err){
-    console.log(err);
+    const user = await User.findOne({ uniqueId });
+    res.status(200).json(user);
+  } catch (err) {
+    logger.error(err.message);
+    res.status(500).json({ error: err.message });
   }
+};
 
-  if(!users){
-    return res.status(404).send({message:"Unable to update user"});
+export const putUser = async (req, res) => {
+  const { name, rID, uID, email, dID } = req.body;
+  const { uniqueId } = req.params;
+
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      { uniqueId },
+      {
+        name,
+        rID,
+        uID,
+        email,
+        dID,
+      },
+      { new: true }
+    );
+
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    logger.error(err.message);
+    res.status(500).json({ error: err.message });
   }
-  return res.status(200).json({
-    users
-  })
-}
-
-//delete user
-export const deleteUser = async (req, res, next) => {
-
-  const id =req.params.id;
-
-  let users;
-
-  try{
-    users= await User.findByIdAndDelete(id)
-  }catch (err){
-    console.log(err);
-  }
-
-  if(!users){
-    return res.status(404).send({message:"Unable to delete user"});
-  }
-  return res.status(200).json({
-    users
-  })
-}
+};
