@@ -34,7 +34,7 @@ function Header({ sidebarOpen, setSidebarOpen }) {
             </button>
           </div>
 
-          {/* Header: Right side */}
+          {/* Header: right side */}
           <div className="flex items-center space-x-3">
             <div>
               <button
