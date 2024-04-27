@@ -1,10 +1,21 @@
-import "dotenv/config";
+
 import express from "express";
 import cors from "cors";
+
+import "dotenv/config";
+
 // import bcrypt from 'bcrypt';
 // import User from './models/User';
+
 import logger from "./utils/logger";
 import connect from "./utils/database.connection";
+import GenerateReportsRouter from "./api/routes/GenarateReports.route";
+import GovernmentPaymentRouter from "./api/routes/GovernmentPayment.route";
+import RefundPaymentRouter from "./api/routes/RefundPayment.route";
+// import bcrypt from 'bcrypt';
+// import User from './models/User';
+
+
 import testRouter from "./api/routes/test.route";
 import userRouter from "./api/routes/user.route";
 import userReportRouter from "./api/routes/userReport.route";
@@ -14,14 +25,22 @@ import staffRouter from "./api/routes/staff.route";
 import departmentRouter from "./api/routes/department.route";
 import attendenceRouter from "./api/routes/attendence.route";
 
+
+
+// Create Express app
 const app = express();
 // const cors = require("cors");
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(cors());
+
 app.use(express.json({ limit: "20mb" }));
 
+// middleware
+app.use("/GenerateReports", GenerateReportsRouter);
+app.use("/GovernmentPayment", GovernmentPaymentRouter);
+app.use("/RefundPayment", RefundPaymentRouter);
 app.use("/test", testRouter);
 app.use("/user", userRouter);
 app.use("/userreport", userReportRouter);
@@ -55,6 +74,6 @@ app.use("/attendence", attendenceRouter);
 // });
 
 app.listen(PORT, () => {
-  logger.info(`Server is up and running on port ${PORT}`);
+  logger.info(` Server is up and running on port ${PORT}`);
   connect();
 });
