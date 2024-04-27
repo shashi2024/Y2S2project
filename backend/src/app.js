@@ -1,7 +1,12 @@
-import dotenv from "dotenv";
+
 import express from "express";
 import cors from "cors";
+
 import "dotenv/config";
+
+// import bcrypt from 'bcrypt';
+// import User from './models/User';
+
 import logger from "./utils/logger";
 import connect from "./utils/database.connection";
 import GenerateReportsRouter from "./api/routes/GenarateReports.route";
@@ -20,13 +25,10 @@ import staffRouter from "./api/routes/staff.route";
 import departmentRouter from "./api/routes/department.route";
 import attendenceRouter from "./api/routes/attendence.route";
 
-// load env variables
-dotenv.config();
+
 
 // Create Express app
 const app = express();
-
-// Start the server
 // const cors = require("cors");
 const PORT = process.env.PORT || 5000;
 
