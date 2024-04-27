@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { getHelloMessage, addDepartment, getById, updateDepartment, deleteDepartment } from "../controllers/department.controller";
+import { getHelloMessage, addDepartment, getById, updateDepartment, deleteDepartment, getAllDepartments } from "../controllers/department.controller";
 
 const departmentRouter = Router();
 
+departmentRouter.get("/", getAllDepartments);
 departmentRouter.get("/", getHelloMessage);
 departmentRouter.post("/", addDepartment);
 departmentRouter.get("/:id", getById);

@@ -24,6 +24,20 @@ export const getHelloMessage = (req, res) => {
   res.json({ message: "staff" });
 };
 
+export const getAllStaff = async (req, res, next) => {
+  try {
+    const staff = await Staff.find();
+    if (staff.length === 0) {
+      return res.status(404).json({ message: "No staff found" });
+    }
+    return res.status(200).json({ staff });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Server error" });
+  }
+};
+
+
 //insert staff
 export const addStaff = async (req, res, next) => {
   const {name,sID,email,dID,nic,position} = req.body;
