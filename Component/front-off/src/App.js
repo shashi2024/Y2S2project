@@ -1,15 +1,15 @@
-import React from 'react';
-import backgroundImage from './images/pic1.png';
-import TopCon from './TopCon';
-import BarCon from './BarCon';
+import './App.css';
+import Top from './Top.jsx';
+import Bottom from './Bottom.jsx';
 
 function App() {
   return (
-    <div className="h-screen bg-cover" style={{ backgroundImage: `url(${backgroundImage})` }}>
-      <TopCon/>
-      <BarCon/>
+    <div>
+      <Top/>
+      <Bottom/>
     </div>
   );
 }
 
 export default App;
+
