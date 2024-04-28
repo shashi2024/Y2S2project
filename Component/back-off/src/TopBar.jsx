@@ -1,8 +1,8 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { faBell } from '@fortawesome/free-solid-svg-icons';
- 
+import { faBell } from "@fortawesome/free-solid-svg-icons";
+
 function TopBar() {
   return (
     <div className="absolute w-full h-36 bg-white shadow-md shadow-gray-600">
@@ -22,10 +22,10 @@ function TopBar() {
       </div>
 
       <div className="absolute right-96 top-12 flex items-center">
-      <FontAwesomeIcon icon={faBell} className="text-red-400 mr-2 size-8"/>
-      <div>
-      Anesthesia <br/> HR Assistant
-      </div>
+        <FontAwesomeIcon icon={faBell} className="text-red-400 mr-2 size-8" />
+        <div>
+          Manuri Dias <br /> Finance Assistant
+        </div>
       </div>
     </div>
   );

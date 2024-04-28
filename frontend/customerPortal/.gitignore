@@ -1,0 +1,29 @@
+# Dependency directories
+node_modules/
+
+# IDE / Editor directories and files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.log
+
+# dotenv environment variable files
+.env
+.env.test
+
+# Distribution / build
+dist/
+
