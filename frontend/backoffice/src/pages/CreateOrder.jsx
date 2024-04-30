@@ -129,6 +129,22 @@ const CreateOrder = () => {
     setOrders((prevOrders) => [...prevOrders, newOrder]);
   };
 
+  const handleFulfillOrder = (orderId) => {
+    setOrders((prevOrders) =>
+      prevOrders.map((order) =>
+        order.id === orderId ? { ...order, orderStatus: "Full Filled" } : order
+      )
+    );
+  };
+
+  const handleCancelOrder = (orderId) => {
+    setOrders((prevOrders) =>
+      prevOrders.map((order) =>
+        order.id === orderId ? { ...order, orderStatus: "Cancelled" } : order
+      )
+    );
+  };
+
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -248,9 +264,7 @@ const CreateOrder = () => {
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto bg-background">
             <div className="bg-white p-6 rounded-lg shadow-lg">
               <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-                <h1 className="text-slate-800 font-bold text-3xl">
-                  Order List
-                </h1>
+                <h1 className="text-slate-800 font-bold text-3xl">Order</h1>
                 <hr className="border-t border-second_background mt-2 mb-12" />
                 <table className="w-full text-left border-collapse">
                   <thead className="border-t border-second_background">
@@ -264,29 +278,32 @@ const CreateOrder = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {orders.length &&
-                      orders.map((order) => (
-                        <tr
-                          key={order.id}
-                          className="border-t border-second_background"
-                        >
-                          <td className="py-4 px-6">{order.orderNumber}</td>
-                          <td className="py-4 px-6">
-                            {order.customerID?.name}
-                          </td>
-                          <td className="py-4 px-6">{order.orderStatus}</td>
-                          <td className="py-4 px-6">{order.paymentStatus}</td>
-                          <td className="py-4 px-6">
-                            ${order.totalAmount.toFixed(2)}
-                          </td>
-                          <td className="py-4 px-6">
-                            <div className="flex space-x-4">
-                              <Button>Full Fill</Button>
-                              <Button>Cancel</Button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
+                    {orders.map((order) => (
+                      <tr
+                        key={order.id}
+                        className="border-t border-second_background"
+                      >
+                        <td className="py-4 px-6">{order.id}</td>
+                        <td className="py-4 px-6">{order.customerName}</td>
+                        <td className="py-4 px-6">{order.orderStatus}</td>
+                        <td className="py-4 px-6">{order.paymentStatus}</td>
+                        <td className="py-4 px-6">
+                          ${order.totalAmount.toFixed(2)}
+                        </td>
+                        <td className="py-4 px-6">
+                          <div className="flex space-x-4">
+                            <Button
+                              onClick={() => handleFulfillOrder(order.id)}
+                            >
+                              Full Fill
+                            </Button>
+                            <Button onClick={() => handleCancelOrder(order.id)}>
+                              Cancel
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

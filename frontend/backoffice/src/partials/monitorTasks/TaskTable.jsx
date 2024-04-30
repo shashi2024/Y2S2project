@@ -1,38 +1,56 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import Button from "../../components/Button";
-import axios from "axios";
+import Modal from "react-modal";
+
+Modal.setAppElement("#root"); // replace '#root' with the id of your app's root element
 
 function TasksTable() {
-  const [tasks, setTasks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [tasks, setTasks] = useState([
+    {
+      title: "Task 1",
+      type: "Type 1",
+      deadline: "2022-12-31",
+      assignee: "John Doe",
+      status: "In Progress",
+    },
+    {
+      title: "Task 2",
+      type: "Type 2",
+      deadline: "2022-12-30",
+      assignee: "Don Juana",
+      status: "In Progress",
+    },
+    {
+      title: "Task 3",
+      type: "Type 1",
+      deadline: "2022-12-31",
+      assignee: "James Smith",
+      status: "In Progress",
+    },
+  ]);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        setIsLoading(true);
-        const response = await axios.get("http://localhost:5000/task");
-        setTasks(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const handleEdit = (task) => {
+    setSelectedTask(task);
+    setModalOpen(true);
+  };
 
-    fetchTasks(); // Call the function
-  }, []);
-
-  if (isLoading) {
-    return (
-      <>
-        <div className="flex justify-center items-center min-h-screen">
-          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary"></div>
-        </div>
-        ;
-      </>
+  const handleSave = (event) => {
+    event.preventDefault();
+    const updatedTasks = tasks.map((task) =>
+      task.title === selectedTask.title ? selectedTask : task
     );
-  }
+    setTasks(updatedTasks);
+    setModalOpen(false);
+  };
+
+  const handleChange = (event) => {
+    setSelectedTask({
+      ...selectedTask,
+      [event.target.name]: event.target.value,
+    });
+  };
 
   return (
     <div>
@@ -50,23 +68,98 @@ function TasksTable() {
           </tr>
         </thead>
         <tbody>
-          {tasks &&
-            tasks.map((task, index) => (
-              <tr key={index} className="border-t border-second_background">
-                <td className="py-4 px-6">{task.title}</td>
-                <td className="py-4 px-6">{task.__t}</td>
-                <td className="py-4 px-6">
-                  {new Date(task.endTime).toLocaleString()}
-                </td>
-                <td className="py-4 px-6">{task.userId?.name}</td>
-                <td className="py-4 px-6">{task.status}</td>
-                <td className="py-4 px-6">
-                  <Button>Edit</Button>
-                </td>
-              </tr>
-            ))}
+          {tasks.map((task, index) => (
+            <tr key={index} className="border-t border-second_background">
+              <td className="py-4 px-6">{task.title}</td>
+              <td className="py-4 px-6">{task.type}</td>
+              <td className="py-4 px-6">{task.deadline}</td>
+              <td className="py-4 px-6">{task.assignee}</td>
+              <td className="py-4 px-6">{task.status}</td>
+              <td className="py-4 px-6">
+                <Button onClick={() => handleEdit(task)}>Edit</Button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
+
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={() => setModalOpen(false)}
+        style={{
+          overlay: {
+            zIndex: 1000,
+          },
+          content: {
+            width: "50%", // 2/3 of the page
+            margin: "0 auto", // center the form
+            backgroundColor: "#FFD600",
+          },
+        }}
+      >
+        {selectedTask && (
+          <form onSubmit={handleSave}>
+            <h1 className="text-2xl font-bold text-black">Edit Tasks</h1>
+            <hr className="border-t border-white mt-3 mb-6" />
+
+            <div class="p-3">
+              <label className="block text-sm font-medium">Title:</label>
+              <input
+                type="text"
+                name="title"
+                value={selectedTask.title}
+                onChange={handleChange}
+                className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
+              />
+            </div>
+            <div class="p-3">
+              <label className="block text-sm font-medium">Type:</label>
+              <input
+                type="text"
+                name="type"
+                value={selectedTask.type}
+                onChange={handleChange}
+                className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
+              />
+            </div>
+            <div class="p-3">
+              <label className="block text-sm font-medium">Deadline:</label>
+              <input
+                type="date"
+                name="deadline"
+                value={selectedTask.deadline}
+                onChange={handleChange}
+                className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
+              />
+            </div>
+            <div class="p-3">
+              <label className="block text-sm font-medium">Assignee:</label>
+              <input
+                type="text"
+                name="assignee"
+                value={selectedTask.assignee}
+                onChange={handleChange}
+                className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
+              />
+            </div>
+            <div class="p-3">
+              <label className="block text-sm font-medium">Status:</label>
+              <input
+                type="text"
+                name="status"
+                value={selectedTask.status}
+                onChange={handleChange}
+                className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
+              />
+            </div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Button type="submit" className="p-3">
+                Save
+              </Button>
+            </div>
+          </form>
+        )}
+      </Modal>
     </div>
   );
 }
