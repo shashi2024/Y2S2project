@@ -1,50 +1,90 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "../../components/Button";
 import Modal from "react-modal";
+import axios from "axios";
 
 Modal.setAppElement("#root"); // replace '#root' with the id of your app's root element
 
 function TasksTable() {
-  const [tasks, setTasks] = useState([
-    {
-      title: "Task 1",
-      type: "Type 1",
-      deadline: "2022-12-31",
-      assignee: "John Doe",
-      status: "In Progress",
-    },
-    {
-      title: "Task 2",
-      type: "Type 2",
-      deadline: "2022-12-30",
-      assignee: "Don Juana",
-      status: "In Progress",
-    },
-    {
-      title: "Task 3",
-      type: "Type 1",
-      deadline: "2022-12-31",
-      assignee: "James Smith",
-      status: "In Progress",
-    },
-  ]);
+  const [tasks, setTasks] = useState([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        setIsLoading(true);
+        const response = await axios.get("http://localhost:5000/task");
+        setTasks(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchTasks(); // Call the function
+  }, []);
+
+  if (isLoading) {
+    return (
+      <>
+        <div className="flex justify-center items-center min-h-screen">
+          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary"></div>
+        </div>
+        ;
+      </>
+    );
+  }
 
   const handleEdit = (task) => {
     setSelectedTask(task);
     setModalOpen(true);
   };
 
-  const handleSave = (event) => {
+  const handleDelete = async (task) => {
+    console.log(task._id);
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/task/${task._id}`
+      );
+      if (response.status === 200) {
+        window.location.reload();
+      } else {
+        console.error("Failed to delete task:", response);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleSave = async (event) => {
     event.preventDefault();
     const updatedTasks = tasks.map((task) =>
       task.title === selectedTask.title ? selectedTask : task
     );
-    setTasks(updatedTasks);
-    setModalOpen(false);
-  };
 
+    try {
+      // Replace 'http://localhost:5000/task' with your API endpoint
+      // Replace 'id' with the property that holds the task's ID
+      const response = await axios.put(
+        `http://localhost:5000/task/${selectedTask._id}`,
+        selectedTask
+      );
+
+      if (response.status === 200) {
+        setModalOpen(false);
+        window.location.reload();
+      } else {
+        console.error("Failed to update task:", response);
+      }
+    } catch (error) {
+      console.error("Error updating task:", error);
+    }
+  };
   const handleChange = (event) => {
     setSelectedTask({
       ...selectedTask,
@@ -71,18 +111,23 @@ function TasksTable() {
           {tasks.map((task, index) => (
             <tr key={index} className="border-t border-second_background">
               <td className="py-4 px-6">{task.title}</td>
-              <td className="py-4 px-6">{task.type}</td>
-              <td className="py-4 px-6">{task.deadline}</td>
-              <td className="py-4 px-6">{task.assignee}</td>
+              <td className="py-4 px-6">{task.__t}</td>
+              <td className="py-4 px-6">
+                {new Date(task.endTime).toLocaleDateString()}
+              </td>
+              <td className="py-4 px-6">{task.userId?.name}</td>
               <td className="py-4 px-6">{task.status}</td>
               <td className="py-4 px-6">
                 <Button onClick={() => handleEdit(task)}>Edit</Button>
+                <Button className="ml-2" onClick={() => handleDelete(task)}>
+                  Delete
+                </Button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-
+      <hr className="border-t border-second_background mt-2 mb-12" />
       <Modal
         isOpen={isModalOpen}
         onRequestClose={() => setModalOpen(false)}
@@ -117,7 +162,7 @@ function TasksTable() {
               <input
                 type="text"
                 name="type"
-                value={selectedTask.type}
+                value={selectedTask.__t}
                 onChange={handleChange}
                 className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
               />
@@ -127,20 +172,25 @@ function TasksTable() {
               <input
                 type="date"
                 name="deadline"
-                value={selectedTask.deadline}
+                value={selectedTask.endTime}
                 onChange={handleChange}
                 className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
               />
             </div>
-            <div class="p-3">
+            <div className="p-3">
               <label className="block text-sm font-medium">Assignee:</label>
-              <input
-                type="text"
+              <select
                 name="assignee"
-                value={selectedTask.assignee}
+                value={selectedTask.userId._id}
                 onChange={handleChange}
                 className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
-              />
+              >
+                <option value="">Select an assignee</option>
+                <option value="66244ddc6fc5b531cea5b6ca">User 1</option>
+                <option value="66244ddc6fc5b531cea5b6ca">User 2</option>
+                <option value="66244ddc6fc5b531cea5b6ca">User 3</option>
+                // Add more options as needed
+              </select>
             </div>
             <div class="p-3">
               <label className="block text-sm font-medium">Status:</label>

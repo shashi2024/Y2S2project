@@ -45,3 +45,47 @@ export const getTasks = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+
+// eslint-disable-next-line consistent-return
+export const putTask = async (req, res) => {
+  try {
+    const task = await MaintenanceTask.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+
+    if (!task) {
+      logger.error(`Task not found with id: ${req.params.id}`);
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    // eslint-disable-next-line no-underscore-dangle
+    logger.info(`Task updated with id: ${task._id}`);
+    res.json(task);
+  } catch (err) {
+    logger.error(`Failed to update task: ${err.message}`);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
+// eslint-disable-next-line consistent-return
+export const deleteTask = async (req, res) => {
+  try {
+    const task = await MaintenanceTask.findByIdAndDelete(req.params.id);
+
+    if (!task) {
+      logger.error(`Task not found with id: ${req.params.id}`);
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    // eslint-disable-next-line no-underscore-dangle
+    logger.info(`Task deleted with id: ${task._id}`);
+    res.json(task);
+  } catch (err) {
+    logger.error(`Failed to delete task: ${err.message}`);
+    res.status(500).json({ message: err.message });
+  }
+}
