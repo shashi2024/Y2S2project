@@ -6,16 +6,14 @@ import Footer from "./components/footer.jsx"; // Corrected import path for Foote
 import GuestRegister from "./guest/GuestRegister.jsx";
 import RoomReservation from "./roomreservation/roomreservation.jsx";
 
-
 function App() {
   return (
     <div>
       <Navbar />
       <Router>
         <Routes>
-          <Route path='/guestregister' element={<GuestRegister/>}/>
-          <Route path='/roomreservation' element={<RoomReservation/>}/>
-          
+          <Route path="/guestregister" element={<GuestRegister />} />
+          <Route path="/roomreservation" element={<RoomReservation />} />
         </Routes>
       </Router>
       <Footer />

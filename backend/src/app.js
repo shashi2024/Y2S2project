@@ -16,7 +16,6 @@ import guestRouter from "./api/routes/GuestRoute";
 import reservationRouter from "./api/routes/ReservationRoute";
 import roomRouter from "./api/routes/RoomRoute";
 
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -48,9 +47,8 @@ app.use("/guest", guestRouter);
 app.use("/reservation", reservationRouter);
 app.use("/room", roomRouter);
 
-
 /* Reports */
-app.use("/report", reportRouter)
+app.use("/report", reportRouter);
 
 app.listen(PORT, () => {
   logger.info(`Server is up and running on port ${PORT}`);
