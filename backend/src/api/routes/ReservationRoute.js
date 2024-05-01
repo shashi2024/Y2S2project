@@ -1,17 +1,18 @@
+import { Router } from "express";
+import {
+  getAllReservations,
+  addReservations,
+  getById,
+  updateReservations,
+  deleteReservations,
+} from "../controllers/ReservationController";
 
+const reservationsrouter = Router();
 
-const express = require('express');
-const reservationsrouter = express.Router();
-//insert Model
-const Reservation = require("../model/ReservationModel");
-//insert controller
-const ReservationController = require("../controllers/ReservationController");
+reservationsrouter.get("/", getAllReservations);
+reservationsrouter.post("/", addReservations);
+reservationsrouter.get("/:id", getById);
+reservationsrouter.put("/:id", updateReservations);
+reservationsrouter.delete("/:id", deleteReservations);
 
-reservationsrouter.get("/",ReservationController.getAllReservations);
-reservationsrouter.post("/",ReservationController.addReservations);
-reservationsrouter.get("/:id",ReservationController.getById);
-reservationsrouter.put("/:id",ReservationController.updateReservations);
-reservationsrouter.delete("/:id",ReservationController.deleteReservations);
-
-//export
-module.exports = reservationsrouter;
+export default reservationsrouter;
