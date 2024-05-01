@@ -1,0 +1,111 @@
+/* GuestRegister.css */
+body
+{
+  background-color: #eee !important;
+}
+.App {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.App h1 {
+  font-size: 36px !important;
+  margin-bottom: 35px !important;
+  margin-top: 18px !important;
+  font-family: Arial, sans-serif;
+}
+
+form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  text-align: left;
+}
+
+input,
+textarea {
+  padding: 10px !important;
+  margin-bottom: 10px !important;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 500px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+#contactmethod
+{
+  margin-bottom: 50px !important;
+}
+
+button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button[type="reset"] {
+  background-color: #dc3545; /* Red color */
+  color: white;
+  margin-right: 10px;
+  width: 110px;
+  height: 40px !important;
+}
+
+button[type="reset"]:hover {
+  background-color: #c82333; /* Darker red color on hover */
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  width: 110px;
+  height: 40px !important;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+p {
+  margin-top: 10px;
+  color: #ff0000; /* Red color for error messages */
+}
+
+fieldset {
+  border: 1px solid #ccc;
+  padding: 20px !important;
+  border-radius: 12px;
+  margin-bottom: 50px !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 600px) {
+  input,
+  textarea {
+    width: 100%;
+  }
+}
+
+#btn_div
+{
+  display: flex;
+  justify-content: space-around;
+}
+
+#footer_container_div 
+{
+  height: 290px !important;
+}

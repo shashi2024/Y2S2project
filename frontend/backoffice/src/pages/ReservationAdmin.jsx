@@ -19,9 +19,8 @@ const GuestAdmin = () => {
             <GuestNavBar />
             <br></br>
             <div className="bg-gray-100 min-h-screen flex flex-col  items-center">
-            <h1 className="text-2xl font-extrabold text-gray-800 mb-8">GUEST ADMIN DASHBOARD</h1>
+            <h1 className="text-2xl font-extrabold text-gray-800 mb-8">RESERVATION ADMIN DASHBOARD</h1>
             </div>
-            
           </div>
         </main>
       </div>

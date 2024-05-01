@@ -18,6 +18,8 @@ import CreateTask from "./pages/CreateTask";
 import TasksTable from "./pages/MonitorTasks";
 import MonitorTasks from "./pages/MonitorTasks";
 import GuestAdmin from "./pages/GuestAdmin";
+import RoomAdmin from "./pages/RoomAdmin";
+import ReservationAdmin from "./pages/ReservationAdmin";
 
 function App() {
   const location = useLocation();
@@ -73,12 +75,33 @@ function App() {
      
 
       /* Guest Management */
-      <Route
+        <Route
           exact
           path="/guest/admin"
           element={<GuestAdmin />}
         />
+
+        /* Room Management */
+        <Route
+          exact
+          path="/room/admin"
+          element={<RoomAdmin />}
+        />
+        */ Reservation Management */
+        <Route
+          exact
+          path="/reservation/admin"
+          element={<ReservationAdmin />}
+        />
+
+
+
+
+
+
       </Routes>
+
+      
 
     </>
   );

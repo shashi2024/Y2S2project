@@ -12,6 +12,10 @@ import maintenanceTaskRouter from "./api/routes/maintenanceTask.route";
 import customerRouter from "./api/routes/customer.route";
 import userRouter from "./api/routes/user.route";
 import reportRouter from "./api/routes/report.route";
+import guestRouter from "./api/routes/GuestRoute";
+import reservationRouter from "./api/routes/ReservationRoute";
+import roomRouter from "./api/routes/RoomRoute";
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -38,6 +42,11 @@ app.use("/task", maintenanceTaskRouter);
 
 app.use("/customer", customerRouter);
 app.use("/user", userRouter);
+
+/* Guest */
+app.use("/guest", guestRouter);
+app.use("/reservation", reservationRouter);
+app.use("/room", roomRouter);
 
 
 /* Reports */
