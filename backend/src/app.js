@@ -42,11 +42,11 @@ app.use("/restaurant-inventory", restaurantInventoryRouter);
 // Finance Management Middleware
 
 app.use("/GenerateReports", GenerateReportsRouter);
-app.use("/GovernmentPayment", GovernmentPayentRouter);
+app.use("/government-payments", GovernmentPayentRouter);
 app.use("/RefundRequest", RefufndRequestRouter);
-app.use("/SalaryPayment", SalaryPaymentRouter);
-app.use("/SupplierPayment", SupplierPaymentRouter);
-app.use("/UtilityPayment", UtilityPaymentRouter);
+app.use("/salary-payments", SalaryPaymentRouter);
+app.use("/supplier-payments", SupplierPaymentRouter);
+app.use("/utility-payments", UtilityPaymentRouter);
 
 /* Maintenance */
 app.use("/task", maintenanceTaskRouter);

@@ -53,7 +53,7 @@ const SalaryPaymentForm = () => {
         ...formData,
         [name]: value,
       });
-    }
+    } 
   };
 
   const handleCalculate = () => {

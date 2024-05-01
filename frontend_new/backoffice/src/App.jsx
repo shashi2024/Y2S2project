@@ -17,6 +17,11 @@ import RestaurantDashboard from "./pages/RestaurantDashboard";
 import CreateTask from "./pages/CreateTask";
 import TasksTable from "./pages/MonitorTasks";
 import MonitorTasks from "./pages/MonitorTasks";
+import CreateSalaryPayment from "./pages/Finance Management/SalaryPayments/CreateSalaryPayment";
+import CreateSupplierPayment from "./pages/Finance Management/SupplierPayment/CreateSupplierPayment";
+import CreateUtilityPayment from "./pages/Finance Management/UtilityPayments/CreateUtilityPayment";
+import CreateGovernmentPayment from "./pages/Finance Management/GovernmentPayments/CreateGovernmentPayment";
+import SalaryPayment from "./pages/Finance Management/SalaryPayments/SalaryPayment";
 
 function App() {
   const location = useLocation();
@@ -68,6 +73,32 @@ function App() {
           exact
           path="/maintenance/monitor-tasks"
           element={<MonitorTasks />}
+        />
+        /* Finance Management Routes */
+        <Route
+          exact
+          path="/finance-management/salary-payments/create"
+          element={<CreateSalaryPayment />}
+        />
+        <Route
+          exact
+          path="/finance-management/supplier-payments/create"
+          element={<CreateSupplierPayment />}
+        />
+        <Route
+          exact
+          path="/finance-management/utility-payments/create"
+          element={<CreateUtilityPayment />}
+        />
+        <Route
+          exact
+          path="/finance-management/government-payments/create"
+          element={<CreateGovernmentPayment />}
+        />
+        <Route
+          exact
+          path="/finance-management/salary-payments"
+          element={<SalaryPayment />}
         />
       </Routes>
     </>

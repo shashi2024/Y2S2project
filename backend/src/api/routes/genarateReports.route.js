@@ -1,5 +1,4 @@
 import express from "express";
-import GenerateReports from "../model/GenerateReports.model";
 import {
   getReports,
   insertReport,
