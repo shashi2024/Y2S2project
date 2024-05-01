@@ -44,32 +44,18 @@ export const getOrders = async (req, res) => {
 };
 
 export const putOrder = async (req, res) => {
-  const {
-    items,
-    discount,
-    totalAmount,
-    discountedAmount,
-    customerID,
-    paymentStatus,
-    orderStatus,
-  } = req.body;
-
   try {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+
     if (!order) {
       logger.error(`Order not found with id: ${req.params.id}`);
       return res.status(404).json({ message: "Order not found" });
     }
 
-    order.items = items;
-    order.discount = discount;
-    order.totalAmount = totalAmount;
-    order.discountedAmount = discountedAmount;
-    order.customerID = customerID;
-    order.paymentStatus = paymentStatus;
-    order.orderStatus = orderStatus;
-
-    await order.save();
     // eslint-disable-next-line no-underscore-dangle
     logger.info(`Order updated with id: ${order._id}`);
     return res.json(order);

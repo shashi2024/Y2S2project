@@ -129,6 +129,59 @@ const CreateOrder = () => {
     setOrders((prevOrders) => [...prevOrders, newOrder]);
   };
 
+  const handleFulfillOrder = (orderId) => {
+    try {
+      const response = axios.put(`http://localhost:5000/order/${orderId}`, {
+        orderStatus: "Fulfilled",
+      });
+      console.log(response.data);
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleCancelOrder = (orderId) => {
+    try {
+      const response = axios.put(`http://localhost:5000/order/${orderId}`, {
+        orderStatus: "Cancelled",
+      });
+      console.log(response.data);
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const genReport = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/report/orders", {
+        responseType: "arraybuffer",
+      });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+
+      // Extract filename from the 'Content-Disposition' header
+      const contentDisposition =
+        response.headers["content-disposition"] ||
+        response.headers["Content-Disposition"];
+      let filename = "file.xlsx"; // Default filename in case extraction fails
+      console.log(contentDisposition);
+      if (contentDisposition) {
+        const regex = /filename="([^"]*)"/;
+        const match = contentDisposition.match(regex);
+        filename = match ? match[1] : filename;
+      }
+
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -264,31 +317,40 @@ const CreateOrder = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {orders.length &&
-                      orders.map((order) => (
-                        <tr
-                          key={order.id}
-                          className="border-t border-second_background"
-                        >
-                          <td className="py-4 px-6">{order.orderNumber}</td>
-                          <td className="py-4 px-6">
-                            {order.customerID?.name}
-                          </td>
-                          <td className="py-4 px-6">{order.orderStatus}</td>
-                          <td className="py-4 px-6">{order.paymentStatus}</td>
-                          <td className="py-4 px-6">
-                            ${order.totalAmount.toFixed(2)}
-                          </td>
-                          <td className="py-4 px-6">
-                            <div className="flex space-x-4">
-                              <Button>Full Fill</Button>
-                              <Button>Cancel</Button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
+                    {orders.map((order) => (
+                      <tr
+                        key={order.id}
+                        className="border-t border-second_background"
+                      >
+                        <td className="py-4 px-6">{order.orderNumber}</td>
+                        <td className="py-4 px-6">{order.customerID?.name}</td>
+                        <td className="py-4 px-6">{order.orderStatus}</td>
+                        <td className="py-4 px-6">{order.paymentStatus}</td>
+                        <td className="py-4 px-6">
+                          ${order.totalAmount.toFixed(2)}
+                        </td>
+                        <td className="py-4 px-6">
+                          <div className="flex space-x-4">
+                            <Button
+                              onClick={() => handleFulfillOrder(order._id)}
+                            >
+                              Full Fill
+                            </Button>
+                            <Button
+                              onClick={() => handleCancelOrder(order._id)}
+                            >
+                              Cancel
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
+                <hr className="border-t border-second_background mt-2 mb-12" />
+                <Button onClick={() => genReport()} className="mt-3 mb-2">
+                  Generate Report
+                </Button>
               </div>
             </div>
           </div>
