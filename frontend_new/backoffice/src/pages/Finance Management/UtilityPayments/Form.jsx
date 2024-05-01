@@ -17,7 +17,7 @@ const CreateUtilityPaymentForm = () => {
       console.log(JSON.stringify(data));
 
       const response = await axios.post(
-        "http://localhost:5000/utility-payment",
+        "http://localhost:5000/utility-payments",
         data
       );
       console.log(response.data);
@@ -34,14 +34,14 @@ const CreateUtilityPaymentForm = () => {
       <div>
         <label className="block text-sm font-medium">Utility Payment ID</label>
         <input
-          {...register("utilityPaymentId", {
+          {...register("PaymentId", {
             required: "Utility Payment ID is required",
           })}
           placeholder="Enter Utility Payment ID"
           className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
         />
-        {errors.utilityPaymentId && (
-          <p className="text-red-500">{errors.utilityPaymentId.message}</p>
+        {errors.PaymentId && (
+          <p className="text-red-500">{errors.PaymentId.message}</p>
         )}
       </div>
       <div>
@@ -76,28 +76,28 @@ const CreateUtilityPaymentForm = () => {
         </div>
         <label className="block text-sm font-medium">Amount</label>
         <input
-          {...register("amount", {
+          {...register("paymentAmount", {
             required: "Amount is required",
             pattern: { value: Number, message: "Please enter valid amount" },
           })}
           placeholder="Enter Amount"
           className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
         />
-        {errors.amount && (
-          <p className="text-red-500">{errors.amount.message}</p>
+        {errors.paymentAmount && (
+          <p className="text-red-500">{errors.paymentAmount.message}</p>
         )}
       </div>
       <div>
         <label className="block text-sm font-medium">Payment Description</label>
         <textarea
-          {...register("paymentDescription", {
+          {...register("description", {
             required: "Payment Description is required",
           })}
           placeholder="Enter Payment Description"
           className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
         />
-        {errors.paymentDescription && (
-          <p className="text-red-500">{errors.paymentDescription.message}</p>
+        {errors.description && (
+          <p className="text-red-500">{errors.description.message}</p>
         )}
       </div>
       <Button type="submit">Submit</Button>

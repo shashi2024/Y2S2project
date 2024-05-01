@@ -279,6 +279,7 @@ function SupplierPaymentTable() {
                 <option value="Poor">Poor</option>
               </select>
             </div>
+            
             <div style={{ display: "flex", justifyContent: "center" }}>
               <Button type="submit">Save</Button>
             </div>

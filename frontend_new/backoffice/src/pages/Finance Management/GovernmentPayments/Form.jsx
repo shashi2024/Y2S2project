@@ -15,7 +15,7 @@ const CreateGovernmentPaymentForm = () => {
       console.log(JSON.stringify(data));
 
       const response = await axios.post(
-        "http://localhost:5000/government-payment",
+        "http://localhost:5000/government-payments",
         data
       );
       console.log(response.data);
@@ -32,12 +32,12 @@ const CreateGovernmentPaymentForm = () => {
       <div>
         <label className="block text-sm font-medium">Payment ID</label>
         <input
-          {...register("paymentId", { required: "Payment ID is required" })}
+          {...register("PaymentId", { required: "Payment ID is required" })}
           placeholder="Enter Payment ID"
           className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
         />
-        {errors.paymentId && (
-          <p className="text-red-500">{errors.paymentId.message}</p>
+        {errors.PaymentId && (
+          <p className="text-red-500">{errors.PaymentId.message}</p>
         )}
       </div>
       <div>
@@ -71,13 +71,13 @@ const CreateGovernmentPaymentForm = () => {
       <div>
         <label className="block text-sm font-medium">Amount</label>
         <input
-          {...register("amount", { required: "Amount is required" })}
+          {...register("paymentAmount", { required: "Amount is required" })}
           placeholder="Enter Amount"
           type="number"
           className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
         />
-        {errors.amount && (
-          <p className="text-red-500">{errors.amount.message}</p>
+        {errors.paymentAmount && (
+          <p className="text-red-500">{errors.paymentAmount.message}</p>
         )}
       </div>
 

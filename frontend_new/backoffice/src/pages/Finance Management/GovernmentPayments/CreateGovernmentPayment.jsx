@@ -3,6 +3,7 @@ import Sidebar from "../../../partials/Sidebar";
 import Header from "../../../partials/Header";
 import { useNavigate } from "react-router-dom";
 import Form from "./Form";
+import GovernmentPaymentTable from "./GovernmentPaymentTable";
 
 const CreateGovernmentPayment = () => {
   const [SidebarOpen, setSidebarOpen] = useState(false);
@@ -18,7 +19,12 @@ const CreateGovernmentPayment = () => {
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto bg-background">
             <div className="bg-white p-6 rounded-lg shadow-lg">
-              <Form history={navigate} />
+              <Form />
+            </div>
+          </div>
+          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto bg-background">
+            <div className="bg-white p-6 rounded-lg shadow-lg">
+              <GovernmentPaymentTable />
             </div>
           </div>
         </main>
