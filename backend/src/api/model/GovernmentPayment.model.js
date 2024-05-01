@@ -1,28 +1,23 @@
 import mongoose from "mongoose";
 
-const governmentPaymentSchema = new mongoose.Schema({
-  paymentType: {
-    // Tax , Fine , Fee
-    type: String,
-    required: true,
-  },
+const GovernmentPaymentSchema = new mongoose.Schema({
   PaymentId: {
     type: String,
     required: true,
     unique: true,
   },
-  amount: {
-    type: Number,
+  paymentType: {
+    type: String,
     required: true,
   },
-  PaymenentDate: {
+  paymentDate: {
     type: Date,
     required: true,
   },
-  description: {
-    type: String,
-    required: false,
+  paymentAmount: {
+    type: Number,
+    required: true,
   },
 });
 
-export default mongoose.model("GovernmentPayment", governmentPaymentSchema);
+export default mongoose.model("GovernmentPayment", GovernmentPaymentSchema);

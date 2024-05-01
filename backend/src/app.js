@@ -12,6 +12,12 @@ import maintenanceTaskRouter from "./api/routes/maintenanceTask.route";
 import customerRouter from "./api/routes/customer.route";
 import userRouter from "./api/routes/user.route";
 import reportRouter from "./api/routes/report.route";
+import GenerateReportsRouter from "./api/routes/genarateReports.route";
+import GovernmentPayentRouter from "./api/routes/GovernmentPayment.route";
+import RefufndRequestRouter from "./api/routes/refundPayment.route";
+import SalaryPaymentRouter from "./api/routes/salaryPayment.route";
+import SupplierPaymentRouter from "./api/routes/supplierPayment.route";
+import UtilityPaymentRouter from "./api/routes/utilityPayment.route";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -33,15 +39,23 @@ app.use("/menu", menuRouter);
 app.use("/order", orderRouter);
 app.use("/restaurant-inventory", restaurantInventoryRouter);
 
+// Finance Management Middleware
+
+app.use("/GenerateReports", GenerateReportsRouter);
+app.use("/GovernmentPayment", GovernmentPayentRouter);
+app.use("/RefundRequest", RefufndRequestRouter);
+app.use("/SalaryPayment", SalaryPaymentRouter);
+app.use("/SupplierPayment", SupplierPaymentRouter);
+app.use("/UtilityPayment", UtilityPaymentRouter);
+
 /* Maintenance */
 app.use("/task", maintenanceTaskRouter);
 
 app.use("/customer", customerRouter);
 app.use("/user", userRouter);
 
-
 /* Reports */
-app.use("/report", reportRouter)
+app.use("/report", reportRouter);
 
 app.listen(PORT, () => {
   logger.info(`Server is up and running on port ${PORT}`);

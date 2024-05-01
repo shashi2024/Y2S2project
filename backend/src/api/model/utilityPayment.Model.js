@@ -1,28 +1,27 @@
 import mongoose from "mongoose";
 
-const utilityPaymentSchema = new mongoose.Schema({
-  paymentType: {
-    // Electricity , Water , Gas
-    type: String,
-    required: true,
-  },
-  paymentId: {
+const UtilityPaymentSchema = new mongoose.Schema({
+  PaymentId: {
     type: String,
     required: true,
     unique: true,
   },
-  amount: {
-    type: Number,
+  utilityType: {
+    type: String,
     required: true,
   },
   paymentDate: {
     type: Date,
     required: true,
   },
+  paymentAmount: {
+    type: Number,
+    required: true,
+  },
   description: {
     type: String,
-    required: false,
+    required: true,
   },
 });
 
-export default mongoose.model("UtilityPayment", utilityPaymentSchema);
+export default mongoose.model("UtilityPayment", UtilityPaymentSchema);

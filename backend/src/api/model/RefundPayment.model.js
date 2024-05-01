@@ -1,30 +1,31 @@
 import mongoose from "mongoose";
 
-const refundPaymentSchema = new mongoose.Schema({
-  refundId: {
+const RefundRequestSchema = new mongoose.Schema({
+  refundRequestId: {
     type: String,
     required: true,
     unique: true,
   },
-  customerId: {
+  refundType: {
     type: String,
-    required: true,
-  },
-  customerName: {
-    type: String,
-    required: true,
-  },
-  refundDate: {
-    type: Date,
     required: true,
   },
   refundAmount: {
     type: Number,
     required: true,
   },
-  refundDescription: {
+  refundDate: {
+    type: Date,
+    required: true,
+  },
+  paymentDate: {
+    type: Date,
+    required: true,
+  },
+  description: {
     type: String,
     required: true,
   },
 });
-export default mongoose.model("RefundPayment", refundPaymentSchema);
+
+export default mongoose.model("RefundRequest", RefundRequestSchema);

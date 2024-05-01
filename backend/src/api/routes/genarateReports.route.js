@@ -1,8 +1,9 @@
 import express from "express";
+import GenerateReports from "../model/GenerateReports.model";
 import {
   getReports,
-  getReportById,
   insertReport,
+  getReportById,
   updateReportById,
   deleteReportById,
 } from "../controllers/GenerateReports.controller";
@@ -15,4 +16,5 @@ router.get("/:id", getReportById);
 router.put("/:id", updateReportById);
 router.delete("/:id", deleteReportById);
 
+// Export the router
 export default router;

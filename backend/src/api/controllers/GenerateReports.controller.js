@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import GenerateReports from "../model/GenerateReports.model";
 
-// Get all Reports
+// Get all Reports --> Display sll reports
+
 export const getReports = async (req, res) => {
   try {
     const reports = await GenerateReports.find();
@@ -11,14 +12,15 @@ export const getReports = async (req, res) => {
   }
 };
 
-// insert a new report
+// insert report --> insert report to the database
+
 export const insertReport = async (req, res) => {
-  const { reportType, reportId, reportDate, reportDescription } = req.body;
+  const { reportId, reportType, fromDate, toDate } = req.body;
   const newReport = new GenerateReports({
-    reportType,
     reportId,
-    reportDate,
-    reportDescription,
+    reportType,
+    fromDate,
+    toDate,
   });
   try {
     await newReport.save();
@@ -28,7 +30,8 @@ export const insertReport = async (req, res) => {
   }
 };
 
-// Get a report by ID
+// Get a report by id --> Display a single report
+
 export const getReportById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -39,31 +42,24 @@ export const getReportById = async (req, res) => {
   }
 };
 
-// Update a report by ID
+// Update a report by id --> Update a report
+
 export const updateReportById = async (req, res) => {
   const { id } = req.params;
-  const { reportType, reportId, reportDate, reportDescription } = req.body;
-
+  const { reportId, reportType, fromDate, toDate } = req.body;
   if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send("No report with that id");
-  const updatedReport = {
-    reportType,
-    reportId,
-    reportDate,
-    reportDescription,
-    _id: id,
-  };
+    return res.status(404).send(`No report with id: ${id}`);
+  const updatedReport = { reportId, reportType, fromDate, toDate, _id: id };
   await GenerateReports.findByIdAndUpdate(id, updatedReport, { new: true });
   res.json(updatedReport);
 };
 
-// delete a report by ID
+// Delete a report by id --> Delete a report
 
 export const deleteReportById = async (req, res) => {
   const { id } = req.params;
-
   if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send("No report with that id");
+    return res.status(404).send(`No report with id: ${id}`);
   await GenerateReports.findByIdAndDelete(id);
   res.json({ message: "Report deleted successfully." });
 };

@@ -1,23 +1,23 @@
 import mongoose from "mongoose";
 
-const generateReportsSchema = new mongoose.Schema({
-  reportType: {
-    type: String,
-    required: true,
-  },
+const GenerateReportsSchema = new mongoose.Schema({
   reportId: {
     type: String,
     required: true,
     unique: true,
   },
-  reportDate: {
+  reportType: {
+    type: String,
+    required: true,
+  },
+  fromDate: {
     type: Date,
     required: true,
   },
-  reportDescription: {
-    type: String,
+  toDate: {
+    type: Date,
     required: true,
   },
 });
 
-export default mongoose.model("GenerateReports", generateReportsSchema);
+export default mongoose.model("GenerateReports", GenerateReportsSchema);

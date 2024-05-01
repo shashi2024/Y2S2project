@@ -1,73 +1,91 @@
 import mongoose from "mongoose";
-import RefundPayment from "../model/RefundPayment.model";
+import RefundRequest from "../model/RefundPayment.model";
 
-// Get all Refund Payments
+// Get all refund requests
 
-export const getRefundPayments = async (req, res) => {
+export const getRefundRequests = async (req, res) => {
   try {
-    const refundPayments = await RefundPayment.find();
-    res.status(200).json(refundPayments);
+    const refundRequests = await RefundRequest.find();
+    res.status(200).json(refundRequests);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 };
 
-// get a refund payment by ID
+// insert refund request
 
-export const getRefundPaymentById = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const refundPayment = await RefundPayment.findById(id);
-    res.status(200).json(refundPayment);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
-};
-
-// insert a new Refund Payment
-
-export const insertRefundPayment = async (req, res) => {
-  const { paymentType, paymentId, paymentDate, paymentDescription } = req.body;
-  const newRefundPayment = new RefundPayment({
-    paymentType,
-    paymentId,
+export const insertRefundRequest = async (req, res) => {
+  const {
+    refundRequestId,
+    refundType,
+    refundAmount,
+    refundDate,
     paymentDate,
-    paymentDescription,
+    description,
+  } = req.body;
+  const newRefundRequest = new RefundRequest({
+    refundRequestId,
+    refundType,
+    refundAmount,
+    refundDate,
+    paymentDate,
+    description,
   });
   try {
-    await newRefundPayment.save();
-    res.status(201).json(newRefundPayment);
+    await newRefundRequest.save();
+    res.status(201).json(newRefundRequest);
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
 };
-// Update a Refund Payment by ID
 
-export const updateRefundPaymentById = async (req, res) => {
+// Get a refund request by id
+
+export const getRefundRequestById = async (req, res) => {
   const { id } = req.params;
-  const { paymentType, paymentId, paymentDate, paymentDescription } = req.body;
-
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send("No Refund Payment with that id");
-  const updatedRefundPayment = {
-    paymentType,
-    paymentId,
-    paymentDate,
-    paymentDescription,
-    _id: id,
-  };
-  await RefundPayment.findByIdAndUpdate(id, updatedRefundPayment, {
-    new: true,
-  });
-  res.json(updatedRefundPayment);
+  try {
+    const refundRequest = await RefundRequest.findById(id);
+    res.status(200).json(refundRequest);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
 };
 
-// delete a refund payment by ID
-export const deleteRefundPaymentById = async (req, res) => {
-  const { id } = req.params;
+// Update a refund request by id
 
+export const updateRefundRequestById = async (req, res) => {
+  const { id } = req.params;
+  const {
+    refundRequestId,
+    refundType,
+    refundAmount,
+    refundDate,
+    paymentDate,
+    description,
+  } = req.body;
   if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send("No Refund Payment with that id");
-  await RefundPayment.findByIdAndDelete(id);
-  res.json({ message: "Refund Payment deleted successfully." });
+    return res.status(404).send(`No refund request with id: ${id}`);
+  const updatedRefundRequest = {
+    refundRequestId,
+    refundType,
+    refundAmount,
+    refundDate,
+    paymentDate,
+    description,
+    _id: id,
+  };
+  await RefundRequest.findByIdAndUpdate(id, updatedRefundRequest, {
+    new: true,
+  });
+  res.json(updatedRefundRequest);
+};
+
+// Delete a refund request by id
+
+export const deleteRefundRequestById = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`No refund request with id: ${id}`);
+  await RefundRequest.findByIdAndDelete(id);
+  res.json({ message: "Refund request deleted successfully." });
 };

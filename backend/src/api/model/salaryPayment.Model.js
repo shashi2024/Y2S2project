@@ -1,54 +1,43 @@
 import mongoose from "mongoose";
 
-const salaryPaymentSchema = new mongoose.Schema({
+const SalaryPaymentSchema = new mongoose.Schema({
   PaymentId: {
     type: String,
     required: true,
     unique: true,
   },
-  EmployeeId: {
+  employeeId: {
     type: String,
     required: true,
-    unique: true,
   },
-  EmployeeName: {
-    type: String,
+  paymentDate: {
+    type: Date,
     required: true,
   },
   basicSalary: {
     type: Number,
     required: true,
   },
-  attendence: {
+  Attendance: {
     type: Number,
     required: true,
   },
-  otHours: {
+  overtime: {
     type: Number,
     required: true,
-  },
-  bankName: {
-    type: String,
-    required: false,
-  },
-  AccountNum: {
-    type: Number,
-    required: true,
-  },
-  PaymenentDate: {
-    type: Date,
-    required: true,
-  },
-  discription: {
-    type: String,
-    required: false,
   },
   totalSalary: {
     type: Number,
     required: true,
   },
+  bankAccount: {
+    type: String,
+    required: true,
+  },
+  bankName: {
+    type: String,
+    required: true,
+  },
 });
 
-export default mongoose.model("SalaryPayment", salaryPaymentSchema);
-
-// { bufferCommands: false, bufferMaxEntries: 0 }
+export default mongoose.model("SalaryPayment", SalaryPaymentSchema);
