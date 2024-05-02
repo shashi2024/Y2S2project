@@ -1,10 +1,12 @@
 import { useState } from "react";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
-import Button from "../components/Button";
+import { useNavigate } from "react-router-dom";
+import ManageTasksList from "../partials/manageTasks/ManageTasksList";
 
-const RestaurantDashboard = () => {
+const CreateTask = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -14,8 +16,10 @@ const RestaurantDashboard = () => {
         {/*  Site header */}
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <main>
-          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            <h1 className="text-slate-800 font-bold text-3xl">Dashboard</h1>
+          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto bg-background ">
+            <div className="bg-white p-6 rounded-lg shadow-lg">
+              <ManageTasksList />
+            </div>
           </div>
         </main>
       </div>
@@ -23,4 +27,4 @@ const RestaurantDashboard = () => {
   );
 };
 
-export default RestaurantDashboard;
+export default CreateTask;

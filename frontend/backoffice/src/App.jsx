@@ -17,6 +17,7 @@ import RestaurantDashboard from "./pages/RestaurantDashboard";
 import CreateTask from "./pages/CreateTask";
 import TasksTable from "./pages/MonitorTasks";
 import MonitorTasks from "./pages/MonitorTasks";
+import ManageTasks from "./pages/ManageTasks";
 
 function App() {
   const location = useLocation();
@@ -68,6 +69,11 @@ function App() {
           exact
           path="/maintenance/monitor-tasks"
           element={<MonitorTasks />}
+        />
+        <Route
+          exact
+          path="/maintenance/manage-tasks"
+          element={<ManageTasks />}
         />
       </Routes>
     </>

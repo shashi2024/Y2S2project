@@ -4,6 +4,7 @@ import Header from "../partials/Header";
 import ProductCard from "../components/ProductCard";
 import Button from "../components/Button";
 import axios from "axios";
+import SearchBar from "../components/SearchBar";
 
 const CreateOrder = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -300,6 +301,7 @@ const CreateOrder = () => {
                 <h1 className="text-slate-800 font-bold text-3xl">
                   Order List
                 </h1>
+                <SearchBar alignment="left" />
                 <hr className="border-t border-second_background mt-2 mb-12" />
                 <table className="w-full text-left border-collapse">
                   <thead className="border-t border-second_background">

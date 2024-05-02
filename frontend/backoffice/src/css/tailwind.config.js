@@ -18,6 +18,8 @@ module.exports = {
         second_background: '#FFD4D4',
         selected_text: '#9E9292',
         color: '#FF8585',
+        color2: '#FFE6E6',
+        light_pink: '#FFF7F7'
       },
       boxShadow: {
         DEFAULT: '0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.02)',
