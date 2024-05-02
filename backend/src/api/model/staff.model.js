@@ -2,16 +2,12 @@
 import mongoose from "mongoose";
 
 // Define the schema
-const UserSchema = new mongoose.Schema({
+const StaffSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
   },
-  rID: {
-    type: Number,
-    required: true,
-  },
-  uID: {
+  sID: {
     type: Number,
     required: true,
   },
@@ -23,8 +19,16 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  nic: {
+    type: Number,
+    required: true,
+  },
+  position: {
+    type: String,
+    required: true,
+  }
 });
 
 // Create the model from the schema and export it
-const User = mongoose.model("User", UserSchema);
-export default User;
+const Staff = mongoose.model("Staff", StaffSchema);
+export default Staff;
