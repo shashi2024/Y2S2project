@@ -1,10 +1,13 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 node_modules
 .DS_Store
 dist
 dist-ssr
 *.local
 =======
+=======
+>>>>>>> 880c69adf5653c1a2fd43fd1fcc88971da3076c7
 # Dependency directories
 node_modules/
 
@@ -34,4 +37,7 @@ pids
 # Distribution / build
 dist/
 
+<<<<<<< HEAD
+>>>>>>> 880c69adf5653c1a2fd43fd1fcc88971da3076c7
+=======
 >>>>>>> 880c69adf5653c1a2fd43fd1fcc88971da3076c7
