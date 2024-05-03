@@ -1,5 +1,6 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< HEAD:frontend/backoffice/package.json
   "name": "backoffice",
   "version": "0.1.0",
@@ -13,10 +14,16 @@
   "private": true,
   "version": "0.0.0",
 >>>>>>> 880c69adf5653c1a2fd43fd1fcc88971da3076c7
+=======
+  "name": "customerportal",
+  "private": true,
+  "version": "0.0.0",
+>>>>>>> 880c69adf5653c1a2fd43fd1fcc88971da3076c7
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+<<<<<<< HEAD
 <<<<<<< HEAD
     "preview": "vite preview"
   },
@@ -29,16 +36,22 @@
     "moment": "^2.29.4",
 =======
 =======
+=======
+>>>>>>> 880c69adf5653c1a2fd43fd1fcc88971da3076c7
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
+>>>>>>> 880c69adf5653c1a2fd43fd1fcc88971da3076c7
+=======
 >>>>>>> 880c69adf5653c1a2fd43fd1fcc88971da3076c7
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-brands-svg-icons": "^6.5.2",
     "@fortawesome/free-regular-svg-icons": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> 880c69adf5653c1a2fd43fd1fcc88971da3076c7:frontend_new/customerPortal/package.json
     "react": "^18.2.0",
@@ -58,6 +71,8 @@
     "tailwindcss": "^3.3.6",
     "vite": "^5.0.6"
 =======
+=======
+>>>>>>> 880c69adf5653c1a2fd43fd1fcc88971da3076c7
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -73,6 +88,9 @@
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "vite": "^5.2.0"
+<<<<<<< HEAD
+>>>>>>> 880c69adf5653c1a2fd43fd1fcc88971da3076c7
+=======
 >>>>>>> 880c69adf5653c1a2fd43fd1fcc88971da3076c7
   }
 }
