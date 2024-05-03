@@ -14,7 +14,6 @@ import userRouter from "./api/routes/user.route";
 import staffRouter from "./api/routes/staff.route";
 import reportRouter from "./api/routes/report.route";
 import nodemailer from 'nodemailer';
-import crypto from 'crypto';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -49,119 +48,75 @@ app.use("/user", userRouter);
 app.use("/report", reportRouter);
 
 //shashi
-// Set up nodemailer
 const mongoose = require('mongoose');
 
-let transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'sashinisithara20@gmail.com',
-    pass: 'Sashi2000@123'
-  }
-});
-
 //call register model
-// require("./api/model/registerUser.model.js")
-// const User = mongoose.model("Register");
-const Register = require("./api/model/registerUser.model.js");
+require("./api/model/registerUser.model.js")
+const User = mongoose.model("Register");
 
-// app.post("/register", async (req, res) => {
-//   const { userID, email, password } = req.body;
-//   try{
-//     await User.create({ userID, email, password })
-//     res.send({ status: "ok" });
-//   } catch (error) {
-//     res.send({ status: "error", error: error.message });
-//   }
-// });
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
+//register user
 app.post("/register", async (req, res) => {
   const { userID, email, password } = req.body;
-  try{
-    await Register.create({ userID, email, password })
+  try {
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    await User.create({ userID, email, password: hashedPassword });
     res.send({ status: "ok" });
   } catch (error) {
     res.send({ status: "error", error: error.message });
   }
 });
 
-app.post("/login", async (req, res) => {
+//user loging
+app.post('/login', (req, res) => {
   const { email, password } = req.body;
-  try {
-    const user = await User.findOne({ email });
-    if (user.password === password) {
-      // Generate OTP
-      const otp = crypto.randomBytes(3).toString('hex');
-      user.otp = otp;
-      await user.save();
 
-      // Send OTP
-      let mailOptions = {
-        from: 'sashinisithara20@gmail.com',
-        to: user.email,
-        subject: 'Your OTP',
-        text: `Your OTP is ${otp}`
-      };
-      transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
-      });
+  User.findOne({ email: email })
+    .then(user => {
+      if (!user) {
+        return res.send({ status: "User not existed" });
+      }
 
-      res.send({ status: "ok", message: "OTP sent to email" });
-    } else {
-      res.send({ status: "error", error: "Invalid email/password" });
-    }
-  } catch (error) { 
-    res.send({ status: "error", error: error.message });
-  }
+      bcrypt.compare(password, user.password)
+        .then(isMatch => {
+          if (isMatch) {
+            // Passwords match
+            res.send({ status: "ok" });
+          } else {
+            // Passwords don't match
+            res.send({ status: "Login Failed" });
+          }
+        })
+        .catch(err => res.send({ status: err }));
+    })
+    .catch(err => res.send({ status: err }));
 });
 
-app.post("/verify-otp", async (req, res) => {
-  const { email, otp } = req.body;
-  try {
-    const user = await User.findOne({ email });
-    if (user.otp === otp) {
-      res.send({ status: "ok", message: "OTP verified" });
-    } else {
-      res.send({ status: "error", error: "Invalid OTP" });
-    }
-  } catch (error) { 
-    res.send({ status: "error", error: error.message });
-  }
-});
+//reset password
+app.post('/forgot-password', (req, res) => {
+  const { email, newPassword, confirmPassword } = req.body;
 
-//change password
-// app.post("/change-password", async (req, res) => {
-//   const { email, password } = req.body;
-//   try {
-//     const user = await User.findOne({ email });
-//     if (!user) {
-//       return res.status(404).send({ status: "error", error: "User not found" });
-//     }
-//     user.password = password;
-//     await user.save();
-//     res.send({ status: "ok" });
-//   } catch (error) {
-//     res.status(500).send({ status: "error", error: error.message });
-//   }
-// });
-
-app.post("/change-password", async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const user = await Register.findOne({ email });
-    if (!user) {
-      return res.status(404).send({ status: "error", error: "User not found" });
-    }
-    user.password = password;
-    await user.save();
-    res.send({ status: "ok" });
-  } catch (error) {
-    res.status(500).send({ status: "error", error: error.message });
+  if (newPassword !== confirmPassword) {
+    return res.status(400).send({ Status: "Passwords do not match" });
   }
+
+  User.findOne({ email: email })
+    .then(user => {
+      if (!user) {
+        return res.send({ Status: "User not existed" });
+      }
+
+      bcrypt.hash(newPassword, 10)
+        .then(hash => {
+          user.password = hash;
+          user.save();
+          res.send({ Status: "Success" });
+        })
+        .catch(err => res.send({ Status: err }));
+    })
+    .catch(err => res.send({ Status: err }));
 });
 
 app.listen(PORT, () => {

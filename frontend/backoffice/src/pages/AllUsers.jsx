@@ -23,6 +23,7 @@ function AllUsers() {
   const [searchQuery, setSearchQuery] = useState("");
   const [noResults, setNoResults] = useState(false);
   const navigate = useNavigate();
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
   useEffect(() => {
     fetchHandler().then((data) => setUsers(data.users));
@@ -36,18 +37,20 @@ function AllUsers() {
     onafterprint: () => alert("User Report Successfully Download!"),
   });
 
-  const handleSearch = () => {
-    fetchHandler().then((data) => {
-      const user = data.users.find(
-        (user) =>
-          user.uID.toString().toLowerCase() === searchQuery.toLowerCase()
-      );
-      if (user) {
-        navigate(`/showUser/${user._id}`);
-      } else {
-        setNoResults(true);
-      }
-    });
+  const handleSearch = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    if (query === "") {
+      setFilteredUsers([]);
+    } else {
+      fetchHandler().then((data) => {
+        const filtered = data.users.filter((user) =>
+          user.name.toLowerCase().startsWith(query.toLowerCase())
+        );
+        setFilteredUsers(filtered);
+      });
+    }
   };
 
   return (
@@ -58,7 +61,7 @@ function AllUsers() {
         <div className="absolute top-20 right-28 w-4/5 h-24 bg-white p-2">
           <div className="absolute top-4 left-12 flex items-center border-b w-1/2 border-b-2 border-red-400 py-2">
             <input
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={handleSearch}
               className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
               type="text"
               placeholder="Search Users...."
@@ -71,6 +74,17 @@ function AllUsers() {
               Search
             </button>
           </div>
+
+          {filteredUsers.length > 0 && (
+            <div className="absolute top-20 right-28 w-4/5 h-24 bg-white p-2">
+              {filteredUsers.map((user) => (
+                <div key={user._id}>
+                  <Link to={`/showUser/${user._id}`}>{user.name}</Link>
+                </div>
+              ))}
+            </div>
+          )}
+
           <div>
             <Link to="/newUser">
               <button className="absolute top-20 top-4 right-56 w-40 h-12 bg-red-400 hover:bg-red-500 text-white border-2 border-red-400 rounded-lg translate-y-1">
@@ -100,7 +114,9 @@ function AllUsers() {
                   <table className="absolute top-36 right-1 w-4/5  border-separate border-spacing-2 p-2 text-lg">
                     <thead>
                       <tr>
-                        <th className="border border-black rounded-md p-2">No.</th>
+                        <th className="border border-black rounded-md p-2">
+                          No.
+                        </th>
                         <th className="border border-black rounded-md">Name</th>
                         <th className="border border-black rounded-md">
                           User ID

@@ -1,6 +1,7 @@
 import myImage from "../images/pic2.jpeg";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+import axios from "axios";
 
 function ForgetPassword() {
   const [email, setEmail] = useState("");
@@ -16,18 +17,20 @@ function ForgetPassword() {
       return;
     }
 
-    const response = await fetch("/change-password", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
+    try {
+      const response = await axios.post("http://localhost:5000/forgot-password", {
+        email,
+        newPassword: password,
+        confirmPassword,
+      });
 
-    if (response.ok) {
-      navigate.push("/login");
-    } else {
-      alert("Failed to change password");
+      if (response.data.Status === "Success") {
+        navigate("/login");
+      } else {
+        alert("Failed to change password");
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -43,11 +46,11 @@ function ForgetPassword() {
 
       <div className="absolute top-36 left-1/4 translate-x-20 w-2/5 h-3/5 bg-black bg-opacity-70 drop-shadow-xl rounded-2xl">
         <h1 className="text-white text-3xl font-serif font-bold absolute left-20 translate-x-3 top-8">
-          CHENGE YOUR PASSWORD
+          PLEASE ENTER YOUR EMAIL
         </h1>
         <form onSubmit={handleSubmit}>
           <input
-            className="bg-gray-900 bg-opacity-80 absolute top-24 left-28 h-12 w-2/3 rounded-xl p-2"
+            className="bg-gray-900 bg-opacity-80 absolute top-20 left-28 h-12 w-2/3 rounded-xl p-2"
             type="text"
             placeholder="Enter Email"
             id="email"
@@ -55,24 +58,26 @@ function ForgetPassword() {
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
-            className="bg-gray-900 bg-opacity-80 absolute top-44 left-28 h-12 w-2/3 rounded-xl p-2"
+            className="bg-gray-900 bg-opacity-80 absolute top-40 left-28 h-12 w-2/3 rounded-xl p-2"
             type="password"
             placeholder="Enter Password"
-            id="password1"
+            id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="new-password"
           />
           <input
-            className="bg-gray-900 bg-opacity-80 absolute top-64 left-28 h-12 w-2/3 rounded-xl p-2"
-            type="Password"
+            className="bg-gray-900 bg-opacity-80 absolute top-60 left-28 h-12 w-2/3 rounded-xl p-2"
+            type="password"
             placeholder="Enter again Password"
-            id="Password2"
+            id="confirmPassword"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            autoComplete="new-password"
           />
           <button
             type="submit"
-            className="w-40 h-12 bg-white bg-opacity-65 text-black rounded-2xl"
+            className="w-40 absolute top-2/3 translate-y-6 left-56 h-12 bg-white bg-opacity-65 text-black rounded-2xl"
           >
             Submit Password
           </button>
