@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
-import axios from 'axios';
 
-function CampForm() {
+
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
+export default function UpdateCamp() {
   const [campData, setCampData] = useState({
     campName: "",
     budget: "",
-    duration: {
-      startDate: null, // Change from empty string to null
-      endDate: null, // Change from empty string to null
-    },
-    description: "",
+    startDate: "",
+    endDate: "",
     platform: "",
-    tasks: []
+    description: "",
+    tasks: [],
   });
-  
+  const params = useParams();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,53 +25,57 @@ function CampForm() {
     });
   };
 
+  const getCampaign = async (id) => {
+    try {
+      const res = await axios.get(`http://localhost:3000/api/campaigns/getCampaign/${id}`);
+      setCampData(res.data);
+      console.log('Campaign fetched successfully:', res.data);
+    } catch (error) {
+      console.error('Failed to fetch campaign:', error);
+    }
+  };
+
+  useEffect(() => {
+    getCampaign(params.id);
+  }, [params.id]);
+
+  const editCamp = async () => {
+    try {
+      const res = await axios.put(`http://localhost:3000/api/campaigns/updateCampaign/${params.id}`, campData);
+      console.log('Campaign updated successfully:', res.data);
+    } catch (error) {
+      console.error('Failed to update campaign:', error);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form submitted:", campData);
+    editCamp();
+    window.location = '/camplist';
+  };
+
   const handleTaskChange = (index, value) => {
     const updatedTasks = [...campData.tasks];
     updatedTasks[index] = value;
-    setCampData({
-      ...campData,
-      tasks: updatedTasks,
-    });
+    setCampData({ ...campData, tasks: updatedTasks });
   };
 
   const handleRemoveTask = (index) => {
     const updatedTasks = [...campData.tasks];
     updatedTasks.splice(index, 1);
-    setCampData({
-      ...campData,
-      tasks: updatedTasks,
-    });
+    setCampData({ ...campData, tasks: updatedTasks });
   };
 
   const handleAddTask = () => {
-    setCampData({
-      ...campData,
-      tasks: [...campData.tasks, ""],
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    axios.post("http://localhost:3000/api/campaigns/createCampaign", campData).then(() => {
-      setCampData({
-        campName: "",
-        budget: "",
-        duration: {
-          startDate: "",
-          endDate: ""
-        },
-        description: "",
-        platform: "",
-        tasks: []
-      })
-    })
+    setCampData({ ...campData, tasks: [...campData.tasks, ""] });
   };
 
   return (
     <div className="max-w-lg mx-auto p-12 bg-white rounded-md shadow-md">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-4">New Marketing Campaign</h2><br />
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4">Update Marketing Campaign</h2><br />
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
+      <div className="mb-4">
           <input
             type="text"
             name="campName"
@@ -117,7 +123,7 @@ function CampForm() {
         <div className="mb-4">
           <div className="block text-gray-700 font-semibold mb-2">Choose Platform</div>
           <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2">
               <input
                 type="radio"
                 id="tiktok"
@@ -161,6 +167,7 @@ function CampForm() {
             </div>
           </div>
         </div>
+
         <div className="mb-4">
           <textarea
             placeholder="Add Description"
@@ -186,12 +193,10 @@ function CampForm() {
             type="submit"
             className="px-6 py-3 bg-pink-500 text-white rounded-lg text-lg font-semibold hover:bg-pink-600 focus:outline-none focus:bg-pink-600"
           >
-            Submit
+            Update
           </button>
         </div>
       </form>
     </div>
   );
 }
-
-export default CampForm;
