@@ -1,50 +1,54 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Axios from 'axios';
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
-import GuestNavBar from "../partials/GuestNavBar";
 
 const GuestAdmin = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [searchInput, setSearchInput] = useState("");
+    const [guestData, setGuestData] = useState([]);
+    const [filteredGuests, setFilteredGuests] = useState([]);
 
-    // Dummy guest data for demonstration
-    const guest = {
-        fullName: "John Doe",
-        userName: "johndoe123",
-        passportId: "AB123456",
-        password: "********",
-        phone: "123-456-7890",
-        email: "johndoe@example.com",
-        country: "USA",
-        paymentMethod: "Credit Card",
-        healthIssues: "None",
-        specialRequest: "N/A",
-        language: "English",
-        contactMethod: "Email",
+    useEffect(() => {
+        getGuestData();
+    }, []);
+
+    const getGuestData = async () => {
+        try {
+            const response = await Axios.get("http://localhost:5000/guest");
+            console.log(response.data);
+            setGuestData(response.data.response || []);
+            setFilteredGuests(response.data.response || []);
+        } catch (error) {
+            console.error("Error fetching guest data:", error);
+        }
     };
 
     const handleSearchInputChange = (event) => {
-      setSearchInput(event.target.value);
-  };
+        const searchValue = event.target.value;
+        setSearchInput(searchValue);
+        const filtered = guestData.filter(guest => {
+            return Object.values(guest).some(value =>
+                value.toLowerCase().includes(searchValue.toLowerCase())
+            );
+        });
+        setFilteredGuests(filtered);
+    };
 
-  const handleUpdateButtonClick = () => {
-      // Implement update functionality here
-  };
+    const handleUpdateButtonClick = () => {
+        // Implement update functionality here
+    };
 
-  const handleDeleteButtonClick = () => {
-      // Implement delete functionality here
-  };
+    const handleDeleteButtonClick = () => {
+        // Implement delete functionality here
+    };
 
     return (
         <div className="flex h-screen overflow-hidden">
             <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
             <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-                {/* Site header */}
                 <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
                 <main className="bg-gray-100 min-h-screen flex flex-col items-center">
-                    <br />
                     <h1 className="text-2xl font-extrabold text-gray-800 mb-8">GUEST ADMIN DASHBOARD</h1>
                     <div className="flex items-center mb-4">
                         <input
@@ -67,63 +71,41 @@ const GuestAdmin = () => {
                             Delete
                         </button>
                     </div>
-                    <div className="overflow-x-auto w-full">
-                        <table className="w-full border-collapse border border-gray-300">
-                            <thead>
-                                <tr className="bg-gray-100">
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">Field</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">Details</th>
+                    <div className="overflow-x-auto">
+                        <table className="min-w-full divide-y divide-gray-200">
+                            <thead className="bg-gray-50">
+                                <tr>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Field
+                                    </th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Details
+                                    </th>
+                                    <th scope="col" className="relative px-6 py-3">
+                                        <span className="sr-only">Edit</span>
+                                    </th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-gray-200">
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Full Name:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{guest.fullName}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">User Name:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{guest.userName}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Passport ID:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{guest.passportId}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Password:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{guest.password}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Phone:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{guest.phone}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Email:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{guest.email}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Country:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{guest.country}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Payment Method:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{guest.paymentMethod}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Health Issues:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{guest.healthIssues}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Special Request:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{guest.specialRequest}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Language:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{guest.language}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Contact Method:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{guest.contactMethod}</td>
-                                </tr>
+                            <tbody className="bg-white divide-y divide-gray-200">
+                                {filteredGuests.map((guest, index) => (
+                                    <tr key={index}>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                            {Object.keys(guest).map((key, index) => (
+                                                <div key={index}>{key}</div>
+                                            ))}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {Object.values(guest).map((value, index) => (
+                                                <div key={index}>{value}</div>
+                                            ))}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                                                Edit
+                                            </a>
+                                        </td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>

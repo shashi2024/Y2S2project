@@ -1,30 +1,41 @@
-import { useState } from "react";
+// ReservationAdmin.jsx
+
+import { useState, useEffect } from "react";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 import GuestNavBar from "../partials/GuestNavBar";
+import Axios from 'axios';
 
 const ReservationAdmin = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [searchInput, setSearchInput] = useState("");
+    const [reservation, setReservation] = useState(null);
 
-    // Dummy reservation data for demonstration
-    const reservation = {
-        reservationId: "123456789",
-        passportId: "AB123456",
-        numberOfDays: 5,
-        roomNumber: "101",
-        floor: "1",
-        type: "Standard",
-        numberOfBeds: 1,
-        hasBalcony: true,
-        hasAC: true,
-        specialRequest: "N/A",
-        checkIn: "2024-05-01",
-        checkOut: "2024-05-06",
+    useEffect(() => {
+        getReservation();
+    }, []);
+
+
+    const getReservation = async () => {
+        try {
+            const response = await Axios.get("http://localhost:5000/reservation");
+            console.log(response.data);
+            setReservation(response.data.response || null);
+        } catch (error) {
+            console.error("Error fetching reservation data:", error);
+            // Handle error if needed
+        }
     };
 
     const handleSearchInputChange = (event) => {
-        setSearchInput(event.target.value);
+        const searchValue = event.target.value;
+        setSearchInput(searchValue);
+        const filtered = reservationData.filter(reservation => {
+            return Object.values(reservation).some(value =>
+                value.toLowerCase().includes(searchValue.toLowerCase())
+            );
+        });
+        setFilteredReservations(filtered);
     };
 
     const handleUpdateButtonClick = () => {
@@ -40,7 +51,6 @@ const ReservationAdmin = () => {
             <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
             <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-                {/* Site header */}
                 <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
                 <main className="bg-gray-100 min-h-screen flex flex-col items-center">
@@ -76,54 +86,19 @@ const ReservationAdmin = () => {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200">
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Reservation ID:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{reservation.reservationId}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Passport ID:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{reservation.passportId}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Number of Days:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{reservation.numberOfDays}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Room Number:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{reservation.roomNumber}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Floor:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{reservation.floor}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Type:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{reservation.type}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Number of Beds:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{reservation.numberOfBeds}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Balcony:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{reservation.hasBalcony ? "Yes" : "No"}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">AC:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{reservation.hasAC ? "Yes" : "No"}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Special Request:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{reservation.specialRequest}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Check-in:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{reservation.checkIn}</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Check-out:</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{reservation.checkOut}</td>
-                                </tr>
+                                {reservation && (
+                                    <>
+                                        <tr>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Reservation ID:</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{reservation.reservationId}</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">Passport ID:</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b">{reservation.passportId}</td>
+                                        </tr>
+                                        {/* Add more rows for other fields */}
+                                    </>
+                                )}
                             </tbody>
                         </table>
                     </div>

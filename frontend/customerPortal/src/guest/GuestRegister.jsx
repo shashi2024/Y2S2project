@@ -2,37 +2,34 @@ import React, { useState } from "react";
 import "./GuestRegister.css";
 import axios from "axios";
 
-function guestregister() {
-  const [fullName, setFullName] = useState("");
-  const [userName, setUserName] = useState("");
-  const [passportId, setPassportId] = useState("");
+function guestregister  () {
+  const [fullname, setFullName] = useState("");
+  const [username, setUserName] = useState("");
+  const [passportid, setPassportId] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [country, setCountry] = useState("");
-  const [paymentOption, setPaymentOption] = useState("");
-  const [healthIssues, setHealthIssues] = useState("");
-  const [specialRequest, setSpecialRequest] = useState("");
+  const [payment, setPaymentOption] = useState("");
+  const [health, setHealthIssues] = useState("");
+  const [request, setSpecialRequest] = useState("");
   const [language, setLanguage] = useState("");
-  const [contactMethod, setContactMethod] = useState("");
+  const [contactmethod, setContactMethod] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   //validation
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!validateLettersOnly(fullName)) {
+    if (!validateLettersOnly(fullname)) {
       setErrorMessage("Full Name should contain only letters.");
       return;
     }
-    if (!validateLettersOnly(userName)) {
-      setErrorMessage("User Name should contain only letters.");
-      return;
-    }
+    
     if (!validateLettersOnly(country)) {
       setErrorMessage("Country should contain only letters.");
       return;
     }
-    if (!validateLettersOnly(paymentOption)) {
+    if (!validateLettersOnly(payment)) {
       setErrorMessage("Payment Option should contain only letters.");
       return;
     }
@@ -48,37 +45,52 @@ function guestregister() {
     setErrorMessage(""); // Clear error message if validation succeeds
 
     console.log(
-      fullName,
-      userName,
-      passportId,
+      fullname,
+      username,
+      passportid,
       password,
       phone,
       email,
       country,
-      paymentOption,
-      healthIssues,
-      specialRequest,
+      payment,
+      health,
+      request,
       language,
-      contactMethod
+      contactmethod
     );
     // Add your form submission logic here
     try {
-      const response = axios.post("http://localhost:5000/guest/", {
-        fullName,
-        userName,
-        passportId,
+      console.log(
+        fullname,
+        username,
+        passportid,
         password,
         phone,
         email,
         country,
-        paymentOption,
-        healthIssues,
-        specialRequest,
+        payment,
+        health,
+        request,
         language,
-        contactMethod,
+        contactmethod
+      );
+      const response = axios.post("http://localhost:5000/guest/", {
+        fullname,
+        username,
+        passportid,
+        password,
+        phone,
+        email,
+        country,
+        payment,
+        health,
+        request,
+        language,
+        contactmethod,
       });
 
       console.log(response);
+      alert("Guest Registered Successfully!");
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -124,13 +136,13 @@ function guestregister() {
       <h1>Guest Registration</h1>
 
       <fieldset>
-        <form action="#" method="get">
+        <form action="#" method="post">
           <label htmlFor="fullname">Full Name*</label>
           <input
             type="text"
             name="fullname"
             id="fullname"
-            value={fullName}
+            value={fullname}
             onChange={(e) => setFullName(e.target.value)}
             placeholder="Enter Full Name"
             required
@@ -140,7 +152,7 @@ function guestregister() {
             type="text"
             name="username"
             id="username"
-            value={userName}
+            value={username}
             onChange={(e) => setUserName(e.target.value)}
             placeholder="Enter User Name"
             required
@@ -150,7 +162,7 @@ function guestregister() {
             type="text"
             name="passportid"
             id="passportid"
-            value={passportId}
+            value={passportid}
             onChange={(e) => setPassportId(e.target.value)}
             placeholder="Enter Passport ID"
             required
@@ -200,7 +212,7 @@ function guestregister() {
             type="text"
             name="paymentoption"
             id="paymentoption"
-            value={paymentOption}
+            value={payment}
             onChange={(e) => setPaymentOption(e.target.value)}
             placeholder="Enter Payment Option"
             required
@@ -211,7 +223,7 @@ function guestregister() {
             id="healthissues"
             cols="30"
             rows="5"
-            value={healthIssues}
+            value={health}
             onChange={(e) => setHealthIssues(e.target.value)}
             placeholder="Enter Health Issues (if any)"
           ></textarea>
@@ -221,7 +233,7 @@ function guestregister() {
             id="specialrequest"
             cols="30"
             rows="5"
-            value={specialRequest}
+            value={request}
             onChange={(e) => setSpecialRequest(e.target.value)}
             placeholder="Enter Special Request (if any)"
           ></textarea>
@@ -239,7 +251,7 @@ function guestregister() {
             type="text"
             name="contactmethod"
             id="contactmethod"
-            value={contactMethod}
+            value={contactmethod}
             onChange={(e) => setContactMethod(e.target.value)}
             placeholder="Enter Contact Method"
             required

@@ -5,6 +5,7 @@ import Navbar from "./components/navbar.jsx"; // Corrected import path for Navba
 import Footer from "./components/footer.jsx"; // Corrected import path for Footer
 import GuestRegister from "./guest/GuestRegister.jsx";
 import RoomReservation from "./roomreservation/roomreservation.jsx";
+import GuestLogin from "./guest/GuestLogin.jsx"; // Added import for GuestLogin
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/guestregister" element={<GuestRegister />} />
           <Route path="/roomreservation" element={<RoomReservation />} />
+          <Route path="/guestlogin" element={<GuestLogin />} /> // Added route for GuestLogin
         </Routes>
       </Router>
       <Footer />

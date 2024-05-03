@@ -1,4 +1,4 @@
-const User = require("../model/GuestModel");
+const Guest = require("../model/GuestModel");
 
 //display
 const getAllGuests = async (req, res) => { 
@@ -6,7 +6,7 @@ const getAllGuests = async (req, res) => {
     let Guests;
     //get all users
     try {
-        Guests = await User.find();
+        Guests = await Guest.find();
     } catch (err) {
          console.log(err);
         }
@@ -30,7 +30,7 @@ const addGuests = async(req, res, next)=>{
     let guests;
 
     try{
-        guests = new Guest({username,password,fullname,passportid,email,phone,language,contactmethod,arrival,leave,country,health,payment,request});
+        guests = new Guest({username,password,fullname,passportid,email,phone,language,contactmethod,country,health,payment,request});
         await guests.save();
     }catch(err){
         console.log(err);
@@ -72,7 +72,7 @@ const updateGuests = async(req, res, next)=>{
     let guests;
 
     try{
-        guests = await User.findByIdAndUpdate(id,
+        guests = await Guest.findByIdAndUpdate(id,
         {username,password,fullname,passportid,email,phone,language,contactmethod,country,health,payment,request},)
         guests = await guests.save();
     }
