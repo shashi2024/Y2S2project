@@ -42,6 +42,11 @@ app.use("/user", userRouter);
 
 /* Reports */
 app.use("/report", reportRouter)
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 880c69adf5653c1a2fd43fd1fcc88971da3076c7
 
 app.listen(PORT, () => {
   logger.info(`Server is up and running on port ${PORT}`);
