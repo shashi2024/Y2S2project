@@ -127,7 +127,7 @@ const CreateOrder = () => {
       totalAmount: calculateDiscountedAmount(),
     };
 
-    setOrders(prevOrders => [...prevOrders, newOrder]);
+    setOrders((prevOrders) => [...prevOrders, newOrder]);
   };
 
   const handleFulfillOrder = (orderId) => {
@@ -140,7 +140,7 @@ const CreateOrder = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const handleCancelOrder = (orderId) => {
     try {
@@ -156,15 +156,19 @@ const CreateOrder = () => {
 
   const genReport = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/report/orders", { responseType: 'arraybuffer' });
+      const response = await axios.get("http://localhost:5000/report/orders", {
+        responseType: "arraybuffer",
+      });
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
 
       // Extract filename from the 'Content-Disposition' header
-      const contentDisposition = response.headers['content-disposition'] || response.headers['Content-Disposition'];
-      let filename = 'file.xlsx'; // Default filename in case extraction fails
-      console.log(contentDisposition)
+      const contentDisposition =
+        response.headers["content-disposition"] ||
+        response.headers["Content-Disposition"];
+      let filename = "file.xlsx"; // Default filename in case extraction fails
+      console.log(contentDisposition);
       if (contentDisposition) {
         const regex = /filename="([^"]*)"/;
         const match = contentDisposition.match(regex);
@@ -177,7 +181,7 @@ const CreateOrder = () => {
     } catch (error) {
       console.error(error);
     }
-}
+  };
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -316,24 +320,39 @@ const CreateOrder = () => {
                   </thead>
                   <tbody>
                     {orders.map((order) => (
-                      <tr key={order.id} className="border-t border-second_background">
+                      <tr
+                        key={order.id}
+                        className="border-t border-second_background"
+                      >
                         <td className="py-4 px-6">{order.orderNumber}</td>
                         <td className="py-4 px-6">{order.customerID?.name}</td>
                         <td className="py-4 px-6">{order.orderStatus}</td>
                         <td className="py-4 px-6">{order.paymentStatus}</td>
-                        <td className="py-4 px-6">${order.totalAmount.toFixed(2)}</td>
+                        <td className="py-4 px-6">
+                          ${order.totalAmount.toFixed(2)}
+                        </td>
                         <td className="py-4 px-6">
                           <div className="flex space-x-4">
-                          <Button onClick={() => handleFulfillOrder(order._id)}>Full Fill</Button>
-                          <Button onClick={() => handleCancelOrder(order._id)}>Cancel</Button>
+                            <Button
+                              onClick={() => handleFulfillOrder(order._id)}
+                            >
+                              Full Fill
+                            </Button>
+                            <Button
+                              onClick={() => handleCancelOrder(order._id)}
+                            >
+                              Cancel
+                            </Button>
                           </div>
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
-                <hr className="border-t border-second_background mt-2 mb-12"/>
-                <Button onClick={() => genReport()} className="mt-3 mb-2">Generate Report</Button>
+                <hr className="border-t border-second_background mt-2 mb-12" />
+                <Button onClick={() => genReport()} className="mt-3 mb-2">
+                  Generate Report
+                </Button>
               </div>
             </div>
           </div>

@@ -9,6 +9,7 @@ function CreateTaskForm() {
     register,
     handleSubmit,
     watch,
+    getValues,
     formState: { errors },
   } = useForm();
   const watchStartTime = watch("startTime");

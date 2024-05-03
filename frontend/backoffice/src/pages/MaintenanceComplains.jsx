@@ -2,10 +2,11 @@ import { useState } from "react";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 import Button from "../components/Button";
-import TasksTable from "../partials/monitorTasks/TaskTable";
+import TasksTable from "../partials/MaintenanceDashboard/TaskTable";
 import axios from "axios";
+import ComplainList from "../partials/maintenanceComplains/ComplainList";
 
-const MonitorTasks = () => {
+const MaintenanceDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <div className="flex h-screen overflow-hidden">
@@ -17,7 +18,7 @@ const MonitorTasks = () => {
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto bg-background ">
             <div className="bg-white p-6 rounded-lg shadow-lg">
-              <TasksTable />
+              <ComplainList />
             </div>
           </div>
         </main>
@@ -26,4 +27,4 @@ const MonitorTasks = () => {
   );
 };
 
-export default MonitorTasks;
+export default MaintenanceDashboard;

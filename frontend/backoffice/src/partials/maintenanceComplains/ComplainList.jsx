@@ -1,59 +1,47 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import SearchBar from "../../components/SearchBar";
+import axios from "axios";
+import TabBar from "../../components/TabBar";
 import Button from "../../components/Button";
 import Modal from "react-modal";
-import axios from "axios";
-import SearchBar from "../../components/SearchBar";
+import CustomModal from "../../components/PopUp";
 
-Modal.setAppElement("#root"); // replace '#root' with the id of your app's root element
+Modal.setAppElement("#root");
 
-function TasksTable() {
+function ManageTasksList() {
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
+  const [filter, setFilter] = useState("All Tasks");
+  const [tab, setTab] = useState("All");
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
-
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        setIsLoading(true);
         const response = await axios.get("http://localhost:5000/task");
         setTasks(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error(error);
-      } finally {
-        setIsLoading(false);
       }
     };
 
-    fetchTasks(); // Call the function
+    fetchTasks();
   }, []);
 
-  if (isLoading) {
-    return (
-      <>
-        <div className="flex justify-center items-center min-h-screen">
-          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary"></div>
-        </div>
-        ;
-      </>
-    );
-  }
-
-  const handleEdit = (task) => {
+  const handleDelete = (task) => {
     setSelectedTask(task);
-    setModalOpen(true);
+    setDeleteModalOpen(true);
   };
 
-  const handleDelete = async (task) => {
-    console.log(task._id);
+  const handleConfirmDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/task/${task._id}`
+        `http://localhost:5000/task/${selectedTask._id}`
       );
       if (response.status === 200) {
-        window.location.reload();
+        setTasks(tasks.filter((t) => t._id !== selectedTask._id));
+        setDeleteModalOpen(false);
       } else {
         console.error("Failed to delete task:", response);
       }
@@ -61,6 +49,17 @@ function TasksTable() {
       console.error(error);
     }
   };
+
+  const handleEdit = (task) => {
+    setSelectedTask(task);
+    setModalOpen(true);
+  };
+
+  const filteredTasks = tasks.filter((task) => {
+    if (filter !== "All Tasks" && task.__t !== filter) return false;
+    if (tab !== "All" && task.status !== tab) return false;
+    return true;
+  });
 
   const handleSave = async (event) => {
     event.preventDefault();
@@ -93,72 +92,50 @@ function TasksTable() {
     });
   };
 
-  const genReport = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/report/tasks", {
-        responseType: "arraybuffer",
-      });
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-
-      // Extract filename from the 'Content-Disposition' header
-      const contentDisposition =
-        response.headers["content-disposition"] ||
-        response.headers["Content-Disposition"];
-      let filename = "file.xlsx"; // Default filename in case extraction fails
-      console.log(contentDisposition);
-      if (contentDisposition) {
-        const regex = /filename="([^"]*)"/;
-        const match = contentDisposition.match(regex);
-        filename = match ? match[1] : filename;
-      }
-
-      link.setAttribute("download", filename);
-      document.body.appendChild(link);
-      link.click();
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
-    <div>
-      <h1 className="text-2xl font-bold">Monitor Tasks</h1>
+    <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+      <h1 className="text-2xl font-bold">Maintenance Complains</h1>
       <SearchBar alignment="left" />
-      <hr className="border-t border-second_background mt-2 mb-12" />
-      <table className="w-full text-left border-collapse">
-        <thead className="border-t border-second_background">
-          <tr className="bg-second_background">
-            <th className="py-4 px-6">Task Title</th>
-            <th className="py-4 px-6">Task Type</th>
-            <th className="py-4 px-6">Task Deadline</th>
-            <th className="py-4 px-6">Assignee</th>
-            <th className="py-4 px-6">Task Status</th>
-            <th className="py-4 px-6">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tasks.map((task, index) => (
-            <tr key={index} className="border-t border-second_background">
-              <td className="py-4 px-6">{task.title}</td>
-              <td className="py-4 px-6">{task.__t}</td>
-              <td className="py-4 px-6">
-                {new Date(task.endTime).toLocaleDateString()}
-              </td>
-              <td className="py-4 px-6">{task.userId?.name}</td>
-              <td className="py-4 px-6">{task.status}</td>
-              <td className="py-4 px-6">
-                <Button onClick={() => handleEdit(task)}>Edit</Button>
-                <Button className="ml-2" onClick={() => handleDelete(task)}>
-                  Delete
+      <div className="flex space-x-4 mt-8 mb-8">
+        <TabBar
+          tabs={["All", "Open", "Closed"]}
+          activeTab={tab}
+          onTabClick={setTab}
+        />
+      </div>
+      {filteredTasks.map((task) => (
+        <div
+          key={task._id}
+          className="w-full bg-second_background rounded-xl shadow-lg overflow-hidden mb-5"
+        >
+          <div className="md:flex-shrink-0 p-8">
+            <div>
+              <h2>Task Title: {task.title}</h2>
+              <p>Task Type: {task.taskType}</p>
+              <p>Description: {task.description}</p>
+              <p>Assignee: {task.assignee}</p>
+              <p>Start Date: {new Date(task.startDate).toLocaleDateString()}</p>
+              <p>End Date: {new Date(task.endDate).toLocaleDateString()}</p>
+              <p>Status: {task.status}</p>
+              <p>Priority: {task.priority}</p>
+              <p>Location: {task.location}</p>
+              <div className="flex justify-center">
+                <Button className="px-14 " onClick={() => handleEdit(task)}>
+                  Edit
                 </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <hr className="border-t border-second_background mt-2 mb-12" />
+                {tab === "On Hold" && (
+                  <Button
+                    className="pl-14 pr-14 ml-4"
+                    onClick={() => handleDelete(task)}
+                  >
+                    Delete
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
       <Modal
         isOpen={isModalOpen}
         onRequestClose={() => setModalOpen(false)}
@@ -241,11 +218,16 @@ function TasksTable() {
           </form>
         )}
       </Modal>
-      <Button className="mt-3 mb-2" onClick={() => genReport()}>
-        Generate Report
-      </Button>
+      <CustomModal
+        isOpen={isDeleteModalOpen}
+        onRequestClose={() => setDeleteModalOpen(false)}
+        title="Confirm Deletion"
+        onConfirm={handleConfirmDelete}
+      >
+        Are you sure you want to delete this task?
+      </CustomModal>
     </div>
   );
 }
 
-export default TasksTable;
+export default ManageTasksList;

@@ -1,30 +1,34 @@
-import React from 'react';
+import React from "react";
 
 const SearchBar = ({ alignment }) => {
   let alignmentClass;
   switch (alignment) {
-    case 'left':
-      alignmentClass = 'justify-start';
+    case "left":
+      alignmentClass = "justify-start";
       break;
-    case 'center':
-      alignmentClass = 'justify-center';
+    case "center":
+      alignmentClass = "justify-center";
       break;
-    case 'right':
-      alignmentClass = 'justify-end';
+    case "right":
+      alignmentClass = "justify-end";
       break;
     default:
-      alignmentClass = 'justify-start';
+      alignmentClass = "justify-start";
   }
 
   return (
     <div className={`flex ${alignmentClass} pt-8 pb-8`}>
-      <div className="relative w-1/2 shadow-md">
+      <div className="relative sm:w-full md:w-1/2 shadow-md">
         <input
           className="w-full dark:text-slate-300 bg-color2 dark:bg-slate-800 border-0 focus:ring-transparent placeholder-slate-400 dark:placeholder-slate-500 appearance-none py-3 pl-10 pr-8"
           type="search"
           placeholder="Type to search…"
         />
-        <button className="absolute inset-0 right-auto group" type="submit" aria-label="Search">
+        <button
+          className="absolute inset-0 right-auto group"
+          type="submit"
+          aria-label="Search"
+        >
           <svg
             className="w-5 h-5 shrink-0 fill-current text-button_color dark:text-slate-500 group-hover:text-button_hover dark:group-hover:text-slate-400 ml-4 mr-2"
             viewBox="0 0 16 16"

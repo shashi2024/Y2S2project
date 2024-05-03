@@ -15,9 +15,12 @@ import ManageReservations from "./pages/ManageReservations";
 import RequestIngredients from "./pages/RequestIngredients";
 import RestaurantDashboard from "./pages/RestaurantDashboard";
 import CreateTask from "./pages/CreateTask";
-import TasksTable from "./pages/MonitorTasks";
-import MonitorTasks from "./pages/MonitorTasks";
+import MonitorTasks from "./pages/MaintenanceDashboard";
 import ManageTasks from "./pages/ManageTasks";
+import AssignedTasks from "./pages/AssignedTasks";
+import CompanyAssets from "./pages/CompanyAssets";
+import MaintenanceDashboard from "./pages/MaintenanceDashboard";
+import MaintenanceComplains from "./pages/MaintenanceComplains";
 
 function App() {
   const location = useLocation();
@@ -67,13 +70,28 @@ function App() {
         <Route exact path="/maintenance/create-task" element={<CreateTask />} />
         <Route
           exact
-          path="/maintenance/monitor-tasks"
-          element={<MonitorTasks />}
+          path="/maintenance/dashboard"
+          element={<MaintenanceDashboard />}
         />
         <Route
           exact
           path="/maintenance/manage-tasks"
           element={<ManageTasks />}
+        />
+        <Route
+          exact
+          path="/maintenance/assigned-tasks"
+          element={<AssignedTasks />}
+        />
+        <Route
+          exact
+          path="/maintenance/company-assets"
+          element={<CompanyAssets />}
+        />
+        <Route
+          exact
+          path="/maintenance/complains"
+          element={<MaintenanceComplains />}
         />
       </Routes>
     </>
