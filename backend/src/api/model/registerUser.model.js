@@ -2,21 +2,21 @@
 import mongoose from "mongoose";
 
 // Define the schema
-const StaffReportSchema = new mongoose.Schema({
-  sId: {
-    type: Number,
-    required: true,
-  },
-  noHrs: {
-    type: Number,
-    required: true,
-  },
-  activites: {
+const RegisterSchema = new mongoose.Schema({
+    email: {
     type: String,
     required: true,
-  }
+  },
+  userID: {
+    type: Number,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
 });
 
 // Create the model from the schema and export it
-const StaffReport = mongoose.model("StaffReport", StaffReportSchema);
-export default StaffReport;
+const Register = mongoose.model("Register", RegisterSchema);
+export default Register;

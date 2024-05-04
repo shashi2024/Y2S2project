@@ -3,6 +3,11 @@ import { NavLink, useLocation } from "react-router-dom";
 import { MdDashboard, MdRestaurant } from "react-icons/md";
 import { FaTools } from "react-icons/fa";
 import logo from "../images/logo.png";
+import {Link} from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 import SidebarLinkGroup from "./SidebarLinkGroup";
 
@@ -135,6 +140,28 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                             : setSidebarExpanded(true);
                         }}
                       >
+                        <Link to="/allUsers">
+                          <button className="text-left pb-2">
+                            <FontAwesomeIcon icon={faUser} className="pr-3" />
+                            Users
+                            <FontAwesomeIcon
+                              icon={faCaretDown}
+                              className="pl-34"
+                            />
+                          </button>
+                        </Link>
+
+                        <Link to="/allStaff">
+                          <button className="text-left pb-2 top-5">
+                            <FontAwesomeIcon icon={faUsers} className="pr-3" />
+                            Staff
+                            <FontAwesomeIcon
+                              icon={faCaretDown}
+                              className="pl-34"
+                            />
+                          </button>
+                        </Link>
+
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
                             <MdDashboard className="fill-current" />
