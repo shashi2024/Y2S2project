@@ -40,12 +40,20 @@ export const getAllStaff = async (req, res, next) => {
 
 //insert staff
 export const addStaff = async (req, res, next) => {
+<<<<<<< HEAD
   const {name,sID,email,department,nic,position} = req.body;
+=======
+  const {name,sID,email,dID,nic,position} = req.body;
+>>>>>>> main
 
   let staffs;
 
   try{
+<<<<<<< HEAD
     staffs = new Staff({name,sID,email,department,nic,position});
+=======
+    staffs = new Staff({name,sID,email,dID,nic,position});
+>>>>>>> main
     await staffs.save();
   }catch (err){
     console.log(err);
@@ -83,13 +91,21 @@ export const getById = async(req, res, next) => {
 export const updateStaff = async (req, res, next) => {
 
   const id =req.params.id;
+<<<<<<< HEAD
   const {name,nic,sID,email,department,position} = req.body;
+=======
+  const {name,rID,uID,email,dID} = req.body;
+>>>>>>> main
 
   let staffs
 
   try {
     staffs = await Staff.findByIdAndUpdate(id,
+<<<<<<< HEAD
       {name: name, nic: nic, sID: sID, email: email, position:position, department: department});
+=======
+      {name: name, rID: rID, uID: uID, email: email, dID: dID});
+>>>>>>> main
       staffs = await staffs.save();
   }catch (err){
     console.log(err);

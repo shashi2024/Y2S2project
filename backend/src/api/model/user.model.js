@@ -1,28 +1,13 @@
 // Import the mongoose module
 import mongoose from "mongoose";
 
-// Define the schema
 const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  rID: {
-    type: Number,
-    required: true,
-  },
-  uID: {
-    type: Number,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-  department:{
-    type: String,
-    required: true,
-  },
+  name: String,
+  rID: Number,
+  uID: Number,
+  email: String,
+  dID: Number,
+  userRole: { type: mongoose.Schema.Object.Id.ObjectId, ref: "Role" },
 });
 
 // Create the model from the schema and export it

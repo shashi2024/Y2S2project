@@ -45,6 +45,7 @@ app.use("/user", userRouter);
 
 
 /* Reports */
+<<<<<<< HEAD
 app.use("/report", reportRouter);
 
 //shashi
@@ -118,6 +119,24 @@ app.post('/forgot-password', (req, res) => {
     })
     .catch(err => res.send({ Status: err }));
 });
+=======
+app.use("/report", reportRouter)
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 880c69adf5653c1a2fd43fd1fcc88971da3076c7
+=======
+
+
+>>>>>>> 880c69adf5653c1a2fd43fd1fcc88971da3076c7
+=======
+
+
+>>>>>>> 880c69adf5653c1a2fd43fd1fcc88971da3076c7
+>>>>>>> main
 
 app.listen(PORT, () => {
   logger.info(`Server is up and running on port ${PORT}`);

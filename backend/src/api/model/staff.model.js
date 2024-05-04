@@ -15,8 +15,13 @@ const StaffSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+<<<<<<< HEAD
   department:{
     type: String,
+=======
+  dID:{
+    type: Number,
+>>>>>>> main
     required: true,
   },
   nic: {
