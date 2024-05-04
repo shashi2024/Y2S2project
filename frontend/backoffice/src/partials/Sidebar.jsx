@@ -1,17 +1,26 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { MdDashboard, MdRestaurant } from "react-icons/md";
 import { FaTools } from "react-icons/fa";
 import logo from "../images/logo.png";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { UserContext } from "../App";
+import { faPersonWalkingLuggage } from "@fortawesome/free-solid-svg-icons";
+import { faBed } from "@fortawesome/free-solid-svg-icons";
+import { faWarehouse } from "@fortawesome/free-solid-svg-icons";
+import { faCarSide } from "@fortawesome/free-solid-svg-icons";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+
 
 import SidebarLinkGroup from "./SidebarLinkGroup";
 
 function Sidebar({ sidebarOpen, setSidebarOpen }) {
+  const { rID } = useContext(UserContext);
+  console.log(rID);
+
   const location = useLocation();
   const { pathname } = location;
 
@@ -118,6 +127,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
             </h3>
             <ul className="mt-3">
               {/* Dashboard */}
+              {/* {rID === "dashboard" && ( */}
               <SidebarLinkGroup
                 activecondition={
                   pathname === "/" || pathname.includes("dashboard")
@@ -140,28 +150,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                             : setSidebarExpanded(true);
                         }}
                       >
-                        <Link to="/allUsers">
-                          <button className="text-left pb-2">
-                            <FontAwesomeIcon icon={faUser} className="pr-3" />
-                            Users
-                            <FontAwesomeIcon
-                              icon={faCaretDown}
-                              className="pl-34"
-                            />
-                          </button>
-                        </Link>
-
-                        <Link to="/allStaff">
-                          <button className="text-left pb-2 top-5">
-                            <FontAwesomeIcon icon={faUsers} className="pr-3" />
-                            Staff
-                            <FontAwesomeIcon
-                              icon={faCaretDown}
-                              className="pl-34"
-                            />
-                          </button>
-                        </Link>
-
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
                             <MdDashboard className="fill-current" />
@@ -222,8 +210,10 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                   );
                 }}
               </SidebarLinkGroup>
+               {/* )} */}
 
               {/* Maintenance Link Group */}
+              {rID === "maintenance" && (
               <SidebarLinkGroup
                 activecondition={pathname.includes("maintenance")}
               >
@@ -353,8 +343,10 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                   );
                 }}
               </SidebarLinkGroup>
+              )}
 
               {/* Restaurant Link Group */}
+              {rID === "restaurant" && (
               <SidebarLinkGroup
                 activecondition={pathname.includes("restaurant")}
               >
@@ -516,9 +508,63 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                   );
                 }}
               </SidebarLinkGroup>
+              )}
             </ul>
           </div>
         </div>
+
+        {rID === "admin" && (
+          <Link to="/allUsers">
+            <button className="text-left pb-2 hover:text-gray-600 text-black py-2 px-4">
+              <FontAwesomeIcon icon={faUser} className="pr-3" />
+              Users
+            </button>
+          </Link>
+        )}
+
+        {rID === "admin" && (
+          <Link to="/allStaff">
+            <button className="text-left pb-2 hover:text-gray-600 text-black py-2 px-4">
+              <FontAwesomeIcon icon={faUsers} className="pr-3" />
+              Staff
+            </button>
+          </Link>
+        )}
+
+        {rID === "guest" && (
+          <button className="text-left pb-2 hover:text-gray-600 text-black py-2 px-4">
+            <FontAwesomeIcon icon={faPersonWalkingLuggage} className="pr-3" />
+            Guests
+          </button>
+        )}
+
+        {rID === "guest" && (
+          <button className="text-left pb-2 hover:text-gray-600 text-black py-2 px-4">
+            <FontAwesomeIcon icon={faBed} className="pr-3" />
+            Room Reservations
+          </button>
+        )}
+
+        {rID === "inventory" && (
+          <button className="text-left pb-2 hover:text-gray-600 text-black py-2 px-4">
+            <FontAwesomeIcon icon={faWarehouse} className="pr-3" />
+            Inventory
+          </button>
+        )}
+
+        {rID === "transport" && (
+          <button className="text-left pb-2 hover:text-gray-600 text-black py-2 px-4">
+            <FontAwesomeIcon icon={faCarSide} className="pr-3" />
+            Transport
+          </button>
+        )}
+
+        {rID === "marketing" && (
+          <button className="text-left pb-2 hover:text-gray-600 text-black py-2 px-4">
+            <FontAwesomeIcon icon={faStar} className="pr-1" />
+            Feedback & Marketing
+          </button>
+        )}
 
         {/* Expand / collapse button */}
         <div className="pt-3 hidden lg:inline-flex 2xl:hidden justify-end mt-auto">

@@ -6,6 +6,26 @@ import Header from "../partials/Header";
 
 function NewUser() {
   const history = useNavigate();
+  const departments = [
+    "HR Department",
+    "Merketing Department",
+    "Finance Department",
+    "Transport Department",
+    "Inventory and Supplier Management Department",
+    "Restaurent Management Department",
+    "Maintenance Department",
+    "Guest Services Department",
+  ];
+  const roles = [
+    "Admin",
+    "Maintenance",
+    "Guest",
+    "Restaurent",
+    "Marketing",
+    "Transport",
+    "Finance",
+    "Inventory",
+  ];
   const [inputs, setInputs] = useState({
     name: "",
     rID: "",
@@ -31,7 +51,7 @@ function NewUser() {
     await axios
       .post("http://localhost:5000/user", {
         name: String(inputs.name),
-        rID: Number(inputs.rID),
+        rID: String(inputs.rID),
         uID: Number(inputs.uID),
         email: String(inputs.email),
         department: String(inputs.department),
@@ -41,10 +61,10 @@ function NewUser() {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      <Sidebar/>
+      <Sidebar />
 
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-        <Header/>
+        <Header />
         <main>
           <div className="absolute top-40 right-20 w-4/5 h-3/5 bg-white p-4 drop-shadow-xl rounded-xl">
             <form onSubmit={handleSubmit}>
@@ -109,18 +129,45 @@ function NewUser() {
                 >
                   Department
                 </label>
-                <input
+                <select
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="department"
                   type="text"
                   name="department"
                   onChange={handleChange}
                   value={inputs.department}
-                  placeholder="Enter Department"
-                />
+                >
+                  {departments.map((department, index) => (
+                    <option key={index} value={department}>
+                      {department}
+                    </option>
+                  ))}
+                </select>
               </div>
 
-              <div className="absolute top-2/5 top-96 w-full flex items-center justify-between ">
+              <div className="mb-4 w-4/5 absolute top-64 translate-y-16 ">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2 text-left"
+                  htmlFor="rID"
+                >
+                  User Role
+                </label>
+                <select
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="rID"
+                  name="rID"
+                  onChange={handleChange}
+                  value={inputs.rID}
+                >
+                  {roles.map((role, index) => (
+                    <option key={index} value={role}>
+                      {role}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="absolute top-96 translate-y-8 w-full flex items-center justify-between ">
                 <button
                   className="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline absolute right-10"
                   type="submits"

@@ -7,8 +7,8 @@ const RegisterSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  userID: {
-    type: Number,
+  userRoll: {
+    type: String,
     required: true,
   },
   password: {
