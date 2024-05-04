@@ -43,7 +43,7 @@ app.use("/restaurant-inventory", restaurantInventoryRouter);
 
 app.use("/GenerateReports", GenerateReportsRouter);
 app.use("/government-payments", GovernmentPayentRouter);
-app.use("/RefundRequest", RefufndRequestRouter);
+app.use("/refund-payments", RefufndRequestRouter);
 app.use("/salary-payments", SalaryPaymentRouter);
 app.use("/supplier-payments", SupplierPaymentRouter);
 app.use("/utility-payments", UtilityPaymentRouter);

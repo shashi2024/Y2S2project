@@ -22,6 +22,7 @@ import CreateSupplierPayment from "./pages/Finance Management/SupplierPayment/Cr
 import CreateUtilityPayment from "./pages/Finance Management/UtilityPayments/CreateUtilityPayment";
 import CreateGovernmentPayment from "./pages/Finance Management/GovernmentPayments/CreateGovernmentPayment";
 import SalaryPayment from "./pages/Finance Management/SalaryPayments/SalaryPayment";
+import CreateRefundPayment from "./pages/Finance Management/RefundPayments/CreateRefundPayment";
 
 function App() {
   const location = useLocation();
@@ -99,6 +100,11 @@ function App() {
           exact
           path="/finance-management/salary-payments"
           element={<SalaryPayment />}
+        />
+        <Route
+          exact
+          path="/finance-management/refund-payments/create"
+          element={<CreateRefundPayment />}
         />
       </Routes>
     </>

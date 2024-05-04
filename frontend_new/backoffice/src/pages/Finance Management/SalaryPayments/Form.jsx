@@ -7,6 +7,7 @@ function CreateSalaryPaymentForm() {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm();
 
@@ -32,7 +33,7 @@ function CreateSalaryPaymentForm() {
       console.log(JSON.stringify(data));
 
       const response = await axios.post(
-        "http://localhost:5000/salary-payment",
+        "http://localhost:5000/salary-payments",
         data
       );
       console.log(response.data);
@@ -46,19 +47,17 @@ function CreateSalaryPaymentForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <h1 className="text-2xl font-bold">Create Salary Payment</h1>
       <h1 className="border-t border-second_background mt-2 mb-12"></h1>
-
       <div>
         <label className="block text-sm font-medium">Payment ID</label>
         <input
-          {...register("paymentId", { required: "Payment ID is required" })}
+          {...register("PaymentId", { required: "Payment ID is required" })}
           placeholder="Enter Payment ID"
           className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
         />
-        {errors.paymentId && (
-          <p className="text-red-500">{errors.paymentId.message}</p>
+        {errors.PaymentId && (
+          <p className="text-red-500">{errors.PaymentId.message}</p>
         )}
       </div>
-
       <div>
         <label className="block text-sm font-medium">Employee ID</label>
         <input
@@ -83,6 +82,28 @@ function CreateSalaryPaymentForm() {
         )}
       </div>
       <div>
+        <label className="block text-sm font-medium">Overtime</label>
+        <input
+          {...register("overtime", {
+            required: "Overtime is required",
+            valueAsNumber: true,
+            min: {
+              value: 0,
+              message: "Overtime must be a positive Number",
+            },
+            onChange: (event) => {
+              const basicSalary = getValues("basicSalary");
+              calculateTotalSalary(basicSalary, event.target.value); // Update total salary on overtime change
+            },
+          })}
+          placeholder="Enter Overtime"
+          className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
+        />
+        {errors.overtime && (
+          <p className="text-red-500">{errors.overtime.message}</p>
+        )}
+      </div>
+      <div>
         <label className="block text-sm font-medium">Basic Salary</label>
         <input
           {...register("basicSalary", {
@@ -103,11 +124,10 @@ function CreateSalaryPaymentForm() {
           <p className="text-red-500">{errors.basicSalary.message}</p>
         )}
       </div>
-
       <div>
         <label className="block text-sm font-medium">Attendance</label>
         <input
-          {...register("attendance", {
+          {...register("Attendance", {
             required: "Attendance is required",
             valueAsNumber: true,
             min: {
@@ -118,32 +138,10 @@ function CreateSalaryPaymentForm() {
           placeholder="Enter Attendance"
           className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
         />
-        {errors.attendance && (
-          <p className="text-red-500">{errors.attendance.message}</p>
+        {errors.Attendance && (
+          <p className="text-red-500">{errors.Attendance.message}</p>
         )}
       </div>
-      <div>
-        <label className="block text-sm font-medium">Overtime</label>
-        <input
-          {...register("overtime", {
-            required: "Overtime is required",
-            valueAsNumber: true,
-            min: {
-              value: 0,
-              message: "Overtime must be a positive Number",
-            },
-            onChange: (event) => {
-              calculateTotalSalary(basicSalary.value, event.target.value); // Update total salary on overtime change
-            },
-          })}
-          placeholder="Enter Overtime"
-          className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
-        />
-        {errors.overtime && (
-          <p className="text-red-500">{errors.overtime.message}</p>
-        )}
-      </div>
-
       <div>
         <label className="block text-sm font-medium">Bank Name</label>
         <input
@@ -158,14 +156,14 @@ function CreateSalaryPaymentForm() {
       <div>
         <label className="block text-sm font-medium">Account Number</label>
         <input
-          {...register("accountNumber", {
+          {...register("bankAccount", {
             required: "Account Number is required",
           })}
           placeholder="Enter Account Number"
           className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
         />
-        {errors.accountNumber && (
-          <p className="text-red-500">{errors.accountNumber.message}</p>
+        {errors.bankAccount && (
+          <p className="text-red-500">{errors.bankAccount.message}</p>
         )}
       </div>
       <div>
@@ -188,12 +186,7 @@ function CreateSalaryPaymentForm() {
           <p className="text-red-500">{errors.totalSalary.message}</p>
         )}
       </div>
-
-      <Button onClick={() => handleCalculateClick(register.getValues())}>
-        Calculate
-      </Button>
-
-      <Button type="submit">Submit</Button>
+      <Button onClick={() => handleCalculateClick(getValues())}>submit</Button>
     </form>
   );
 }
