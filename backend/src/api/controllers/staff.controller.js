@@ -37,42 +37,31 @@ export const getAllStaff = async (req, res, next) => {
   }
 };
 
-
 //insert staff
 export const addStaff = async (req, res, next) => {
-<<<<<<< HEAD
-  const {name,sID,email,department,nic,position} = req.body;
-=======
-  const {name,sID,email,dID,nic,position} = req.body;
->>>>>>> main
+  const { name, sID, email, department, nic, position } = req.body;
 
   try {
     // Check if a staff with the same email or sID already exists
     const existingStaffEmail = await Staff.findOne({ email });
     const existingStaffSID = await Staff.findOne({ sID });
 
-<<<<<<< HEAD
     if (existingStaffEmail) {
       return res.status(400).json({ message: "Email already in use." });
     }
-=======
-  try{
-<<<<<<< HEAD
-    staffs = new Staff({name,sID,email,department,nic,position});
-=======
-    staffs = new Staff({name,sID,email,dID,nic,position});
->>>>>>> main
-    await staffs.save();
-  }catch (err){
-    console.log(err);
-  }
->>>>>>> 72da37b130e7d435bba16e911536f464252209d7
+
+    try {
+      const staff = new Staff({ name, sID, email, department, nic, position });
+      await staff.save();
+    } catch (err) {
+      console.log(err);
+    }
 
     if (existingStaffSID) {
       return res.status(400).json({ message: "Staff ID already in use." });
     }
 
-    const staff = new Staff({name,sID,email,department,nic,position});
+    const staff = new Staff({ name, sID, email, department, nic, position });
     await staff.save();
 
     return res.status(200).json({ staff });
@@ -83,74 +72,70 @@ export const addStaff = async (req, res, next) => {
 };
 
 //Get by ID
-export const getById = async(req, res, next) => {
-  const id =req.params.id;
+export const getById = async (req, res, next) => {
+  const id = req.params.id;
 
   let staffs;
 
-  try{
-    staffs=await Staff.findById(id);
-  }catch (err){
+  try {
+    staffs = await Staff.findById(id);
+  } catch (err) {
     console.log(err);
   }
 
-  if(!staffs){
-    return res.status(404).send({message:"Unable to desplay user"});
+  if (!staffs) {
+    return res.status(404).send({ message: "Unable to desplay user" });
   }
   return res.status(200).json({
-    staffs
-  })
-}
+    staffs,
+  });
+};
 
 //update staff
 export const updateStaff = async (req, res, next) => {
-
-  const id =req.params.id;
-<<<<<<< HEAD
-  const {name,nic,sID,email,department,position} = req.body;
-=======
-  const {name,rID,uID,email,dID} = req.body;
->>>>>>> main
-
-  let staffs
-
-  try {
-    staffs = await Staff.findByIdAndUpdate(id,
-<<<<<<< HEAD
-      {name: name, nic: nic, sID: sID, email: email, position:position, department: department});
-=======
-      {name: name, rID: rID, uID: uID, email: email, dID: dID});
->>>>>>> main
-      staffs = await staffs.save();
-  }catch (err){
-    console.log(err);
-  }
-
-  if(!staffs){
-    return res.status(404).send({message:"Unable to update user"});
-  }
-  return res.status(200).json({
-    staffs
-  })
-}
-
-//delete staff
-export const deleteStaff = async (req, res, next) => {
-
-  const id =req.params.id;
+  const id = req.params.id;
+  const { name, nic, sID, email, department, position } = req.body;
 
   let staffs;
 
-  try{
-    staffs= await Staff.findByIdAndDelete(id)
-  }catch (err){
+  try {
+    staffs = await Staff.findByIdAndUpdate(id, {
+      name: name,
+      nic: nic,
+      sID: sID,
+      email: email,
+      position: position,
+      department: department,
+    });
+    staffs = await staffs.save();
+  } catch (err) {
     console.log(err);
   }
 
-  if(!staffs){
-    return res.status(404).send({message:"Unable to delete user"});
+  if (!staffs) {
+    return res.status(404).send({ message: "Unable to update user" });
   }
   return res.status(200).json({
-    staffs
-  })
-}
+    staffs,
+  });
+};
+
+//delete staff
+export const deleteStaff = async (req, res, next) => {
+  const id = req.params.id;
+
+  let staffs;
+
+  try {
+    staffs = await Staff.findByIdAndDelete(id);
+  } catch (err) {
+    console.log(err);
+  }
+
+  if (!staffs) {
+    return res.status(404).send({ message: "Unable to delete user" });
+  }
+  return res.status(200).json({
+    staffs,
+  });
+};

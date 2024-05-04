@@ -67,7 +67,6 @@ export const addUser = async (req, res, next) => {
     const existingUserEmail = await User.findOne({ email });
     const existingUserId = await User.findOne({ uID });
 
-<<<<<<< HEAD
     if (existingUserEmail) {
       return res.status(400).json({ message: "Email already in use." });
     }
@@ -76,7 +75,7 @@ export const addUser = async (req, res, next) => {
       return res.status(400).json({ message: "User ID already in use." });
     }
 
-    const user = new User({name,rID,uID,email,department,password});
+    const user = new User({ name, rID, uID, email, department, password });
     await user.save();
 
     return res.status(200).json({ user });
@@ -84,21 +83,6 @@ export const addUser = async (req, res, next) => {
     console.error(err.message);
     return res.status(500).json({ error: "Server error" });
   }
-=======
-  try {
-    users = new User({ name, rID, uID, email, department, password });
-    await users.save();
-  } catch (err) {
-    console.log(err);
-  }
-
-  if (!users) {
-    return res.status(404).send({ message: "Unable to add user" });
-  }
-  return res.status(200).json({
-    users,
-  });
->>>>>>> 72da37b130e7d435bba16e911536f464252209d7
 };
 
 //Get by ID

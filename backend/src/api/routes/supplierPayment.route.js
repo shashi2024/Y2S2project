@@ -4,7 +4,7 @@ import {
   createSupplierPayment,
   displaySupplierPaymentById,
   displayAllSupplierPayments,
-} from "../controllers/supplier.controller";
+} from "../controllers/SupplierPayment.controller";
 
 const supplierPaymentRouter = Router();
 

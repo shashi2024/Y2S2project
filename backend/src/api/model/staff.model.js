@@ -15,13 +15,8 @@ const StaffSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-<<<<<<< HEAD
-  department:{
+  department: {
     type: String,
-=======
-  dID:{
-    type: Number,
->>>>>>> main
     required: true,
   },
   nic: {
@@ -31,7 +26,7 @@ const StaffSchema = new mongoose.Schema({
   position: {
     type: String,
     required: true,
-  }
+  },
 });
 
 // Create the model from the schema and export it
