@@ -12,6 +12,8 @@ import maintenanceTaskRouter from "./api/routes/maintenanceTask.route";
 import customerRouter from "./api/routes/customer.route";
 import userRouter from "./api/routes/user.route";
 import reportRouter from "./api/routes/report.route";
+import campaigns from "./api/routes/campaigns.route";
+import feedbackRoutes from "./api/routes/feedbackRoutes.route";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
