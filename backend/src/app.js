@@ -12,8 +12,6 @@ import maintenanceTaskRouter from "./api/routes/maintenanceTask.route";
 import customerRouter from "./api/routes/customer.route";
 import userRouter from "./api/routes/user.route";
 import reportRouter from "./api/routes/report.route";
-import campaigns from "./api/routes/campaigns.route";
-import feedbackRoutes from "./api/routes/feedbackRoutes.route";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -41,24 +39,8 @@ app.use("/task", maintenanceTaskRouter);
 app.use("/customer", customerRouter);
 app.use("/user", userRouter);
 
-
 /* Reports */
-app.use("/report", reportRouter)
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 880c69adf5653c1a2fd43fd1fcc88971da3076c7
-=======
-
-
->>>>>>> 880c69adf5653c1a2fd43fd1fcc88971da3076c7
-=======
-
-
->>>>>>> 880c69adf5653c1a2fd43fd1fcc88971da3076c7
+app.use("/report", reportRouter);
 
 app.listen(PORT, () => {
   logger.info(`Server is up and running on port ${PORT}`);
