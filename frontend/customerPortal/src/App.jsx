@@ -6,6 +6,9 @@ import Footer from "./components/footer.jsx"; // Corrected import path for Foote
 import GuestRegister from "./guest/GuestRegister.jsx";
 import RoomReservation from "./roomreservation/roomreservation.jsx";
 import GuestLogin from "./guest/GuestLogin.jsx"; // Added import for GuestLogin
+import Dashboard from "./guest/Dashboard.jsx";
+import ReservationForm from "./guest/ReservationForm.jsx";
+import NotFound from "./404.jsx";
 
 function App() {
   return (
@@ -16,6 +19,9 @@ function App() {
           <Route path="/guestregister" element={<GuestRegister />} />
           <Route path="/roomreservation" element={<RoomReservation />} />
           <Route path="/guestlogin" element={<GuestLogin />} /> // Added route for GuestLogin
+          <Route path="/guestprofile" element={<Dashboard />} /> // Added route for GuestLogin
+          <Route path="/addreservation" element={<ReservationForm />} /> // Added route for GuestLogin
+          <Route path="/404" element={<NotFound />} /> // Added route for GuestLogin
         </Routes>
       </Router>
       <Footer />

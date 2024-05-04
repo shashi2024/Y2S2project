@@ -5,6 +5,14 @@ import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/images/pic2.png";
 import backgroundImage from "../assets/images/pic1.png";
 
+const navigate = () => {
+  window.location.href = '/guestlogin';
+};
+
+const navigate2 = () => {
+  window.location.href = '/guestprofile';
+};
+
 const Navbar = () => {
   return (
     <div
@@ -24,12 +32,12 @@ const Navbar = () => {
           </button>
         </div>
         <div className="absolute top-24 right-16">
-          <button className="bg-white w-32 h-12 top-2 font-bold font-sans rounded-2xl p-1">
+          <button className="bg-white w-32 h-12 top-2 font-bold font-sans rounded-2xl p-1" onClick={navigate}>
             BOOK NOW
           </button>
         </div>
         <div className="absolute top-12 right-12 flex">
-          <button className="text-white font text-lg">MY ACCOUNT</button>
+          <button className="text-white font text-lg" onClick={navigate2}>MY ACCOUNT</button>
           <h1 className="text-white p-2">|</h1>
           <button className="text-white text-lg">LOGOUT</button>
         </div>

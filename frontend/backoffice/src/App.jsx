@@ -20,6 +20,7 @@ import MonitorTasks from "./pages/MonitorTasks";
 import GuestAdmin from "./pages/GuestAdmin";
 import RoomAdmin from "./pages/RoomAdmin";
 import ReservationAdmin from "./pages/ReservationAdmin";
+import GuestLogin from "../../customerPortal/src/guest/GuestLogin";
 
 function App() {
   const location = useLocation();
@@ -93,6 +94,9 @@ function App() {
           path="/reservation/admin"
           element={<ReservationAdmin />}
         />
+
+{/* 
+/////////////////////////// */}
 
 
 
