@@ -14,6 +14,12 @@ import customerRouter from "./api/routes/customer.route";
 import userRouter from "./api/routes/user.route";
 import staffRouter from "./api/routes/staff.route";
 import reportRouter from "./api/routes/report.route";
+import GenerateReportsRouter from "./api/routes/genarateReports.route";
+import GovernmentPayentRouter from "./api/routes/GovernmentPayment.route";
+import RefufndRequestRouter from "./api/routes/refundPayment.route";
+import SalaryPaymentRouter from "./api/routes/salaryPayment.route";
+import SupplierPaymentRouter from "./api/routes/supplierPayment.route";
+import UtilityPaymentRouter from "./api/routes/utilityPayment.route";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -36,6 +42,15 @@ app.use("/restaurant-inventory", restaurantInventoryRouter);
 app.use("/user", userRouter);
 app.use("/staff", staffRouter);
 
+// Finance Management Middleware
+
+app.use("/generate-reports", GenerateReportsRouter);
+app.use("/government-payments", GovernmentPayentRouter);
+app.use("/refund-payments", RefufndRequestRouter);
+app.use("/salary-payments", SalaryPaymentRouter);
+app.use("/supplier-payments", SupplierPaymentRouter);
+app.use("/utility-payments", UtilityPaymentRouter);
+
 /* Maintenance */
 app.use("/task", maintenanceTaskRouter);
 
@@ -43,6 +58,7 @@ app.use("/customer", customerRouter);
 app.use("/user", userRouter);
 
 /* Reports */
+<<<<<<< HEAD
 
 app.use("/report", reportRouter);
 
@@ -135,6 +151,8 @@ app.post("/forgot-password", (req, res) => {
     .catch(err => res.send({ Status: err }));
 });
 
+=======
+>>>>>>> Manuja
 app.use("/report", reportRouter);
 
 app.listen(PORT, () => {

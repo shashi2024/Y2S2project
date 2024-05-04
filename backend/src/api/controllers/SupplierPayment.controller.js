@@ -1,129 +1,103 @@
-/* eslint-disable import/no-import-module-exports */
-/* eslint-disable import/prefer-default-export */
-import SupplierPayment from "../model/supplierPayment.Model"; // Import  model
-import logger from "../../utils/logger";
+import mongoose from "mongoose";
+import SupplierPayment from "../model/supplierPayment.Model";
 
-// Create a new supplier payment || Insert data
+// Get all supplier payments
 
-export const createSupplierPayment = async (req, res) => {
+export const getSupplierPayments = async (req, res) => {
   try {
-    // Extract data from request body
-    const {
-      paymentId,
-      name,
-      supplierId,
-      email,
-      tele,
-      country,
-      bankName,
-      AccountNo,
-    } = req.body;
-
-    // Validate request data
-    if (
-      !paymentId ||
-      !name ||
-      !supplierId ||
-      !email ||
-      !tele ||
-      !country ||
-      !bankName ||
-      !AccountNo
-    ) {
-      return res.status(400).json({ message: "All fields must be completed " });
-    }
-
-    // Create new supplier payment instance
-    const newSupplierPayment = new SupplierPayment({
-      paymentId,
-      name,
-      supplierId,
-      email,
-      tele,
-      country,
-      bankName,
-      AccountNo,
-    });
-
-    // Save the new supplier payment to the database
-    const savedSupplierPayment = await newSupplierPayment.save();
-
-    // Return the newly created supplier payment
-    return res.status(201).json({ supplierPayment: savedSupplierPayment });
-  } catch (err) {
-    // Log the error
-    logger.error(err);
-    // Handle the error
-    return res.status(500).json({ message: "Internal Server Error" });
+    const supplierPayments = await SupplierPayment.find();
+    res.status(200).json(supplierPayments);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
   }
 };
 
-// Display all supplier payments
-const displayAllSupplierPayments = async (req, res) => {
+// insert supplier payment
+
+export const insertSupplierPayment = async (req, res) => {
+  const {
+    PaymentId,
+    supplierId,
+    supplierName,
+    email,
+    contactNumber,
+    paymentDate,
+    paymentAmount,
+    description,
+    quality,
+  } = req.body;
+  const newSupplierPayment = new SupplierPayment({
+    PaymentId,
+    supplierId,
+    supplierName,
+    email,
+    contactNumber,
+    paymentDate,
+    paymentAmount,
+    description,
+    quality,
+  });
   try {
-    // Retrieve all supplier payments from the database
-    const allSupplierPayments = await SupplierPayment.find();
-
-    // If no supplier payments are found, return a 404 status with a message
-    if (!allSupplierPayments || allSupplierPayments.length === 0) {
-      return res.status(404).json({ message: "No supplier payments found" });
-    }
-
-    // Return the array of supplier payments
-    return res.status(200).json({ supplierPayments: allSupplierPayments });
-  } catch (err) {
-    // Log the error
-    logger.error(err);
-    // Handle the error
-    return res.status(500).json({ message: "Internal Server Error" });
+    await newSupplierPayment.save();
+    res.status(201).json(newSupplierPayment);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
   }
 };
 
-// Display supplier payment by paymentId
-const displaySupplierPaymentById = async (req, res) => {
+// Get a supplier payment by id
+
+export const getSupplierPaymentById = async (req, res) => {
+  const { id } = req.params;
   try {
-    // Extract paymentId from request parameters
-    const { paymentId } = req.params;
-
-    // Find the supplier payment document by paymentId in the database
-    const supplierPayment = await SupplierPayment.findOne({ paymentId });
-
-    // If no supplier payment is found, return a 404 status with a message
-    if (!supplierPayment) {
-      return res.status(404).json({ message: "Supplier payment not found" });
-    }
-
-    // Return the supplier payment document
-    return res.status(200).json({ supplierPayment });
-  } catch (err) {
-    // Log the error
-    logger.error(err);
-    // Handle the error
-    return res.status(500).json({ message: "Internal Server Error" });
+    const supplierPayment = await SupplierPayment.findById(id);
+    res.status(200).json(supplierPayment);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
   }
 };
-exports.createSupplierPayment = createSupplierPayment;
-exports.displayAllSupplierPayments = displayAllSupplierPayments;
-exports.displaySupplierPaymentById = displaySupplierPaymentById;
-// -----------------------------------------------------------------------------------------------------------
-// export const createSupplier = async (req, res) => {
-//   const randomNumber = Math.floor(Math.random() * 100);
 
-//   const supplier = new Supplier({
-//     randomNo: randomNumber,
-//   });
+// Update a supplier payment by id
 
-//   try {
-//     const savedTest = await supplier.save();
-//     const { _id } = savedTest;
+export const updateSupplierPaymentById = async (req, res) => {
+  const { id } = req.params;
+  const {
+    PaymentId,
+    supplierId,
+    supplierName,
+    email,
+    contactNumber,
+    paymentDate,
+    paymentAmount,
+    description,
+    quality,
+  } = req.body;
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`No supplier payment with id: ${id}`);
+  const updatedSupplierPayment = {
+    PaymentId,
+    supplierId,
+    supplierName,
+    email,
+    contactNumber,
+    paymentDate,
+    paymentAmount,
+    description,
+    quality,
+    _id: id,
+  };
+  await SupplierPayment.findByIdAndUpdate(id, updatedSupplierPayment, {
+    new: true,
+  });
+  res.json(updatedSupplierPayment);
+};
 
-//     res.status(200).json({ savedTest, _id });
-//   } catch (error) {
-//     logger.error(error.message);
-//     res.status(500).json({ message: "Something went wrong" });
-//   }
-// };
+// Delete a supplier payment by id
 
-// export const getHelloMessage = (req, res) => {
-//   res.json({ message: "hello" });
-// };
+export const deleteSupplierPaymentById = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`No supplier payment with id: ${id}`);
+  await SupplierPayment.findByIdAndDelete(id);
+  res.json({ message: "supplier payment deleted successfully." });
+};

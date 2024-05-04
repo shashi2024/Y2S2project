@@ -1,16 +1,25 @@
-/* eslint-disable import/named */
-import { Router } from "express";
+import express from "express";
+import SupplierPayment from "../model/supplierPayment.Model";
 import {
+<<<<<<< HEAD
   createSupplierPayment,
   displaySupplierPaymentById,
   displayAllSupplierPayments,
+=======
+  getSupplierPayments,
+  insertSupplierPayment,
+  getSupplierPaymentById,
+  updateSupplierPaymentById,
+  deleteSupplierPaymentById,
+>>>>>>> Manuja
 } from "../controllers/SupplierPayment.controller";
 
-const supplierPaymentRouter = Router();
+const router = express.Router();
 
-// Define routes
-supplierPaymentRouter.post("/", createSupplierPayment);
-supplierPaymentRouter.get("/", displayAllSupplierPayments);
-supplierPaymentRouter.get("/:id", displaySupplierPaymentById);
+router.get("/", getSupplierPayments);
+router.post("/", insertSupplierPayment);
+router.get("/:id", getSupplierPaymentById);
+router.put("/:id", updateSupplierPaymentById);
+router.delete("/:id", deleteSupplierPaymentById);
 
-export default supplierPaymentRouter;
+export default router;

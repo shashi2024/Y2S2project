@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
+=======
+import React, { useEffect } from "react";
+>>>>>>> Manuja
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import "./css/style.css";
@@ -17,6 +21,7 @@ import RestaurantDashboard from "./pages/RestaurantDashboard";
 import CreateTask from "./pages/CreateTask";
 import TasksTable from "./pages/MonitorTasks";
 import MonitorTasks from "./pages/MonitorTasks";
+<<<<<<< HEAD
 import ShowStaff from "./pages/ShowStaff";
 import ShowUser from "./pages/ShowUser";
 import UserReg from "./pages/UserReg";
@@ -35,6 +40,15 @@ export const UserContext = React.createContext();
 
 function App() {
   const [rID, setRole] = useState("");
+=======
+import CreateSalaryPayment from "./pages/Finance Management/SalaryPayments/CreateSalaryPayment";
+import CreateSupplierPayment from "./pages/Finance Management/SupplierPayment/CreateSupplierPayment";
+import CreateUtilityPayment from "./pages/Finance Management/UtilityPayments/CreateUtilityPayment";
+import CreateGovernmentPayment from "./pages/Finance Management/GovernmentPayments/CreateGovernmentPayment";
+import CreateRefundPayment from "./pages/Finance Management/RefundPayments/CreateRefundPayment";
+
+function App() {
+>>>>>>> Manuja
   const location = useLocation();
 
   useEffect(() => {
@@ -44,6 +58,7 @@ function App() {
   }, [location.pathname]); // triggered on route change
 
   return (
+<<<<<<< HEAD
     <UserContext.Provider value={{ rID, setRole }}>
     <>
       <React.Fragment>
@@ -113,6 +128,77 @@ function App() {
       </React.Fragment>
     </>
     </UserContext.Provider>
+=======
+    <>
+      <Routes>
+        <Route exact path="/" element={<Dashboard />} />
+        <Route
+          exact
+          path="/restaurant/create-item"
+          element={<CreateFoodItem />}
+        />
+        <Route
+          exact
+          path="/restaurant/manage-orders"
+          element={<CreateOrder />}
+        />
+        <Route
+          exact
+          path="/restaurant/food-inventory"
+          element={<FoodInventory />}
+        />
+        <Route exact path="/restaurant/manage-menus" element={<ManageMenu />} />
+        <Route
+          exact
+          path="/restaurant/manage-reservations"
+          element={<ManageReservations />}
+        />
+        <Route
+          exact
+          path="/restaurant/request-ingredients"
+          element={<RequestIngredients />}
+        />
+        <Route
+          exact
+          path="/restaurant/dashboard"
+          element={<RestaurantDashboard />}
+        />
+        /* Maintenance Routes */
+        <Route exact path="/maintenance/create-task" element={<CreateTask />} />
+        <Route
+          exact
+          path="/maintenance/monitor-tasks"
+          element={<MonitorTasks />}
+        />
+        /* Finance Management Routes */
+        <Route
+          exact
+          path="/finance-management/salary-payments/create"
+          element={<CreateSalaryPayment />}
+        />
+        <Route
+          exact
+          path="/finance-management/supplier-payments/create"
+          element={<CreateSupplierPayment />}
+        />
+        <Route
+          exact
+          path="/finance-management/utility-payments/create"
+          element={<CreateUtilityPayment />}
+        />
+        <Route
+          exact
+          path="/finance-management/government-payments/create"
+          element={<CreateGovernmentPayment />}
+        />
+        <Route
+          exact
+          path="/finance-management/refund-payments/create"
+          element={<CreateRefundPayment />}
+        />
+      </Routes>
+    </>
+>>>>>>> Manuja
   );
 }
 

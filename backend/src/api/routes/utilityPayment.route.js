@@ -1,9 +1,18 @@
 import express from "express";
-import { createUtilityPayment } from "../controllers/utilityPayment.controller";
+import {
+  getUtilityPayments,
+  insertUtilityPayment,
+  getUtilityPaymentById,
+  updateUtilityPaymentById,
+  deleteUtilityPaymentById,
+} from "../controllers/utilityPayment.controller";
 
-const utilityPaymentrouter = express.Router();
+const router = express.Router();
 
-// Route for creating a new utility payment
-utilityPaymentrouter.post("/", createUtilityPayment);
+router.get("/", getUtilityPayments);
+router.post("/", insertUtilityPayment);
+router.get("/:id", getUtilityPaymentById);
+router.put("/:id", updateUtilityPaymentById);
+router.delete("/:id", deleteUtilityPaymentById);
 
-export default utilityPaymentrouter;
+export default router;

@@ -41,7 +41,7 @@ function FoodItemsTable() {
     setModalOpen(true);
   };
 
-  const handleDelete = async (item) => {
+  const handleDelete = async (item) => {  
     console.log(item._id);
     try {
       const response = await axios.delete(`http://localhost:5000/food-item/${item._id}`);
@@ -91,14 +91,14 @@ function FoodItemsTable() {
       <hr className="border-t border-second_background mt-2 mb-12" />
       <table className="w-full text-left border-collapse">
         <thead>
-          <tr className="border-t border-second_background">
-            <th className="py-4 px-6 bg-second_background">Code</th>
-            <th className="py-4 px-6 bg-second_background">Name</th>
-            <th className="py-4 px-6 bg-second_background">Category</th>
-            <th className="py-4 px-6 bg-second_background">Sub Category</th>
-            <th className="py-4 px-6 bg-second_background">Price</th>
-            <th className="py-4 px-6 bg-second_background">Actions</th>
-          </tr>
+            <tr className="border-t border-second_background">
+              <th className="py-4 px-6 bg-second_background">Code</th>
+              <th className="py-4 px-6 bg-second_background">Name</th>
+              <th className="py-4 px-6 bg-second_background">Category</th>
+              <th className="py-4 px-6 bg-second_background">Sub Category</th>
+              <th className="py-4 px-6 bg-second_background">Price</th>
+              <th className="py-4 px-6 bg-second_background">Actions</th>
+            </tr>
         </thead>
         <tbody>
           {foodItems.map((item) => (

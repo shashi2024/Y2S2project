@@ -1,14 +1,19 @@
 import express from "express";
+import SalaryPayment from "../model/salaryPayment.Model";
 import {
-  createSalaryPayment,
   getSalaryPayments,
+  insertSalaryPayment,
+  getSalaryPaymentById,
+  updateSalaryPaymentById,
+  deleteSalaryPaymentById,
 } from "../controllers/salaryPayment.controller";
-import SalaryPayment from "../models/salaryPayment.model";
 
-const salaryPaymentrouter = express.Router();
+const router = express.Router();
 
-// Route for creating a new salary payment
-salaryPaymentrouter.post("/", createSalaryPayment);
-salaryPaymentrouter.get("/", getSalaryPayments);
+router.get("/", getSalaryPayments);
+router.post("/", insertSalaryPayment);
+router.get("/:id", getSalaryPaymentById);
+router.put("/:id", updateSalaryPaymentById);
+router.delete("/:id", deleteSalaryPaymentById);
 
-export default salaryPaymentrouter;
+export default router;

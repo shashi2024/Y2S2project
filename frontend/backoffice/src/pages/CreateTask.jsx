@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const CreateTask = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
   return (
     <div className="flex h-screen overflow-hidden">

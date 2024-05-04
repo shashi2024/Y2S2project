@@ -1,69 +1,278 @@
-import mongoose from "mongoose";
-import GenerateReports from "../model/GenerateReports.model";
+import xlsx from "xlsx";
+import logger from "../../utils/logger";
+import Salary from "../model/salaryPayment.Model";
+import Utility from "../model/utilityPayment.Model";
+import Refund from "../model/RefundPayment.model";
+import Govt from "../model/GovernmentPayment.model";
+import Supplier from "../model/supplierPayment.Model";
 
-// Get all Reports
-export const getReports = async (req, res) => {
+export const UtilityReports = async (req, res) => {
   try {
-    const reports = await GenerateReports.find();
-    res.status(200).json(reports);
+    const utilities = await Utility.find();
+    const wb = xlsx.utils.book_new();
+    const worksheetData = [
+      [
+        "Payment ID",
+        "Utility Type",
+        "Payment Date",
+        "Payment Amount",
+        "Description",
+      ],
+      ...utilities.map(utility => [
+        utility.PaymentId,
+        utility.utilityType,
+        utility.paymentDate,
+        utility.paymentAmount,
+        utility.description,
+      ]),
+    ];
+
+    const worksheet = xlsx.utils.aoa_to_sheet(worksheetData);
+
+    xlsx.utils.book_append_sheet(wb, worksheet, "Utility Payments");
+
+    const excelBuffer = xlsx.write(wb, { type: "buffer", bookType: "xlsx" });
+
+    const now = new Date();
+
+    const timestamp = now
+      .toISOString()
+      .replace(/[:\-T]/g, "")
+      .split(".")[0];
+    logger.warn(`timestamp: ${timestamp}`);
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    res.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${timestamp}_utility_payments.xlsx"`
+    );
+    res.setHeader("Content-Length", excelBuffer.length);
+
+    res.end(excelBuffer, "binary");
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    logger.error(error.message);
+    res.status(500).send("Error generating utility report");
   }
 };
 
-// insert a new report
-export const insertReport = async (req, res) => {
-  const { reportType, reportId, reportDate, reportDescription } = req.body;
-  const newReport = new GenerateReports({
-    reportType,
-    reportId,
-    reportDate,
-    reportDescription,
-  });
+export const SalaryReports = async (req, res) => {
   try {
-    await newReport.save();
-    res.status(201).json(newReport);
+    const salaries = await Salary.find();
+    const wb = xlsx.utils.book_new();
+    const worksheetData = [
+      [
+        "Payment ID",
+        "Employee ID",
+        "Payment Date",
+        "Basic Salary",
+        "Attendance",
+        "Overtime",
+        "Total Salary",
+        "Bank Account",
+        "Bank Name",
+      ],
+      ...salaries.map(salary => [
+        salary.PaymentId,
+        salary.employeeId,
+        salary.paymentDate,
+        salary.basicSalary,
+        salary.Attendance,
+        salary.overtime,
+        salary.totalSalary,
+        salary.bankAccount,
+        salary.bankName,
+      ]),
+    ];
+
+    const worksheet = xlsx.utils.aoa_to_sheet(worksheetData);
+
+    xlsx.utils.book_append_sheet(wb, worksheet, "Salary Payments");
+
+    const excelBuffer = xlsx.write(wb, { type: "buffer", bookType: "xlsx" });
+
+    const now = new Date();
+
+    const timestamp = now
+      .toISOString()
+      .replace(/[:\-T]/g, "")
+      .split(".")[0];
+    logger.warn(`timestamp: ${timestamp}`);
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    res.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${timestamp}_salary_payments.xlsx"`
+    );
+    res.setHeader("Content-Length", excelBuffer.length);
+
+    res.end(excelBuffer, "binary");
   } catch (error) {
-    res.status(409).json({ message: error.message });
+    logger.error(error.message);
+    res.status(500).send("Error generating salary report");
   }
 };
 
-// Get a report by ID
-export const getReportById = async (req, res) => {
-  const { id } = req.params;
+export const RefundReports = async (req, res) => {
   try {
-    const report = await GenerateReports.findById(id);
-    res.status(200).json(report);
+    const refunds = await Refund.find();
+    const wb = xlsx.utils.book_new();
+    const worksheetData = [
+      [
+        "Refund Request ID",
+        "Refund Type",
+        "Refund Amount",
+        "Refund Date",
+        "Customer Payment Date",
+        "Description",
+      ],
+      ...refunds.map(refund => [
+        refund.refundRequestId,
+        refund.refundType,
+        refund.refundAmount,
+        refund.refundDate,
+        refund.paymentDate,
+        refund.description,
+      ]),
+    ];
+
+    const worksheet = xlsx.utils.aoa_to_sheet(worksheetData);
+
+    xlsx.utils.book_append_sheet(wb, worksheet, "Refund Payments");
+
+    const excelBuffer = xlsx.write(wb, { type: "buffer", bookType: "xlsx" });
+
+    const now = new Date();
+
+    const timestamp = now
+      .toISOString()
+      .replace(/[:\-T]/g, "")
+      .split(".")[0];
+    logger.warn(`timestamp: ${timestamp}`);
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    res.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${timestamp}_refund_payments.xlsx"`
+    );
+    res.setHeader("Content-Length", excelBuffer.length);
+
+    res.end(excelBuffer, "binary");
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    logger.error(error.message);
+    res.status(500).send("Error generating salary report");
   }
 };
 
-// Update a report by ID
-export const updateReportById = async (req, res) => {
-  const { id } = req.params;
-  const { reportType, reportId, reportDate, reportDescription } = req.body;
+export const GovtReports = async (req, res) => {
+  try {
+    const govt = await Govt.find();
+    const wb = xlsx.utils.book_new();
+    const worksheetData = [
+      ["Payment ID", "Payment Type", "Payment Date", "Payment Amount"],
+      ...govt.map(govt => [
+        govt.PaymentId,
+        govt.paymentType,
+        govt.paymentDate,
+        govt.paymentAmount,
+      ]),
+    ];
 
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send("No report with that id");
-  const updatedReport = {
-    reportType,
-    reportId,
-    reportDate,
-    reportDescription,
-    _id: id,
-  };
-  await GenerateReports.findByIdAndUpdate(id, updatedReport, { new: true });
-  res.json(updatedReport);
+    const worksheet = xlsx.utils.aoa_to_sheet(worksheetData);
+
+    xlsx.utils.book_append_sheet(wb, worksheet, "Government Payments");
+
+    const excelBuffer = xlsx.write(wb, { type: "buffer", bookType: "xlsx" });
+
+    const now = new Date();
+
+    const timestamp = now
+      .toISOString()
+      .replace(/[:\-T]/g, "")
+      .split(".")[0];
+    logger.warn(`timestamp: ${timestamp}`);
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    res.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${timestamp}_government_payments.xlsx"`
+    );
+    res.setHeader("Content-Length", excelBuffer.length);
+
+    res.end(excelBuffer, "binary");
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).send("Failed to generate report");
+  }
 };
 
-// delete a report by ID
+export const SupplierReports = async (req, res) => {
+  try {
+    const suppliers = await Supplier.find();
+    const wb = xlsx.utils.book_new();
+    const worksheetData = [
+      [
+        "Payment ID",
+        "Supplier ID",
+        "supplier Name",
+        "Email",
+        "Contact Number",
+        "Payment Date",
+        "Payment Amount",
+        "Description",
+        "Quality",
+      ],
+      ...suppliers.map(supplier => [
+        supplier.PaymentId,
+        supplier.supplierId,
+        supplier.supplierName,
+        supplier.email,
+        supplier.contactNumber,
+        supplier.paymentDate,
+        supplier.paymentAmount,
+        supplier.description,
+        supplier.quality,
+      ]),
+    ];
 
-export const deleteReportById = async (req, res) => {
-  const { id } = req.params;
+    const worksheet = xlsx.utils.aoa_to_sheet(worksheetData);
 
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send("No report with that id");
-  await GenerateReports.findByIdAndDelete(id);
-  res.json({ message: "Report deleted successfully." });
+    xlsx.utils.book_append_sheet(wb, worksheet, "Supplier Payments");
+
+    const excelBuffer = xlsx.write(wb, { type: "buffer", bookType: "xlsx" });
+
+    const now = new Date();
+
+    const timestamp = now
+      .toISOString()
+      .replace(/[:\-T]/g, "")
+      .split(".")[0];
+    logger.warn(`timestamp: ${timestamp}`);
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    res.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${timestamp}_supplier_payments.xlsx"`
+    );
+    res.setHeader("Content-Length", excelBuffer.length);
+
+    res.end(excelBuffer, "binary");
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).send("Failed to generate report");
+  }
 };

@@ -5,12 +5,17 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "react-scripts start"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
+=======
+    "@stripe/stripe-js": "^3.3.0",
+>>>>>>> Manuja
     "@tailwindcss/forms": "^0.5.7",
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
@@ -33,6 +38,7 @@
     "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
+    "@babel/node": "^7.23.9",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.32",

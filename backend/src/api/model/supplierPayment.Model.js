@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
-const supplierPaymentSchema = new mongoose.Schema({
-  paymentId: {
+const SupplierPaymentSchema = new mongoose.Schema({
+  PaymentId: {
     type: String,
     required: true,
     unique: true,
@@ -14,11 +14,11 @@ const supplierPaymentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  supplierEmail: {
+  email: {
     type: String,
     required: true,
   },
-  supplierPhone: {
+  contactNumber: {
     type: String,
     required: true,
   },
@@ -30,10 +30,14 @@ const supplierPaymentSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  paymentDescription: {
+  description: {
+    type: String,
+    required: true,
+  },
+  quality: {
     type: String,
     required: true,
   },
 });
 
-export default mongoose.model("SupplierPayment", supplierPaymentSchema);
+export default mongoose.model("SupplierPayment", SupplierPaymentSchema);

@@ -1,18 +1,18 @@
-import express from "express";
+import { Router } from "express";
 import {
-  getReports,
-  getReportById,
-  insertReport,
-  updateReportById,
-  deleteReportById,
+  SalaryReports,
+  SupplierReports,
+  RefundReports,
+  UtilityReports,
+  GovtReports,
 } from "../controllers/GenerateReports.controller";
 
-const router = express.Router();
+const reportRouter = Router();
 
-router.get("/", getReports);
-router.post("/", insertReport);
-router.get("/:id", getReportById);
-router.put("/:id", updateReportById);
-router.delete("/:id", deleteReportById);
+reportRouter.get("/salaries", SalaryReports);
+reportRouter.get("/suppliers", SupplierReports);
+reportRouter.get("/refunds", RefundReports);
+reportRouter.get("/utilities", UtilityReports);
+reportRouter.get("/govt", GovtReports);
 
-export default router;
+export default reportRouter;
