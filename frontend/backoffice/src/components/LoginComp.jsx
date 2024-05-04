@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { UserContext } from '../App';
 
 function LoginComp() {
   const history = useNavigate();
+  const { setRole } = useContext(UserContext);
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -22,7 +24,9 @@ function LoginComp() {
     e.preventDefault();
     try {
       const response = await sendRequest();
+      console.log(response);
       if (response.status === "ok") {
+        setRole(response.rID);
         alert("Login Successful");
         history("/dashboard");
       } else {

@@ -6,8 +6,18 @@ import Header from "../partials/Header";
 
 function UserReg() {
   const history = useNavigate();
+  const roles = [
+    "admin",
+    "marketing",
+    "guest",
+    "inventory",
+    "finance",
+    "transport",
+    "restaurent",
+    "maintenance",
+  ];
   const [inputs, setInputs] = useState({
-    userID: "",
+    userRoll: "",
     email: "",
     password: "",
   });
@@ -38,7 +48,7 @@ function UserReg() {
   const sendRequest = async () => {
     return await axios
       .post("http://localhost:5000/register", {
-        userID: Number(inputs.userID),
+        userRoll: String(inputs.userRoll),
         email: String(inputs.email),
         password: String(inputs.password),
       })
@@ -60,18 +70,23 @@ function UserReg() {
               <div className="mb-4">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="userID"
+                  htmlFor="userRoll"
                 >
-                  User ID
+                  User Roll
                 </label>
-                <input
-                  type="text"
-                  value={inputs.userID}
+                <select
+                  value={inputs.userRoll}
                   onChange={handleChange}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  name="userID"
+                  name="userRoll"
                   required
-                />
+                >
+                  {roles.map((role, index) => (
+                    <option key={index} value={role}>
+                      {role}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="mb-6">
                 <label

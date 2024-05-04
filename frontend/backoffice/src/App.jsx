@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import "./css/style.css";
@@ -31,7 +31,10 @@ import NewStaff from "./pages/NewStaff";
 import ForgetPassword from "./pages/ForgetPassword";
 import Login from "./pages/Login";
 
+export const UserContext = React.createContext();
+
 function App() {
+  const [rID, setRole] = useState("");
   const location = useLocation();
 
   useEffect(() => {
@@ -41,6 +44,7 @@ function App() {
   }, [location.pathname]); // triggered on route change
 
   return (
+    <UserContext.Provider value={{ rID, setRole }}>
     <>
       <React.Fragment>
         <Routes>
@@ -108,6 +112,7 @@ function App() {
         </Routes>
       </React.Fragment>
     </>
+    </UserContext.Provider>
   );
 }
 

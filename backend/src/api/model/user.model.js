@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   rID: {
-    type: Number,
+    type: String,
     required: true,
   },
   uID: {

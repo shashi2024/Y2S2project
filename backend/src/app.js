@@ -59,10 +59,10 @@ const saltRounds = 10;
 
 //register user
 app.post("/register", async (req, res) => {
-  const { userID, email, password } = req.body;
+  const { userRoll, email, password } = req.body;
   try {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-    await User.create({ userID, email, password: hashedPassword });
+    await User.create({ userRoll, email, password: hashedPassword });
     res.send({ status: "ok" });
   } catch (error) {
     res.send({ status: "error", error: error.message });
@@ -75,6 +75,7 @@ app.post('/login', (req, res) => {
 
   User.findOne({ email: email })
     .then(user => {
+      console.log(user);
       if (!user) {
         return res.send({ status: "User not existed" });
       }
@@ -82,8 +83,7 @@ app.post('/login', (req, res) => {
       bcrypt.compare(password, user.password)
         .then(isMatch => {
           if (isMatch) {
-            // Passwords match
-            res.send({ status: "ok" });
+            res.send({ status: "ok", rID: user.userRoll }); 
           } else {
             // Passwords don't match
             res.send({ status: "Login Failed" });

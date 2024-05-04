@@ -9,22 +9,6 @@ function UpdateUsers() {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  // const fetchHandler = async () => {
-  //   const response = await axios.get(`http://localhost:5000/user/${id}`);
-  //   const user = response.data.user;
-  //   if (user) {
-  //     setInputs({
-  //       name: user.name,
-  //       email: user.email,
-  //       uID: user.uID,
-  //       dID: user.department,
-  //       message: user.message, // assuming user has a message field
-  //     });
-  //   } else {
-  //     console.log("User not found");
-  //   }
-  // };
-
   const fetchHandler = useCallback(async () => {
     const response = await axios.get(`http://localhost:5000/user/${id}`);
     const user = response.data.users;
