@@ -13,8 +13,11 @@ import customerRouter from "./api/routes/customer.route";
 import userRouter from "./api/routes/user.route";
 import staffRouter from "./api/routes/staff.route";
 import reportRouter from "./api/routes/report.route";
+<<<<<<< HEAD
 import nodemailer from 'nodemailer';
 import { check, validationResult } from 'express-validator';
+=======
+>>>>>>> 72da37b130e7d435bba16e911536f464252209d7
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -44,21 +47,21 @@ app.use("/task", maintenanceTaskRouter);
 app.use("/customer", customerRouter);
 app.use("/user", userRouter);
 
-
 /* Reports */
+
 app.use("/report", reportRouter);
 
 //shashi
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 //call register model
-require("./api/model/registerUser.model.js")
+require("./api/model/registerUser.model.js");
 const User = mongoose.model("Register");
 
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
+
 const saltRounds = 10;
 
-//register user
 app.post("/register", async (req, res) => {
   const { userRoll, email, password } = req.body;
   try {
@@ -71,6 +74,7 @@ app.post("/register", async (req, res) => {
 });
 
 //user loging
+<<<<<<< HEAD
 app.post('/login', [
   // email must be valid
   check('email').isEmail(),
@@ -83,6 +87,9 @@ app.post('/login', [
     return res.status(400).json({ errors: errors.array() });
   }
 
+=======
+app.post("/login", (req, res) => {
+>>>>>>> 72da37b130e7d435bba16e911536f464252209d7
   const { email, password } = req.body;
 
   User.findOne({ email: email })
@@ -92,7 +99,8 @@ app.post('/login', [
         return res.send({ status: "error", message: "Email not found" });
       }
 
-      bcrypt.compare(password, user.password)
+      bcrypt
+        .compare(password, user.password)
         .then(isMatch => {
           if (isMatch) {
             res.send({ status: "ok", rID: user.userRoll }); 
@@ -107,7 +115,7 @@ app.post('/login', [
 });
 
 //reset password
-app.post('/forgot-password', (req, res) => {
+app.post("/forgot-password", (req, res) => {
   const { email, newPassword, confirmPassword } = req.body;
 
   if (newPassword !== confirmPassword) {
@@ -120,7 +128,8 @@ app.post('/forgot-password', (req, res) => {
         return res.send({ Status: "User not existed" });
       }
 
-      bcrypt.hash(newPassword, 10)
+      bcrypt
+        .hash(newPassword, 10)
         .then(hash => {
           user.password = hash;
           user.save();
@@ -130,6 +139,8 @@ app.post('/forgot-password', (req, res) => {
     })
     .catch(err => res.send({ Status: err }));
 });
+
+app.use("/report", reportRouter);
 
 app.listen(PORT, () => {
   logger.info(`Server is up and running on port ${PORT}`);

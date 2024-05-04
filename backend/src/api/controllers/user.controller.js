@@ -60,13 +60,14 @@ export const getHelloMessage = (req, res) => {
 
 //insert user
 export const addUser = async (req, res, next) => {
-  const {name,rID,uID,email,department,password} = req.body;
+  const { name, rID, uID, email, department, password } = req.body;
 
   try {
     // Check if a user with the same email or user ID already exists
     const existingUserEmail = await User.findOne({ email });
     const existingUserId = await User.findOne({ uID });
 
+<<<<<<< HEAD
     if (existingUserEmail) {
       return res.status(400).json({ message: "Email already in use." });
     }
@@ -83,69 +84,88 @@ export const addUser = async (req, res, next) => {
     console.error(err.message);
     return res.status(500).json({ error: "Server error" });
   }
+=======
+  try {
+    users = new User({ name, rID, uID, email, department, password });
+    await users.save();
+  } catch (err) {
+    console.log(err);
+  }
+
+  if (!users) {
+    return res.status(404).send({ message: "Unable to add user" });
+  }
+  return res.status(200).json({
+    users,
+  });
+>>>>>>> 72da37b130e7d435bba16e911536f464252209d7
 };
 
 //Get by ID
-export const getById = async(req, res, next) => {
-  const id =req.params.id;
+export const getById = async (req, res, next) => {
+  const id = req.params.id;
 
   let users;
 
-  try{
-    users=await User.findById(id);
-  }catch (err){
+  try {
+    users = await User.findById(id);
+  } catch (err) {
     console.log(err);
   }
 
-  if(!users){
-    return res.status(404).send({message:"Unable to desplay user"});
+  if (!users) {
+    return res.status(404).send({ message: "Unable to desplay user" });
   }
   return res.status(200).json({
-    users
-  })
-}
+    users,
+  });
+};
 
 //update user
 export const updateUser = async (req, res, next) => {
-
-  const id =req.params.id;
-  const {name,rID,uID,email,department,password} = req.body;
-
-  let users
-
-  try {
-    users = await User.findByIdAndUpdate(id,
-      {name: name, rID: rID, uID: uID, email: email, department: department, password: password},);
-      users = await users.save();
-  }catch (err){
-    console.log(err);
-  }
-
-  if(!users){
-    return res.status(404).send({message:"Unable to update user"});
-  }
-  return res.status(200).json({
-    users
-  })
-}
-
-//delete user
-export const deleteUser = async (req, res, next) => {
-
-  const id =req.params.id;
+  const id = req.params.id;
+  const { name, rID, uID, email, department, password } = req.body;
 
   let users;
 
-  try{
-    users= await User.findByIdAndDelete(id)
-  }catch (err){
+  try {
+    users = await User.findByIdAndUpdate(id, {
+      name: name,
+      rID: rID,
+      uID: uID,
+      email: email,
+      department: department,
+      password: password,
+    });
+    users = await users.save();
+  } catch (err) {
     console.log(err);
   }
 
-  if(!users){
-    return res.status(404).send({message:"Unable to delete user"});
+  if (!users) {
+    return res.status(404).send({ message: "Unable to update user" });
   }
   return res.status(200).json({
-    users
-  })
-}
+    users,
+  });
+};
+
+//delete user
+export const deleteUser = async (req, res, next) => {
+  const id = req.params.id;
+
+  let users;
+
+  try {
+    users = await User.findByIdAndDelete(id);
+  } catch (err) {
+    console.log(err);
+  }
+
+  if (!users) {
+    return res.status(404).send({ message: "Unable to delete user" });
+  }
+  return res.status(200).json({
+    users,
+  });
+};

@@ -40,16 +40,33 @@ export const getAllStaff = async (req, res, next) => {
 
 //insert staff
 export const addStaff = async (req, res, next) => {
+<<<<<<< HEAD
   const {name,sID,email,department,nic,position} = req.body;
+=======
+  const {name,sID,email,dID,nic,position} = req.body;
+>>>>>>> main
 
   try {
     // Check if a staff with the same email or sID already exists
     const existingStaffEmail = await Staff.findOne({ email });
     const existingStaffSID = await Staff.findOne({ sID });
 
+<<<<<<< HEAD
     if (existingStaffEmail) {
       return res.status(400).json({ message: "Email already in use." });
     }
+=======
+  try{
+<<<<<<< HEAD
+    staffs = new Staff({name,sID,email,department,nic,position});
+=======
+    staffs = new Staff({name,sID,email,dID,nic,position});
+>>>>>>> main
+    await staffs.save();
+  }catch (err){
+    console.log(err);
+  }
+>>>>>>> 72da37b130e7d435bba16e911536f464252209d7
 
     if (existingStaffSID) {
       return res.status(400).json({ message: "Staff ID already in use." });
@@ -89,13 +106,21 @@ export const getById = async(req, res, next) => {
 export const updateStaff = async (req, res, next) => {
 
   const id =req.params.id;
+<<<<<<< HEAD
   const {name,nic,sID,email,department,position} = req.body;
+=======
+  const {name,rID,uID,email,dID} = req.body;
+>>>>>>> main
 
   let staffs
 
   try {
     staffs = await Staff.findByIdAndUpdate(id,
+<<<<<<< HEAD
       {name: name, nic: nic, sID: sID, email: email, position:position, department: department});
+=======
+      {name: name, rID: rID, uID: uID, email: email, dID: dID});
+>>>>>>> main
       staffs = await staffs.save();
   }catch (err){
     console.log(err);
