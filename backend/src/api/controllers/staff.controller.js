@@ -42,22 +42,28 @@ export const getAllStaff = async (req, res, next) => {
 export const addStaff = async (req, res, next) => {
   const {name,sID,email,department,nic,position} = req.body;
 
-  let staffs;
+  try {
+    // Check if a staff with the same email or sID already exists
+    const existingStaffEmail = await Staff.findOne({ email });
+    const existingStaffSID = await Staff.findOne({ sID });
 
-  try{
-    staffs = new Staff({name,sID,email,department,nic,position});
-    await staffs.save();
-  }catch (err){
-    console.log(err);
-  }
+    if (existingStaffEmail) {
+      return res.status(400).json({ message: "Email already in use." });
+    }
 
-  if(!staffs){
-    return res.status(404).send({message:"Unable to add user"});
+    if (existingStaffSID) {
+      return res.status(400).json({ message: "Staff ID already in use." });
+    }
+
+    const staff = new Staff({name,sID,email,department,nic,position});
+    await staff.save();
+
+    return res.status(200).json({ staff });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Server error" });
   }
-  return res.status(200).json({
-    staffs
-  })
-}
+};
 
 //Get by ID
 export const getById = async(req, res, next) => {

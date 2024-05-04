@@ -6,6 +6,7 @@ import Header from "../partials/Header";
 
 function NewStaff() {
   const history = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
   const [inputs, setInputs] = useState({
     name: "",
     sID: "",
@@ -24,9 +25,6 @@ function NewStaff() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
-
-    // Check that all the required fields are defined
     if (
       !inputs.name ||
       !inputs.sID ||
@@ -35,32 +33,34 @@ function NewStaff() {
       !inputs.nic ||
       !inputs.position
     ) {
-      console.error("All fields are required");
+      setErrorMessage("All fields are required");
       return;
     }
-
+  
     try {
       await sendRequest();
-      history("/allStaff");
     } catch (error) {
-      console.error(error);
+      if (error.response && error.response.data) {
+        setErrorMessage(error.response.data.message); // Set the error message when the request fails
+      }
     }
   };
 
   const sendRequest = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/staff", {
+      await axios.post("http://localhost:5000/staff", {
         name: String(inputs.name),
-        sID: Number(inputs.sID),
+        sID: String(inputs.sID),
         email: String(inputs.email),
         department: String(inputs.department),
-        nic: Number(inputs.nic),
+        nic: String(inputs.nic),
         position: String(inputs.position),
       });
-      return response.data;
-    } catch (error) {
-      console.error(error);
-      throw error;
+      history("/allStaff"); // Only navigate when the request is successful
+    } catch (err) {
+      if (err.response && err.response.data) {
+        setErrorMessage(err.response.data.message); // Set the error message when the request fails
+      }
     }
   };
 
@@ -182,6 +182,7 @@ function NewStaff() {
               </div>
 
               <div className="absolute top-3/4 translate-y-20 w-full flex items-center justify-between ">
+              {errorMessage && <p className="text-left text-red-500">{errorMessage}</p>}
                 <button
                   className="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline absolute right-10"
                   type="submit"

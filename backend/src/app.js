@@ -14,6 +14,7 @@ import userRouter from "./api/routes/user.route";
 import staffRouter from "./api/routes/staff.route";
 import reportRouter from "./api/routes/report.route";
 import nodemailer from 'nodemailer';
+import { check, validationResult } from 'express-validator';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -70,14 +71,25 @@ app.post("/register", async (req, res) => {
 });
 
 //user loging
-app.post('/login', (req, res) => {
+app.post('/login', [
+  // email must be valid
+  check('email').isEmail(),
+  // password must be at least 5 characters long
+  check('password').isLength({ min: 5 })
+], (req, res) => {
+  // Finds the validation errors in this request and wraps them in an object with handy functions
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const { email, password } = req.body;
 
   User.findOne({ email: email })
     .then(user => {
       console.log(user);
       if (!user) {
-        return res.send({ status: "User not existed" });
+        return res.send({ status: "error", message: "Email not found" });
       }
 
       bcrypt.compare(password, user.password)
@@ -86,12 +98,12 @@ app.post('/login', (req, res) => {
             res.send({ status: "ok", rID: user.userRoll }); 
           } else {
             // Passwords don't match
-            res.send({ status: "Login Failed" });
+            res.send({ status: "error", message: "Login Failed" });
           }
         })
-        .catch(err => res.send({ status: err }));
+        .catch(err => res.send({ status: "error", message: err.message }));
     })
-    .catch(err => res.send({ status: err }));
+    .catch(err => res.send({ status: "error", message: err.message }));
 });
 
 //reset password

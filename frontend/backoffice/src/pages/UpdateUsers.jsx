@@ -15,8 +15,6 @@ function UpdateUsers() {
     if (user) {
       setInputs({
         name: user.name,
-        email: user.email,
-        uID: user.uID,
         department: user.department,
         message: user.message, // assuming user has a message field
       });
@@ -49,7 +47,7 @@ function UpdateUsers() {
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
         <Header />
         <main>
-          <div className="absolute top-40 right-40 w-3/4 h-1/2 bg-white p-2 drop-shadow-xl rounded-xl">
+          <div className="absolute top-40 right-40 w-3/4 h-1/3 bg-white p-2 drop-shadow-xl rounded-xl">
             <form onSubmit={handleSubmit}>
               <div className="mb-4 w-4/5">
                 <label
@@ -66,42 +64,6 @@ function UpdateUsers() {
                   value={inputs ? inputs.name : ""}
                   onChange={handleChange}
                   placeholder="Enter User Name"
-                />
-              </div>
-
-              <div className="mb-4 w-4/5 absolute top-60">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2 text-left"
-                  htmlFor="email"
-                >
-                  Email
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="email"
-                  type="email"
-                  name="email"
-                  onChange={handleChange}
-                  value={inputs ? inputs.email : ""}
-                  placeholder="Enter User Email"
-                />
-              </div>
-
-              <div className="mb-4 w-4/5 absolute top-40">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2 text-left"
-                  htmlFor="uid"
-                >
-                  User ID
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="uID"
-                  type="Number"
-                  name="uID"
-                  onChange={handleChange}
-                  value={inputs ? inputs.uID : ""}
-                  placeholder="Enter User ID"
                 />
               </div>
 
@@ -123,7 +85,7 @@ function UpdateUsers() {
                 />
               </div>
 
-              <div className="absolute top-3/4 translate-y-16 w-full flex items-center justify-between">
+              <div className="absolute top-1/2 translate-y-20 w-full flex items-center justify-between">
                 <button
                   className="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline absolute right-10"
                   type="submit"

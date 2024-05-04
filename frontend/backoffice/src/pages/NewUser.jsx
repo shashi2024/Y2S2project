@@ -28,10 +28,10 @@ function NewUser() {
   ];
   const [inputs, setInputs] = useState({
     name: "",
-    rID: "",
+    rID: roles[0],
     uID: "",
     email: "",
-    department: "",
+    department: departments[0],
   });
 
   const handleChange = (e) => {
@@ -43,20 +43,32 @@ function NewUser() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputs);
-    sendRequest().then(() => history("/registerUser"));
+    if (e.currentTarget.checkValidity()) {
+      console.log(inputs);
+      sendRequest();
+    } else {
+      alert("Please fill out all fields correctly.");
+    }
   };
 
+  const [error, setError] = useState(null);
+
   const sendRequest = async () => {
-    await axios
-      .post("http://localhost:5000/user", {
+    console.log(inputs); 
+    try {
+      await axios.post("http://localhost:5000/user", {
         name: String(inputs.name),
         rID: String(inputs.rID),
         uID: Number(inputs.uID),
         email: String(inputs.email),
         department: String(inputs.department),
-      })
-      .then((res) => res.data);
+      });
+      history("/registerUser"); // Only navigate when the request is successful
+    } catch (err) {
+      if (err.response && err.response.data) {
+        setError(err.response.data.message); // Set the error message when the request fails
+      }
+    }
   };
 
   return (
@@ -76,6 +88,7 @@ function NewUser() {
                   Name
                 </label>
                 <input
+                  required
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="name"
                   type="text"
@@ -94,6 +107,7 @@ function NewUser() {
                   Email
                 </label>
                 <input
+                  required
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="email"
                   type="email"
@@ -102,6 +116,7 @@ function NewUser() {
                   value={inputs.email}
                   placeholder="Enter User Email"
                 />
+                
               </div>
 
               <div className="mb-4 w-4/5 absolute top-40">
@@ -112,6 +127,7 @@ function NewUser() {
                   User ID
                 </label>
                 <input
+                  required
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="uID"
                   type="Number"
@@ -120,6 +136,7 @@ function NewUser() {
                   value={inputs.uID}
                   placeholder="Enter User ID"
                 />
+                
               </div>
 
               <div className="mb-4 w-4/5 absolute top-20 translate-y-3 ">
@@ -130,6 +147,7 @@ function NewUser() {
                   Department
                 </label>
                 <select
+                required
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="department"
                   type="text"
@@ -153,6 +171,7 @@ function NewUser() {
                   User Role
                 </label>
                 <select
+                required
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="rID"
                   name="rID"
@@ -168,9 +187,10 @@ function NewUser() {
               </div>
 
               <div className="absolute top-96 translate-y-8 w-full flex items-center justify-between ">
+              {error && <div className="error text-red-700 text-left">{error}</div>}
                 <button
                   className="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline absolute right-10"
-                  type="submits"
+                  type="submit"
                 >
                   Create User Registration
                 </button>

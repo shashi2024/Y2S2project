@@ -38,25 +38,52 @@ export const getHelloMessage = (req, res) => {
 };
 
 //insert user
+// export const addUser = async (req, res, next) => {
+//   const {name,rID,uID,email,department,password} = req.body;
+
+//   let users;
+
+//   try{
+//     users = new User({name,rID,uID,email,department,password});
+//     await users.save();
+//   }catch (err){
+//     console.log(err);
+//   }
+
+//   if(!users){
+//     return res.status(404).send({message:"Unable to add user"});
+//   }
+//   return res.status(200).json({
+//     users
+//   })
+// }
+
+//insert user
 export const addUser = async (req, res, next) => {
   const {name,rID,uID,email,department,password} = req.body;
 
-  let users;
+  try {
+    // Check if a user with the same email or user ID already exists
+    const existingUserEmail = await User.findOne({ email });
+    const existingUserId = await User.findOne({ uID });
 
-  try{
-    users = new User({name,rID,uID,email,department,password});
-    await users.save();
-  }catch (err){
-    console.log(err);
-  }
+    if (existingUserEmail) {
+      return res.status(400).json({ message: "Email already in use." });
+    }
 
-  if(!users){
-    return res.status(404).send({message:"Unable to add user"});
+    if (existingUserId) {
+      return res.status(400).json({ message: "User ID already in use." });
+    }
+
+    const user = new User({name,rID,uID,email,department,password});
+    await user.save();
+
+    return res.status(200).json({ user });
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).json({ error: "Server error" });
   }
-  return res.status(200).json({
-    users
-  })
-}
+};
 
 //Get by ID
 export const getById = async(req, res, next) => {
