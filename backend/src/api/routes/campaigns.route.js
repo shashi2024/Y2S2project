@@ -58,5 +58,20 @@ router.get("/search", (req, res) => {
 });
 
 
+// Route to get total campaigns and total budget
+router.get("/dash", (req, res) => {
+    Campaigns.aggregate([
+        {
+            $group: {
+                _id: null, // Grouping at the root level to get total
+                totalBudget: { $sum: { $toDouble: "$budget" } }, // Assuming budget is stored as a string
+                totalCampaigns: { $sum: 1 }
+            }
+        }
+    ])
+    .then(result => res.json(result[0] || { totalBudget: 0, totalCampaigns: 0 }))
+    .catch(err => res.status(500).json({ msg: "Error calculating stats", error: err.message }));
+});
+
 
 module.exports = router;
