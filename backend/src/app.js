@@ -41,7 +41,7 @@ app.use("/restaurant-inventory", restaurantInventoryRouter);
 
 // Finance Management Middleware
 
-app.use("/GenerateReports", GenerateReportsRouter);
+app.use("/generate-reports", GenerateReportsRouter);
 app.use("/government-payments", GovernmentPayentRouter);
 app.use("/refund-payments", RefufndRequestRouter);
 app.use("/salary-payments", SalaryPaymentRouter);

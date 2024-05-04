@@ -49,7 +49,7 @@ export const orderReport = async (req, res) => {
 
 export const foodItemReport = () => {
     logger.info('Generating food item report');
-}
+}   
 
 export const taskReport = async (req, res) => {
     try {

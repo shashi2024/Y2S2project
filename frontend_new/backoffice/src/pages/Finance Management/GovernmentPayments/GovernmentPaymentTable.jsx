@@ -9,6 +9,7 @@ const GovernmentPaymentTable = () => {
   const [selectedGovernmentPayment, setSelectedGovernmentPayment] =
     useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchGovernmentPaymentData = async () => {
@@ -83,10 +84,28 @@ const GovernmentPaymentTable = () => {
     }
   };
 
+  const filteredGovernmentPaymentData = governmentPaymentData.filter(
+    (governmentPayment) => {
+      return (
+        governmentPayment.PaymentId.toLowerCase().includes(searchQuery) ||
+        governmentPayment.paymentType.toLowerCase().includes(searchQuery)
+      );
+    }
+  );
+
   return (
     <div>
       <h1 className="text-2xl font-bold text-primary">Government Payment</h1>
       <hr className="border-t border-second_background mt-2 mb-12" />
+      <div className="text-end mb-4 mr-10 br-5 rounded ">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="border p-2 rounded-full ml-2 pl-3 border-second_background "
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
       <table className="w-full text-left border-collapse">
         <thead>
           <tr className="border-t border-second_background">
@@ -98,7 +117,7 @@ const GovernmentPaymentTable = () => {
           </tr>
         </thead>
         <tbody>
-          {governmentPaymentData.map((governmentPayment) => (
+          {filteredGovernmentPaymentData.map((governmentPayment) => (
             <tr key={governmentPayment._id} className="bg-white border-t">
               <td className="py-4 px-6 border">
                 {governmentPayment.PaymentId}

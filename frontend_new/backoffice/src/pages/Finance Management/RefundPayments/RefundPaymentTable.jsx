@@ -8,6 +8,7 @@ const RefundPaymentTable = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedRefundPayment, setSelectedRefundPayment] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchRefundPaymentData = async () => {
@@ -81,10 +82,28 @@ const RefundPaymentTable = () => {
     }
   };
 
+  const filteredRefundPaymentData = refundPaymentData.filter(
+    (refundPayment) => {
+      return (
+        refundPayment.refundRequestId.toLowerCase().includes(searchQuery) ||
+        refundPayment.refundType.toLowerCase().includes(searchQuery)
+      );
+    }
+  );
+
   return (
     <div>
       <h1 className="text-2xl font-bold text-primary">Refund Payment</h1>
       <hr className="border-t border-second_background mt-2 mb-12" />
+      <div className="text-end mb-4 mr-10 br-5 rounded ">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="border p-2 rounded-full ml-2 pl-3 border-second_background "
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
       <table className="w-full text-left border-collapse">
         <thead>
           <tr className="border-t border-second_background">
@@ -98,7 +117,7 @@ const RefundPaymentTable = () => {
           </tr>
         </thead>
         <tbody>
-          {refundPaymentData.map((refundPayment) => (
+          {filteredRefundPaymentData.map((refundPayment) => (
             <tr
               key={refundPayment._id}
               className="border-t border-second_background"

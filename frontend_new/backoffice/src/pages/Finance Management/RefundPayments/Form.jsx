@@ -52,7 +52,7 @@ const CreateRefundPaymentForm = () => {
           className="mt-1 block w-full rounded-md border-second_background shadow-sm focus:border-button_color focus:ring focus:ring-color focus:ring-opacity-5"
         >
           <option value="">-Select-</option>
-          <option value=""></option>
+          <option value="potion 1">option 1</option>
           <option value=""></option>
           <option value=""></option>
           <option value=""></option>

@@ -8,6 +8,7 @@ function SupplierPaymentTable() {
   const [supplierData, setSupplierData] = useState([]);
   const [selectedSupplier, setSelectedSupplier] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchSupplierData = async () => {
@@ -80,11 +81,33 @@ function SupplierPaymentTable() {
       console.log(error);
     }
   };
+  const filteredSupplierPayments = supplierData.filter(
+    (supplierPayment) =>
+      supplierPayment.supplierId
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      supplierPayment.PaymentId.toLowerCase().includes(
+        searchQuery.toLowerCase()
+      ) ||
+      supplierPayment.supplierName
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      supplierPayment.quality.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div>
       <h1 className="text-2xl font-bold text-primary">Supplier Payment</h1>
       <hr className="border-t border-second_background mt-2 mb-12" />
+      <div className="text-end mb-4 mr-10 br-5 rounded ">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="border p-2 rounded-full ml-2 pl-3 border-second_background "
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
       <table className="w-full text-left border-collapse">
         <thead>
           <tr className="border-t border-second_background">
@@ -100,7 +123,7 @@ function SupplierPaymentTable() {
           </tr>
         </thead>
         <tbody>
-          {supplierData.map((supplier) => (
+          {filteredSupplierPayments.map((supplier) => (
             <tr
               key={supplier._id}
               className="bg-gray-200 border-b border-second_background"
@@ -235,7 +258,7 @@ function SupplierPaymentTable() {
               </label>
               <input
                 type="text"
-                name="amount"
+                name="paymentAmount"
                 id="paymentAmount"
                 value={selectedSupplier.paymentAmount}
                 onChange={handleChange}
@@ -279,7 +302,7 @@ function SupplierPaymentTable() {
                 <option value="Poor">Poor</option>
               </select>
             </div>
-            
+
             <div style={{ display: "flex", justifyContent: "center" }}>
               <Button type="submit">Save</Button>
             </div>

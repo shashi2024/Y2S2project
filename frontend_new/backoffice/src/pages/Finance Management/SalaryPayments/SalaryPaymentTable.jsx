@@ -8,6 +8,7 @@ const SalaryPaymentTable = () => {
   const [isModalOpen, setModalIsOpen] = useState(false);
   const [selectedSalaryPayment, setSelectedSalaryPayment] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchSalaryPaymentData = async () => {
@@ -81,10 +82,33 @@ const SalaryPaymentTable = () => {
     }
   };
 
+  const filtereSalaryPayments = salaryPaymentData.filter(
+    (salaryPayment) =>
+      salaryPayment.PaymentId.toLowerCase().includes(
+        searchQuery.toLowerCase()
+      ) ||
+      salaryPayment.employeeId
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      salaryPayment.bankName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div>
       <h1 className="text-2xl font-bold text-primary">Salary Payment</h1>
-      <hr className="border-t border-second_background mt-2 mb-12" />
+
+      <hr className="border-t border-second_background mt-2 mb-10" />
+
+      <div className="text-end mb-4 mr-10 br-5 rounded ">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="border p-2 rounded-full ml-2 pl-3 border-second_background "
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+
       <table className="w-full text-left border-collapse">
         <thead>
           <tr className="border-t border-second_background">
@@ -101,7 +125,7 @@ const SalaryPaymentTable = () => {
           </tr>
         </thead>
         <tbody>
-          {salaryPaymentData.map((salaryPayment) => (
+          {filtereSalaryPayments.map((salaryPayment) => (
             <tr
               key={salaryPayment._id}
               className="bg-gray-100 border-b border-second_background"

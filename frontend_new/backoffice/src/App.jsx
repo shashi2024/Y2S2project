@@ -21,7 +21,6 @@ import CreateSalaryPayment from "./pages/Finance Management/SalaryPayments/Creat
 import CreateSupplierPayment from "./pages/Finance Management/SupplierPayment/CreateSupplierPayment";
 import CreateUtilityPayment from "./pages/Finance Management/UtilityPayments/CreateUtilityPayment";
 import CreateGovernmentPayment from "./pages/Finance Management/GovernmentPayments/CreateGovernmentPayment";
-import SalaryPayment from "./pages/Finance Management/SalaryPayments/SalaryPayment";
 import CreateRefundPayment from "./pages/Finance Management/RefundPayments/CreateRefundPayment";
 
 function App() {
@@ -95,11 +94,6 @@ function App() {
           exact
           path="/finance-management/government-payments/create"
           element={<CreateGovernmentPayment />}
-        />
-        <Route
-          exact
-          path="/finance-management/salary-payments"
-          element={<SalaryPayment />}
         />
         <Route
           exact

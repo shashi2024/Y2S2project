@@ -8,6 +8,7 @@ const UtilityPaymentTable = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedUtilityPayment, setSelectedUtilityPayment] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchUtilityPaymentData = async () => {
@@ -81,10 +82,29 @@ const UtilityPaymentTable = () => {
       console.error(error);
     }
   };
+  // Filter utilityPaymentData based on searchQuery
+
+  const filteredUtilityPayments = utilityPaymentData.filter(
+    (utilityPayment) =>
+      utilityPayment.utilityType
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      utilityPayment.PaymentId.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   return (
     <div>
       <h1 className="text-2xl font-bold text-primary">Utility Payment</h1>
       <hr className="border-t border-second_background mt-2 mb-12" />
+      <div className="text-end mb-4 mr-10 br-5 rounded ">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="border p-2 rounded-full ml-2 pl-3 border-second_background "
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+
       <table className="w-full text-left border-collapse">
         <thead>
           <tr className="border-t border-second_background">
@@ -97,7 +117,7 @@ const UtilityPaymentTable = () => {
           </tr>
         </thead>
         <tbody>
-          {utilityPaymentData.map((utilityPayment) => (
+          {filteredUtilityPayments.map((utilityPayment) => (
             <tr key={utilityPayment._id} className="bg-white border-t">
               <td className="py-4 px-6 border">{utilityPayment.PaymentId}</td>
               <td className="py-4 px-6 border">{utilityPayment.utilityType}</td>
